@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _usernameController,
                 cursorColor: mainColor,
                 decoration: InputDecoration(
-                  labelText: 'Gebruikersnaam',
+                  labelText: 'Email',
                   labelStyle: TextStyle(
                       color: Colors.black,
                   ),
