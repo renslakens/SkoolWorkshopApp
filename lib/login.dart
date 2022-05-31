@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _showPassword = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -23,56 +25,76 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 //TODO: image hier plaatsen
                 const SizedBox(height: 16.0),
-                Text(
-                  'SHRINE',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
+                Image.asset('assets/images/Skool-Workshop_Logo.png'),
+                // Text(
+                //   'SHRINE',
+                //   style: Theme.of(context).textTheme.headline5,
+                // ),
               ],
             ),
             const SizedBox(height: 120.0),
             TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                labelText: 'Username',
-              ),
-            ),
+                controller: _usernameController,
+                cursorColor: mainColor,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  labelStyle: TextStyle(
+                      color: Colors.black,
+                  ),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+
+
+                )),
             const SizedBox(height: 12.0),
             TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
+              obscureText: !this._showPassword,
+              cursorColor: mainColor,
+              decoration: InputDecoration(
                 labelText: 'Password',
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                ),
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color: this._showPassword ? Colors.blue : Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() => this._showPassword = !this._showPassword);
+                  },
+                ),
               ),
-              obscureText: true,
             ),
-            OverflowBar(
-              alignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: const Text('CANCEL'),
-                  onPressed: () {
-                    _usernameController.clear();
-                    _passwordController.clear();
-                  },
-                  style: TextButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                    shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                  ),
+            const SizedBox(
+              height: 50, // <-- SEE HERE
+            ),
+            ElevatedButton(
+              child: const Text('Log in'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 8.0,
+                primary: mainColor,
+                shape: const BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
-                ElevatedButton(
-                  child: const Text('NEXT'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 8.0,
-                    shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                  ),
+              ),
+            ),
+            ElevatedButton(
+              child: const Text('Registreer'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 8.0,
+                primary: mainColor,
+                shape: const BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
-              ],
+              ),
             ),
           ],
         ),
