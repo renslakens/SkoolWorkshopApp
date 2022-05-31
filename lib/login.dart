@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _usernameController,
                 cursorColor: mainColor,
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Gebruikersnaam',
                   labelStyle: TextStyle(
                       color: Colors.black,
                   ),
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: !this._showPassword,
               cursorColor: mainColor,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Wachtwoord',
                 labelStyle: TextStyle(
                   color: Colors.black,
                 ),
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
                 primary: mainColor,
-                shape: const BeveledRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
               ),
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
                 primary: mainColor,
-                shape: const BeveledRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
               ),
