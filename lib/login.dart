@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 elevation: 8.0,
                 primary: mainColor,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
             ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 elevation: 8.0,
                 primary: mainColor,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
             ),
