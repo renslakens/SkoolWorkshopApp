@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -39,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
+                      fontFamily: 'Heebo',
                       color: Colors.black,
                   ),
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -52,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: 'Wachtwoord',
                 labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
                   color: Colors.black,
                 ),
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -71,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
               height: 50, // <-- SEE HERE
             ),
             ElevatedButton(
-              child: const Text('Log in'),
+              child: const Text('Log in',
+              style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -84,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             ElevatedButton(
-              child: const Text('Registreer'),
+              child: const Text('Registreer',
+                  style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
                 Navigator.pop(context);
               },
