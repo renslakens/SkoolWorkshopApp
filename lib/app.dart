@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/notification.dart';
+import 'package:skoolworkshop/register.dart';
 
 import 'home.dart';
 import 'api_test.dart';
 import 'login.dart';
+import 'register.dart';
 
 class SkoolWorkshopApp extends StatelessWidget {
   const SkoolWorkshopApp({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class SkoolWorkshopApp extends StatelessWidget {
       routes: {
         '/api_test' : (BuildContext context) => Home(),
         '/notification' : (BuildContext context) => const notificationPage(),
+        '/register': (BuildContext context) => const RegisterPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/': (BuildContext context) => const HomePage(),
       },
