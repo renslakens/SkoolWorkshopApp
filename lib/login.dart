@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/register.dart';
 import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,9 +43,8 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.black,
                   ),
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-
-
                 )),
+
             const SizedBox(height: 12.0),
             TextField(
               obscureText: !this._showPassword,
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               child: const Text('Registreer'),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
