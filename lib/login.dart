@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -37,8 +38,9 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _usernameController,
                 cursorColor: mainColor,
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Email',
                   labelStyle: TextStyle(
+                      fontFamily: 'Heebo',
                       color: Colors.black,
                   ),
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -50,8 +52,9 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: !this._showPassword,
               cursorColor: mainColor,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Wachtwoord',
                 labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
                   color: Colors.black,
                 ),
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -71,28 +74,30 @@ class _LoginPageState extends State<LoginPage> {
               height: 50, // <-- SEE HERE
             ),
             ElevatedButton(
-              child: const Text('Log in'),
+              child: const Text('Log in',
+              style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
                 primary: mainColor,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
             ),
             ElevatedButton(
-              child: const Text('Registreer'),
+              child: const Text('Registreer',
+                  style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
                 primary: mainColor,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
             ),

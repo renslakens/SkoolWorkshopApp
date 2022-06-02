@@ -27,6 +27,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  dio: any
+  retrofit: any
+  built_value: any
   flutter:
     sdk: flutter
 
@@ -36,6 +39,9 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  retrofit_generator: any
+  build_runner: any
+  built_value_generator: any
   flutter_test:
     sdk: flutter
 
@@ -76,6 +82,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
+  fonts:
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-VariableFont_wght.ttf
+    - family: Heebo
+      fonts:
+        - asset: assets/fonts/Heebo-VariableFont_wght.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
