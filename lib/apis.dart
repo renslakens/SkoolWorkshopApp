@@ -1,5 +1,4 @@
-
-// Class for api tags
-class Apis {
-  static const String users = '/users';
+class apis {
+  static String baseUrl = 'https://jsonplaceholder.typicode.com';
+  static String usersEndpoint = '/users';
 }

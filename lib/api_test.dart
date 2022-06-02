@@ -1,88 +1,65 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'model/data.dart';
-import 'ApiClient.dart';
+import 'model/model.dart';
+import 'api_service.dart';
 
-void main() {
-  runApp(MyApp());
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
 }
 
-class MyApp extends StatelessWidget {
-// to set the root of app.
+class _HomeState extends State<Home> {
+  late List<UserModel>? _userModel = [];
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-    );
+  void initState() {
+    super.initState();
+    _getData();
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({required Key key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+  void _getData() async {
+    _userModel = (await ApiService().getUsers())!;
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Flutter - Retrofit Implementation"),
+        title: const Text('REST API Example'),
       ),
-      body: _buildBody(context),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-
-        },
-        label:Icon(Icons.cancel),
-        backgroundColor: Colors.green,
-      ),
-    );
-  }
-
-  // build list view & manage states
-  FutureBuilder<ResponseData> _buildBody(BuildContext context) {
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-
-    return FutureBuilder<ResponseData>(
-      // future: client.getUsers(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final ResponseData? posts = snapshot.data;
-          return _buildListView(context, posts!);
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
+      body: _userModel == null || _userModel!.isEmpty
+          ? const Center(
+        child: CircularProgressIndicator(),
+      )
+          : ListView.builder(
+        itemCount: _userModel!.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(_userModel![index].id.toString()),
+                    Text(_userModel![index].username),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(_userModel![index].email),
+                    Text(_userModel![index].website),
+                  ],
+                ),
+              ],
+            ),
           );
-        }
-      },
+        },
+      ),
     );
   }
-
-  // build list view & its tile
-  Widget _buildListView(BuildContext context, ResponseData posts) {
-    return
-      ListView.builder(itemBuilder: (context,index){
-        return Card(
-          child: ListTile(
-            leading: Icon(Icons.account_box,color: Colors.green,size: 50,),
-            title: Text(posts.data[index]['name'],style: TextStyle(fontSize: 20),),
-            subtitle: Text(posts.data[index]['email']),
-          ),
-        );
-      },itemCount: posts.data.length,
-      );
-  }
-
 }

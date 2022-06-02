@@ -29,6 +29,7 @@ environment:
 dependencies:
   dio: any
   retrofit: any
+  http: any
   built_value: any
   json_annotation: any
   flutter:
