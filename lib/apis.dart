@@ -1,4 +1,4 @@
 class apis {
-  static String baseUrl = 'https://jsonplaceholder.typicode.com';
-  static String usersEndpoint = '/users';
+  static String baseUrl = 'localhost:3000';
+  static String login = '/api/user';
 }

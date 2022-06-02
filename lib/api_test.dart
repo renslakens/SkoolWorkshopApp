@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   }
 
   void _getData() async {
-    _userModel = (await ApiService().getUsers())!;
+    // _userModel = (await ApiService().getUsers())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(_userModel![index].id.toString()),
-                    Text(_userModel![index].username),
+                    // Text(_userModel![index].firstName),
                   ],
                 ),
                 const SizedBox(
@@ -51,8 +51,8 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(_userModel![index].email),
-                    Text(_userModel![index].website),
+                    // Text(_userModel![index].email),
+                    // Text(_userModel![index].website),
                   ],
                 ),
               ],
