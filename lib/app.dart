@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'login.dart';
+import 'api_test.dart';
 
 class SkoolWorkshopApp extends StatelessWidget {
   const SkoolWorkshopApp({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class SkoolWorkshopApp extends StatelessWidget {
       title: 'SkoolWorkshop',
       initialRoute: '/login',
       routes: {
-        '/login': (BuildContext context) => const LoginPage(),
+        '/login': (BuildContext context) => MyApp(),
         '/': (BuildContext context) => const HomePage(),
       },
     );

@@ -26,7 +26,7 @@ class _ApiClient implements ApiClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseData>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'api/user/',
+                .compose(_dio.options, '/users',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseData.fromJson(_result.data!);

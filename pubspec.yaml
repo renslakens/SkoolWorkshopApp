@@ -30,6 +30,7 @@ dependencies:
   dio: any
   retrofit: any
   built_value: any
+  json_annotation: any
   flutter:
     sdk: flutter
 
@@ -42,6 +43,7 @@ dev_dependencies:
   retrofit_generator: any
   build_runner: any
   built_value_generator: any
+  json_serializable: any
   flutter_test:
     sdk: flutter
 
