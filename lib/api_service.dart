@@ -5,16 +5,26 @@ import 'apis.dart';
 import 'model/model.dart';
 
 class ApiService {
-  Future<List<UserModel>?> getUsers() async {
-    try {
-      var url = Uri.parse(apis.baseUrl + apis.usersEndpoint);
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        List<UserModel> _model = userModelFromJson(response.body);
-        return _model;
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
+  // Future<List<UserModel>?> getUsers() async {
+  //   try {
+  //     var url = Uri.parse(apis.baseUrl + apis.usersEndpoint);
+  //     var response = await http.get(url);
+  //     if (response.statusCode == 200) {
+  //       List<UserModel> _model = userModelFromJson(response.body);
+  //       return _model;
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
+
+  // Future<ResponseModel> login() async {
+  //   try {
+  //     var url = Uri.parse(apis.baseUrl + apis.login);
+  //     var response await http.get(url);
+  //     if (response.statusCode == 200){
+  //       Object _model = ResponseModel
+  //     }
+  //   }
+  // }
 }
