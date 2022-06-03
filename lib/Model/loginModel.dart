@@ -1,4 +1,5 @@
 class loginModel {
+
   int status;
 
   Result result;
@@ -6,6 +7,11 @@ class loginModel {
   // final String achternaam;
   // final String emailadres;
   // final String wachtwoord;
+
+
+  int getStatus(){
+    return status;
+  }
 
   loginModel({
     required this.status,
@@ -36,18 +42,21 @@ class loginModel {
 
 class Result {
   String token;
-
+  int isAccepted;
 
   Result({
     required this.token,
+    required this.isAccepted,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-      token: json['token']
+      token: json['token'],
+      isAccepted: json['isAccepted'],
   );
 
   Map<String, dynamic> toJson() => {
     "token": token,
+    "isAccepted": isAccepted,
   };
 }
 

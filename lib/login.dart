@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/register.dart';
+import 'package:skoolworkshop/app.dart';
+import 'package:skoolworkshop/awaitingprofile.dart';
+import 'Model/loginModel.dart';
+import 'api_service.dart';
 import 'colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
+  Future<loginModel>? _futureLogin;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -52,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             const SizedBox(height: 12.0),
             TextField(
+              controller: _passwordController,
               obscureText: !this._showPassword,
               cursorColor: mainColor,
               decoration: InputDecoration(
@@ -80,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Log in',
               style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
-                Navigator.pop(context);
+                _handleRegister();
+                // Navigator.pop(context);
+                // _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
+                // print("loginDetails: " + _usernameController.text + ', ' + _passwordController.text);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
@@ -94,8 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Registreer',
                   style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
@@ -107,7 +114,61 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
+
       ),
     );
   }
-}
+  // FutureBuilder<loginModel> buildFutureBuilder() {
+  //   return FutureBuilder<loginModel>(
+  //     future: _futureLogin,
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         print(snapshot.data);
+  //
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => const awaitingProfile()));
+  //         return Text(snapshot.data!.result.token.toString());
+  //       } else if (snapshot.hasError) {
+  //         return Text(  '${snapshot.error}');
+  //       }
+  //
+  //       return const CircularProgressIndicator();
+  //     },
+  //   );
+  // }
+
+  Future<void> _handleRegister() async {
+    _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
+    print("loginDetails: " + _usernameController.text + ', ' + _passwordController.text);
+
+    future: _futureLogin;
+
+      loginModel res = await apiLogin(_usernameController.text, _passwordController.text);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    print("token: " + res.result.token);
+
+
+    //   //checks if there is no error in the response body.
+    //   //if error is not present, navigate the users to Login Screen.
+      if (res.result.token != null) {
+
+        if (res.result.isAccepted == 0) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const awaitingProfile()));
+        }else{
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const SkoolWorkshopApp()));
+        }
+      } else {
+        //if error is present, display a snackbar showing the error messsage
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: '),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+    }
+  }
+
+
+
+
