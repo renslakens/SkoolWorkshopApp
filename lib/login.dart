@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'model/data.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
