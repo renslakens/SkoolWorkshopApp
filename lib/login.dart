@@ -51,8 +51,6 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.black,
                   ),
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-
-
                 )),
             const SizedBox(height: 12.0),
             TextField(
