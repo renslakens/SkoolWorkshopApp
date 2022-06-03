@@ -113,8 +113,7 @@ class _MyAppState extends State<MyApp> {
         ElevatedButton(
           onPressed: () {
             setState(() {
-              //email moet elke test verandert worden anders krijg je error
-              _futureAlbum = login("test", "k", "e@gjfeae.baaae", "D231!ggjr");
+              _futureAlbum = apiLogin("e@gjfeae.baaae", "D231!ggjr");
             });
           },
           child: const Text('Create Data'),
@@ -129,7 +128,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print(snapshot.data);
-          return Text(snapshot.data!.status.toString());
+          return Text(snapshot.data!.result.token.toString());
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
