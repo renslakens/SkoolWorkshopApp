@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height:35.0),
             Image.asset('assets/images/Skool-Workshop_Logo.png'),
             
-            const SizedBox(height: 80.0),
+            const SizedBox(height: 60.0),
             TextField(
               controller: _nameController,
               cursorColor: mainColor,
@@ -87,8 +87,8 @@ class _RegisterPageState extends State<RegisterPage> {
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
                 primary: mainColor,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
             ),
