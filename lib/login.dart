@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/register.dart';
 import 'colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'model/data.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -47,8 +47,9 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.black,
                   ),
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                )),
 
+
+                )),
             const SizedBox(height: 12.0),
             TextField(
               obscureText: !this._showPassword,
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Registreer',
                   style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),);
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,

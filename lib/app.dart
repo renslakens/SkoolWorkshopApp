@@ -16,7 +16,7 @@ class SkoolWorkshopApp extends StatelessWidget {
       title: 'SkoolWorkshop',
       initialRoute: '/login',  // set back to login after running
       routes: {
-        '/api_test' : (BuildContext context) => Home(),
+        '/api_test' : (BuildContext context) => MyApp(),
         '/notification' : (BuildContext context) => const notificationPage(),
         '/register': (BuildContext context) => const RegisterPage(),
         '/login': (BuildContext context) => const LoginPage(),
