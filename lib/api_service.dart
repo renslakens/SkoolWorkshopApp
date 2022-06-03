@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:skoolworkshop/Model/loginModel.dart';
 import 'apis.dart';
-import 'model/model.dart';
 
 // class ApiService {
   // Future<List<UserModel>?> getUsers() async {
