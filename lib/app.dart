@@ -13,7 +13,6 @@ class SkoolWorkshopApp extends StatefulWidget {
 }
 
 class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
-  bool _showPassword = false;
   int currentIndex = 0;
 
   final screens = [
