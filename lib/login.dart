@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -41,10 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                 cursorColor: mainColor,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                  ),
+                  labelStyle: Theme.of(context).textTheme.bodyText1,
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
 
 
@@ -55,10 +51,7 @@ class _LoginPageState extends State<LoginPage> {
               cursorColor: mainColor,
               decoration: InputDecoration(
                 labelText: 'Wachtwoord',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
+                labelStyle: Theme.of(context).textTheme.bodyText1,
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
 
                 suffixIcon: IconButton(
@@ -76,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
               height: 50, // <-- SEE HERE
             ),
             ElevatedButton(
-              child: const Text('Log in',
-              style: TextStyle(fontFamily: 'Heebo')),
+
+              child: Text('Log in', style: Theme.of(context).textTheme.bodyText2),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -90,8 +83,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             ElevatedButton(
-              child: const Text('Registreer',
-                  style: TextStyle(fontFamily: 'Heebo')),
+              child: Text('Registreer',
+                  style: Theme.of(context).textTheme.bodyText2),
               onPressed: () {
                 Navigator.pop(context);
               },
