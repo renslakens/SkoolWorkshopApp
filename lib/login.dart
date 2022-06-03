@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: ListView(
@@ -116,23 +117,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  // FutureBuilder<loginModel> buildFutureBuilder() {
-  //   return FutureBuilder<loginModel>(
-  //     future: _futureLogin,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasData) {
-  //         print(snapshot.data);
-  //
-  //         Navigator.push(context, MaterialPageRoute(builder: (context) => const awaitingProfile()));
-  //         return Text(snapshot.data!.result.token.toString());
-  //       } else if (snapshot.hasError) {
-  //         return Text(  '${snapshot.error}');
-  //       }
-  //
-  //       return const CircularProgressIndicator();
-  //     },
-  //   );
-  // }
 
   Future<void> _handleRegister() async {
     _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
@@ -151,8 +135,7 @@ class _LoginPageState extends State<LoginPage> {
       if (res.result.token != null) {
 
         if (res.result.isAccepted == 0) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const awaitingProfile()));
+          Navigator.pushReplacementNamed(context, '/awaiting');
         }else{
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const SkoolWorkshopApp()));
