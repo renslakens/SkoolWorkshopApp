@@ -20,7 +20,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     HomePage(),
     awaitingProfile(),
     awaitingProfile(),
-    notificationPage(),
+    NotificationPage(),
     LoginPage(),
   ];
 

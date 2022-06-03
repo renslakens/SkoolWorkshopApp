@@ -16,7 +16,7 @@ class SkoolWorkshopApp extends StatelessWidget {
       title: 'SkoolWorkshop',
       initialRoute: '/login',
       routes: {
-        '/notification' : (BuildContext context) => const notificationPage(),
+        '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/': (BuildContext context) => const HomePage(),
       },
