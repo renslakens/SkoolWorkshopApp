@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'Model/loginModel.dart';
+import 'api_service.dart';
 import 'colors.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,6 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
+  Future<loginModel>? _futureLogin;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -47,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             const SizedBox(height: 12.0),
             TextField(
+              controller: _passwordController,
               obscureText: !this._showPassword,
               cursorColor: mainColor,
               decoration: InputDecoration(
@@ -75,7 +81,9 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Log in',
               style: TextStyle(fontFamily: 'Heebo')),
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
+                print("loginDetails: " + _usernameController.text + ', ' + _passwordController.text);
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
@@ -104,4 +112,5 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }
