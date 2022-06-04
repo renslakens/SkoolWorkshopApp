@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/theme.dart';
 import 'colors.dart';
 import 'home.dart';
 import 'login.dart';
