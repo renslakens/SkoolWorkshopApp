@@ -14,7 +14,9 @@ class awaitingProfile extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: mainColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back), onPressed: () => exit(0)),
+              icon: Icon(Icons.arrow_back), onPressed: (){
+                Navigator.pushReplacementNamed(context, '/login');}
+          ),
         ),
         body: const Padding(
           padding: EdgeInsets.all(80.0),

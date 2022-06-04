@@ -1,41 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/theme.dart';
 import 'colors.dart';
-import 'home.dart';
-import 'login.dart';
-import 'notification.dart';
-import 'awaitingProfile.dart';
 
-class SkoolWorkshopApp extends StatefulWidget {
-  const SkoolWorkshopApp({Key? key}) : super(key: key);
+class BottomAppBar extends StatefulWidget {
+  const BottomAppBar({Key? key}) : super(key: key);
 
   @override
-  _SkoolWorkshopAppState createState() => _SkoolWorkshopAppState();
+  State<BottomAppBar> createState() => _BottomAppBarState();
 }
 
-class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
-  int currentIndex = 0;
+class _BottomAppBarState extends State<BottomAppBar> {
+  int _selectedIndex = 0;
 
-  final screens = [
-    HomePage(),
-    awaitingProfile(),
-    awaitingProfile(),
-    NotificationPage(),
-    LoginPage(),
-  ];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
-      body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
         backgroundColor: mainColor,
+        mouseCursor: SystemMouseCursors.grab,
+        selectedFontSize: 20,
+        selectedIconTheme: IconThemeData(color: Colors.black, size: 40),
         selectedItemColor: Colors.black,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: [
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -46,7 +38,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time),
-            label: 'Afwachting',
+            label: 'In afwachting',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.circle_notifications_outlined),
@@ -57,9 +49,8 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
             label: 'Profiel',
           ),
         ],
+        onTap: _onItemTapped,
       ),
     );
   }
 }
-
-//Themas hieronder plaatsen
