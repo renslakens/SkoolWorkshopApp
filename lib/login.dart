@@ -105,11 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
-
             ),
           ],
         ),
-
       ),
     );
   }
@@ -133,8 +131,7 @@ class _LoginPageState extends State<LoginPage> {
         if (res.result.isAccepted == 0) {
           Navigator.pushReplacementNamed(context, '/awaiting');
         }else{
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const SkoolWorkshopApp()));
+          Navigator.pushReplacementNamed(context, '/');
         }
       } else {
         //if error is present, display a snackbar showing the error messsage
