@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'tempCardData.dart';
+//import 'tempCardData.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({Key? key}) : super(key: key);
