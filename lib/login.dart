@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/app.dart';
-import 'package:skoolworkshop/awaitingprofile.dart';
+import 'package:skoolworkshop/register.dart';
 import 'Model/loginModel.dart';
 import 'api_service.dart';
+import 'app.dart';
 import 'colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -46,10 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 cursorColor: mainColor,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                  ),
+                  labelStyle: Theme.of(context).textTheme.bodyText1,
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                 )),
             const SizedBox(height: 12.0),
@@ -59,10 +56,7 @@ class _LoginPageState extends State<LoginPage> {
               cursorColor: mainColor,
               decoration: InputDecoration(
                 labelText: 'Wachtwoord',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
+                labelStyle: Theme.of(context).textTheme.bodyText1,
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
 
                 suffixIcon: IconButton(
@@ -80,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 50, // <-- SEE HERE
             ),
             ElevatedButton(
-              child: const Text('Log in',
-              style: TextStyle(fontFamily: 'Heebo')),
+
               onPressed: () {
                 _handleRegister();
                 // Navigator.pop(context);
@@ -95,12 +88,15 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
+
+              child: Text('Log in', style: Theme.of(context).textTheme.bodyText2),
             ),
             ElevatedButton(
-              child: const Text('Registreer',
-                  style: TextStyle(fontFamily: 'Heebo')),
+              child: Text('Registreer',
+                  style: Theme.of(context).textTheme.bodyText2),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
@@ -109,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
+
             ),
           ],
         ),
@@ -116,23 +113,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  // FutureBuilder<loginModel> buildFutureBuilder() {
-  //   return FutureBuilder<loginModel>(
-  //     future: _futureLogin,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasData) {
-  //         print(snapshot.data);
-  //
-  //         Navigator.push(context, MaterialPageRoute(builder: (context) => const awaitingProfile()));
-  //         return Text(snapshot.data!.result.token.toString());
-  //       } else if (snapshot.hasError) {
-  //         return Text(  '${snapshot.error}');
-  //       }
-  //
-  //       return const CircularProgressIndicator();
-  //     },
-  //   );
-  // }
 
   Future<void> _handleRegister() async {
     _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
@@ -151,8 +131,7 @@ class _LoginPageState extends State<LoginPage> {
       if (res.result.token != null) {
 
         if (res.result.isAccepted == 0) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const awaitingProfile()));
+          Navigator.pushReplacementNamed(context, '/awaiting');
         }else{
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const SkoolWorkshopApp()));
