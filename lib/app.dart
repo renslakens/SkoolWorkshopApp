@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/notification.dart';
+
 import 'colors.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
 import 'awaitingProfile.dart';
+import 'register.dart';
 
 class SkoolWorkshopApp extends StatefulWidget {
   const SkoolWorkshopApp({Key? key}) : super(key: key);

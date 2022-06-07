@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
+import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 
 import 'app.dart';
@@ -21,6 +22,7 @@ class SkoolWorkshopApp extends StatelessWidget {
       routes: {
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
+        '/register': (BuildContext context) => const RegisterPage(),
         '/': (BuildContext context) => const HomePage(),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
       },

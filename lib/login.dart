@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/app.dart';
-import 'package:skoolworkshop/awaitingprofile.dart';
+import 'package:skoolworkshop/register.dart';
 import 'Model/loginModel.dart';
 import 'api_service.dart';
+import 'app.dart';
 import 'colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -91,8 +92,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Text('Log in', style: Theme.of(context).textTheme.bodyText2),
             ),
             ElevatedButton(
+              child: Text('Registreer',
+                  style: Theme.of(context).textTheme.bodyText2),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 elevation: 8.0,
@@ -101,8 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
-              child: Text('Registreer',
-                  style: Theme.of(context).textTheme.bodyText2),
+
             ),
           ],
         ),
