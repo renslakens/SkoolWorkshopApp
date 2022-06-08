@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/Model/errorFile.dart';
 import 'package:skoolworkshop/Model/loginModel.dart';
 import 'apis.dart';
 
@@ -18,7 +20,8 @@ import 'apis.dart';
   //     log(e.toString());
   //   }
   // }
-  Future<loginModel> login(String naam, String lastName, String email, String wachtwoord) async {
+  Future<Object> login(String naam, String lastName, String email, String wachtwoord) async {
+    print("sending data");
     final reponse = await http.post(
       Uri.parse(apis.baseUrl + apis.login),
       headers: <String, String>{
@@ -34,15 +37,43 @@ import 'apis.dart';
     if (reponse.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
+      print("test");
       return loginModel.fromJson(jsonDecode(reponse.body));
     }
     else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       print(reponse.statusCode);
+      // return errorFile.fromJson(jsonDecode(reponse.body));
       throw Exception('Failed to create album.');
     }
   }
+
+  uploadFile(String filePath) async {
+    var file = http.MultipartFile.fromBytes('file', await File.fromUri(Uri.parse(filePath)).readAsBytes());
+  final reponse = await http.post(
+    Uri.parse(apis.baseUrl + apis.fileUpload),
+
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, http.MultipartFile>{
+      'file': file
+    }
+    ),
+  );
+  if (reponse.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return loginModel.fromJson(jsonDecode(reponse.body));
+  }
+  else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    print(reponse.statusCode);
+    throw Exception('Failed to create album.');
+  }
+}
 
     Future<loginModel> apiLogin(String email, String wachtwoord) async {
       final reponse = await http.post(
@@ -65,6 +96,7 @@ import 'apis.dart';
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
         print(reponse.statusCode);
+        // return errorFile.fromJson(jsonDecode(reponse.body));
         throw Exception('Failed to login.');
       }
   }

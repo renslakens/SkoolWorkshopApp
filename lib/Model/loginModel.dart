@@ -1,7 +1,6 @@
 class loginModel {
 
   int status;
-
   Result result;
   // final String naam;
   // final String achternaam;
