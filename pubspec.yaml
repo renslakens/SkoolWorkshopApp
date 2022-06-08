@@ -29,6 +29,8 @@ environment:
 dependencies:
   dio: any
   retrofit: any
+  image_picker: any
+  get: any
   http: any
   built_value: any
   json_annotation: any
