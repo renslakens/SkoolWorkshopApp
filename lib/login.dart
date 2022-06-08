@@ -115,12 +115,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _handleRegister() async {
-    _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
+    _futureLogin = apiLogin(context, _usernameController.text.toString(), _passwordController.text.toString());
     print("loginDetails: " + _usernameController.text + ', ' + _passwordController.text);
 
     future: _futureLogin;
 
-      loginModel res = await apiLogin(_usernameController.text, _passwordController.text);
+      loginModel res = await apiLogin(context, _usernameController.text, _passwordController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     print("token: " + res.result.token);
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         //if error is present, display a snackbar showing the error messsage
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: Kon geen verbinding maken'),
+          content: Text('Error: '),
           backgroundColor: Colors.red.shade300,
         ));
       }
