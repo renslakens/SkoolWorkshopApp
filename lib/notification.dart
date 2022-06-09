@@ -1,91 +1,81 @@
 import 'package:flutter/material.dart';
-//import 'tempCardData.dart';
+import 'package:skoolworkshop/Model/userModel.dart';
+import 'api_service.dart';
+import 'apis.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
 
-  //static const userData = ['Patrick', 'Erik', 'Patty', 'Arend'];
-  static const userDes = ['email@email.com', 'maile@mail2.com', 'meel@meel.com', 'aasdb@absd.com'];
-  static const String _title = "Meldingen";
+  @override
+  _NotificationPageState createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  late List<UserModel>? _userModel = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _userModel = (await ApiService().getUsers())!;
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: userDes.length,
-      itemBuilder: (context, index) {
-        return   Card(
-          child: OverflowBar(
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ListTile(
-                    title: Text(userDes[index], style: TextStyle(height: 1.15),),
-                    subtitle: Text(userDes[index], style: TextStyle(height: 1.15),),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            //TODO implement approval of request
-                          },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Meldingen'),
+      ),
+      body: _userModel == null || _userModel!.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: _userModel!.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        //leading: Icon(Icons.album),
+                        title: Text(_userModel![index].naam.toString()),
+                        subtitle: Text(_userModel![index].achternaam.toString()),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              //TODO: Accepteer Docentaanmelding
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green,
-                              elevation: 8.0,
+                            ),
+                            child: const Icon(Icons.check),
                           ),
-                          child: const Icon(Icons.check),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: ElevatedButton(
+                          const SizedBox(width: 8),
+                          ElevatedButton(
                             onPressed: () {
-                              //TODO implement denial of request
+                              //TODO: Weiger docentaanmelding
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.red,
-                              elevation: 8.0,
                             ),
                             child: const Icon(Icons.clear),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
                       ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      },
-
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    ],
+                  ),
+                );
+              },
+            ),
     );
   }
 }
-
-//class notificationWidget extends StatelessWidget {
-// const notificationWidget({Key? key}) : super(key: key);
-
-//  @override
-//   Widget build(BuildContext context) {
-//
-//   }
-// }
-
-// Card buildCard() {
-//   var tempCardData = tempCardData.getData;
-
-
-//}

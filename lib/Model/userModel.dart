@@ -12,27 +12,6 @@ String userModelToJson(List<UserModel> data) =>
 
 class UserModel {
   UserModel({
-    required this.status,
-    required this.result,
-  });
-
-  int status;
-  List<Result> result;
-
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        status: json["status"],
-        result:
-            List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "result": List<dynamic>.from(result.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     required this.docentId,
     required this.naam,
     required this.achternaam,
@@ -53,7 +32,6 @@ class Result {
     required this.isAccepted,
     this.isFlexwerker,
   });
-
   int docentId;
   String naam;
   String achternaam;
@@ -74,7 +52,7 @@ class Result {
   int isAccepted;
   dynamic isFlexwerker;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         docentId: json["docentID"],
         naam: json["naam"],
         achternaam: json["achternaam"],
