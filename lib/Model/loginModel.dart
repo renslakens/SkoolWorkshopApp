@@ -1,7 +1,7 @@
 class loginModel {
 
   int status;
-
+  String message;
   Result result;
   // final String naam;
   // final String achternaam;
@@ -15,12 +15,14 @@ class loginModel {
 
   loginModel({
     required this.status,
-    required this.result
+    required this.result,
+    required this.message
   });
 
+
   factory loginModel.fromJson(Map<String, dynamic> json) => loginModel(
-      status: json['status'],
-      // result: json['result']
+      status: json['status'] ?? "na",
+      message: json['message'] ?? "na",
       result: Result.fromJson(json["result"]),
       // naam: json['naam'],
       // achternaam: json['achternaam'],
@@ -30,6 +32,7 @@ class loginModel {
 
   Map<String, dynamic> toJson() => {
     "status": status,
+    "message": message,
     "result": result.toJson(),
     // "username": lastName,
     // "email": emailAdress,
@@ -39,6 +42,8 @@ class loginModel {
     // "company": company.toJson(),
   };
 }
+
+
 
 class Result {
   String token;
@@ -50,8 +55,8 @@ class Result {
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-      token: json['token'],
-      isAccepted: json['isAccepted'],
+      token: json['token'] ?? "na",
+      isAccepted: json['isAccepted'] ?? "na",
   );
 
   Map<String, dynamic> toJson() => {
