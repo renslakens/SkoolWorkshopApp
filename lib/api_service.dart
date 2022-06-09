@@ -1,23 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:skoolworkshop/Model/userModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:skoolworkshop/Model/loginModel.dart';
 import 'apis.dart';
 
-// class ApiService {
-  // Future<List<UserModel>?> getUsers() async {
-  //   try {
-  //     var url = Uri.parse(apis.baseUrl + apis.usersEndpoint);
-  //     var response = await http.get(url);
-  //     if (response.statusCode == 200) {
-  //       List<UserModel> _model = userModelFromJson(response.body);
-  //       return _model;
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
   Future<loginModel> login(String naam, String lastName, String email, String wachtwoord) async {
     final reponse = await http.post(
       Uri.parse(apis.baseUrl + apis.login),
@@ -68,4 +56,19 @@ import 'apis.dart';
         throw Exception('Failed to login.');
       }
   }
+
+class ApiService {
+  Future<List<UserModel>?> getUsers() async {
+    try {
+      var url = Uri.parse(apis.baseUrl + apis.getUsers);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<UserModel> _model = userModelFromJson(response.body);
+        return _model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+}
 // }
