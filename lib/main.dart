@@ -12,10 +12,10 @@ import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
 
-void main() => runApp(const Main());
+void main() => runApp(const SkoolWorkshopApp());
 
-class Main extends StatelessWidget {
-  const Main({Key? key}) : super(key: key);
+class SkoolWorkshopApp extends StatelessWidget {
+  const SkoolWorkshopApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class Main extends StatelessWidget {
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),
-        '/': (BuildContext context) => const SkoolWorkshopApp(),
+        '/': (BuildContext context) => const HomePage(),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
         '/profile' : (BuildContext context) => const singleProfilePage(),

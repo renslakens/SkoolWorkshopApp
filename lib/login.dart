@@ -4,6 +4,8 @@ import 'Model/loginModel.dart';
 import 'api_service.dart';
 import 'app.dart';
 import 'colors.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
   Future<loginModel>? _futureLogin;
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
@@ -40,13 +42,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 120.0),
             TextField(
-                controller: _emailController,
+                controller: _usernameController,
                 cursorColor: mainColor,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: Theme.of(context).textTheme.bodyText1,
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide: const BorderSide(color: mainColor)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                 )),
             const SizedBox(height: 12.0),
             TextField(
@@ -56,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: 'Wachtwoord',
                 labelStyle: Theme.of(context).textTheme.bodyText1,
-                focusedBorder: const UnderlineInputBorder(
-                    borderSide: const BorderSide(color: mainColor)),
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+
                 suffixIcon: IconButton(
                   icon: Icon(
                     Icons.remove_red_eye,
@@ -73,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 50, // <-- SEE HERE
             ),
             ElevatedButton(
+
               onPressed: () {
                 _handleRegister();
                 // Navigator.pop(context);
@@ -86,16 +88,14 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
-              child:
-                  Text('Log in', style: Theme.of(context).textTheme.bodyText2),
+
+              child: Text('Log in', style: Theme.of(context).textTheme.bodyText2),
             ),
             ElevatedButton(
               child: Text('Registreer',
                   style: Theme.of(context).textTheme.bodyText2),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -105,61 +105,47 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
               ),
+
             ),
           ],
         ),
+
       ),
     );
   }
 
   Future<void> _handleRegister() async {
-    if (!(_emailController.text.toString().contains("@"))) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldige email'),
-        backgroundColor: errorColor,
-      ));
-    } else if (!(_passwordController.text.length > 7)) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldig wachtwoord'),
-        backgroundColor: errorColor,
-      ));
-    } else {
-      _futureLogin = apiLogin(context, _emailController.text.toString(),
-          _passwordController.text.toString());
-      print("loginDetails: " +
-          _emailController.text +
-          ', ' +
-          _passwordController.text);
+    _futureLogin = apiLogin(_usernameController.text.toString(), _passwordController.text.toString());
+    print("loginDetails: " + _usernameController.text + ', ' + _passwordController.text);
 
-      future:
-      _futureLogin;
+    future: _futureLogin;
 
-      loginModel res = await apiLogin(
-          context, _emailController.text, _passwordController.text);
+      loginModel res = await apiLogin(_usernameController.text, _passwordController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      print("token: " + res.result.token);
+    print("token: " + res.result.token);
 
-      //   //checks if there is no error in the response body.
-      //   //if error is not present, navigate the users to Login Screen.
+
+    //   //checks if there is no error in the response body.
+    //   //if error is not present, navigate the users to Login Screen.
       if (res.result.token != null) {
+
         if (res.result.isAccepted == 0) {
           Navigator.pushReplacementNamed(context, '/awaiting');
-        } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const SkoolWorkshopApp()));
+        }else{
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const SkoolWorkshopApp()));
         }
       } else {
         //if error is present, display a snackbar showing the error messsage
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: '),
-          backgroundColor: errorColor,
+          backgroundColor: Colors.red.shade300,
         ));
       }
     }
   }
-}
+
+
+
+

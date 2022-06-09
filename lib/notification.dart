@@ -13,7 +13,7 @@ class NotificationPage extends StatelessWidget {
     return ListView.builder(
       itemCount: userDes.length,
       itemBuilder: (context, index) {
-        return Card(
+        return   Card(
           child: OverflowBar(
             children: <Widget>[
               Column(
