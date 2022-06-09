@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/Model/workShopDetailModel.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
+import 'package:skoolworkshop/workshopDetail.dart';
 
 import 'app.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
 
-void main() => runApp(const SkoolWorkshopApp());
+void main() => runApp(const Main());
 
-class SkoolWorkshopApp extends StatelessWidget {
-  const SkoolWorkshopApp({Key? key}) : super(key: key);
+class Main extends StatelessWidget {
+  const Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +22,11 @@ class SkoolWorkshopApp extends StatelessWidget {
       theme: customLightTheme(),
       initialRoute: '/login',
       routes: {
+        '/workshop' : (BuildContext context) => workShopDetail(),
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),
-        '/': (BuildContext context) => const HomePage(),
+        '/': (BuildContext context) => const SkoolWorkshopApp(),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
       },
     );
