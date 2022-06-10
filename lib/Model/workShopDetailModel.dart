@@ -28,29 +28,21 @@ class workshopDetail {
 
 class Result {
   String naam;
-  DateTime startTijd;
-  DateTime eindTijd;
   String beschrijving;
 
 
   Result({
     required this.naam,
-    required this.startTijd,
-    required this.eindTijd,
     required this.beschrijving
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     naam: json['naam'] ?? "na",
-    startTijd: json['startTijd'] ?? "na",
-    eindTijd: json['eindTijd'] ?? "na",
     beschrijving: json['beschrijving'] ?? "na",
   );
 
   Map<String, dynamic> toJson() => {
     "naam": naam,
-    "startTijd": startTijd,
-    "eindTijd": eindTijd,
     "beschrijving": beschrijving,
   };
 }
