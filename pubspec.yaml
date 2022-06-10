@@ -30,6 +30,7 @@ dependencies:
   dio: any
   retrofit: any
   http: any
+  blobs: ^2.0.0
   built_value: any
   json_annotation: any
   flutter:

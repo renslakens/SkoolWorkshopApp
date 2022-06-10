@@ -36,7 +36,7 @@ class WorkshopWidget extends StatelessWidget {
                     //TODO: Docent weigert workshop, moet uit zijn eigen lijst verdwijnen
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
+                    primary: errorColor,
                   ),
                   child: const Icon(Icons.clear),
                 ),

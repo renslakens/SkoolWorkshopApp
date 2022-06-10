@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
+import 'package:skoolworkshop/profiles.dart';
 import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 
@@ -18,13 +19,14 @@ class Main extends StatelessWidget {
     return MaterialApp(
       title: 'SkoolWorkshop',
       theme: customLightTheme(),
-      initialRoute: '/login',
+      initialRoute: '/profiles',
       routes: {
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),
         '/': (BuildContext context) => const SkoolWorkshopApp(),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
+        '/profiles': (BuildContext context) => const ProfilePage(),
       },
     );
   }

@@ -1,4 +1,11 @@
+import 'dart:convert';
+//import 'dart:html';
+
+//import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+//import 'package:open_file/open_file.dart';
 import 'colors.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -91,6 +98,19 @@ List<Step> stepList() => [
             labelText: 'Pin Code',
           ),
         ),
+          const SizedBox(
+            height: 8,
+          ),
+
+          //TODO: File picker naar ander scherm verplaatsen
+          //Pick file
+          ElevatedButton(onPressed: () async {
+            //final result = await FilePicker.platform.pickFiles();
+            // if(result == null) return;
+            // final file = result.files.first;
+            //TODO: File naar api sturen die het in datase zet
+            //Blob blob = new Blob(await file.bytes);
+          }, child: Icon(Icons.file_upload))
       ],
     ),
   )),
@@ -152,88 +172,38 @@ List<Step> stepList() => [
       ),
     );
   }
+
+  // void openFile(PlatformFile file) {
+  //   OpenFile.open(file.path!);
+  // }
+  //
+  // upload(PlatformFile file) async {
+  //   // open a bytestream
+  //   //var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
+  //
+  //   // get file length
+  //   var length = await file.size;
+  //
+  //   // string to uri
+  //   var uri = Uri.parse("http://ip:8082/composer/predict");
+  //
+  //   // create multipart request
+  //   var request = new http.MultipartRequest("POST", uri);
+  //
+  //   // multipart that takes file
+  //   //var multipartFile = new http.MultipartFile('file', stream, length, filename: basename(file.path));
+  //
+  //   // add file to multipart
+  //   //request.files.add(multipartFile);
+  //
+  //   // send
+  //   var response = await request.send();
+  //   print(response.statusCode);
+  //
+  //   // listen for response
+  //   response.stream.transform(utf8.decoder).listen((value) {
+  //     print(value);
+  //   });
+  // }
 }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('register'),
-  //     ),
-  //     body: SafeArea(
-  //       child: ListView(
-  //         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-  //         children: <Widget>[
-  //
-  //           const SizedBox(height:35.0),
-  //           Image.asset('assets/images/Skool-Workshop_Logo.png'),
-  //
-  //           const SizedBox(height: 60.0),
-  //           TextField(
-  //             controller: _nameController,
-  //             cursorColor: mainColor,
-  //             decoration: InputDecoration(
-  //               labelText: 'Voornaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Achternaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'E-mail',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             obscureText: !this._showPassword,
-  //             decoration: InputDecoration(
-  //               labelText: 'Wachtwoord',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //
-  //               suffixIcon: IconButton(
-  //                 icon: Icon(
-  //                   Icons.remove_red_eye,
-  //                   color: this._showPassword ? Colors.blue : Colors.grey,
-  //                 ),
-  //                 onPressed: () {
-  //                   setState(() => this._showPassword = !this._showPassword);
-  //                 },
-  //               ),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 50.0),
-  //           ElevatedButton(
-  //             child: const Text('Terug'),
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             style: ElevatedButton.styleFrom(
-  //               elevation: 8.0,
-  //               primary: mainColor,
-  //               shape: const RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.all(Radius.circular(100.0)),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-// }
