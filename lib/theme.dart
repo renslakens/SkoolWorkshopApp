@@ -15,6 +15,11 @@ ThemeData customLightTheme() {
         color: OswaldColor,
         fontWeight: FontWeight.bold,
       ),
+      headline3: base.headline3?.copyWith(
+        fontFamily: 'Heebo',
+        fontSize: 22.0,
+        color: OswaldColor,
+      ),
       bodyText1: base.bodyText1?.copyWith(
         fontFamily: 'Heebo',
         fontSize: 17.0,
