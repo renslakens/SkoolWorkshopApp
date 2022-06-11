@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/colors.dart';
 import 'package:skoolworkshop/profiles.dart';
 
 import 'Widgets/profile_widget.dart';
@@ -39,6 +40,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
             color: Colors.black,
           ),
           const SizedBox(height: 8),
+          buildInfo(),
         ],
       ),
     );
@@ -54,6 +56,37 @@ class _singleProfilePageState extends State<singleProfilePage> {
             height: 4,
           ),
           Text("Emailadres", style: Theme.of(context).textTheme.bodyText1)
+        ],
+      );
+
+  buildInfo() => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("Docent informatie",
+              style: Theme.of(context).textTheme.headline3),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("",
+                      style: Theme.of(context).textTheme.bodyText1)
+                ],
+              ),
+              Column(
+                children: [
+                  Text("", style: Theme.of(context).textTheme.bodyText1)
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
         ],
       );
 }
