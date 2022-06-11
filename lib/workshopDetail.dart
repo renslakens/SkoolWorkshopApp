@@ -1,64 +1,103 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/Model/loginModel.dart';
-import 'package:skoolworkshop/api_service.dart';
+import 'package:skoolworkshop/apis.dart';
 import 'colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/colors.dart';
 
-class workShopDetail extends StatefulWidget {
-  workShopDetail({Key? key}) : super(key: key);
 
-  @override
-  State<workShopDetail> createState() => _workshopDetail();
-}
+class WorkshopWidget extends StatelessWidget {
 
-class _workshopDetail extends State<workShopDetail> {
-  Dio? dio;
-  loginModel? _workshop;
+  WorkshopWidget({Key? key}) : super(key: key);
 
-  @override
-  void initState() {
-    super.initState();
-    BaseOptions options = BaseOptions(baseUrl: 'https://api.github.com/');
-    dio = Dio(options);
-    _getData();
+  final String apiUrl = apis.baseUrl + apis.getWorkshopDetail + "1";
+
+  Future<List<dynamic>> fetchUsers() async {
+
+    var result = await http.get(Uri.parse(apiUrl));
+    print(result.body);
+    return json.decode(result.body)['result'];
+
   }
 
-  void _getData() async {
-    _workshop = (await apiLogin(context, 'niek@gmail.com', '1DIWWeee!!'));
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  String _naam(dynamic workshop){
+    return workshop['naam'] ?? "Onbekende workshop";
   }
+
+  String _beschrijving(dynamic workshop){
+    return workshop['beschrijving'] ?? "Geen beschrijving meegegeven";
+  }
+
+  int _aantalDocenten(dynamic job){
+    return job['aantalDocenten'] ?? 0;
+  }
+
+  int _salarisIndicatie(dynamic job){
+    return job['salarisIndicatie'] ?? 0;
+  }
+
+  DateTime _startTijd(dynamic job){
+    // print(job['startTijd'].toString());
+    return job['startTijd'] ?? 0;
+  }
+
+  DateTime _eindTijd(dynamic job){
+    return job['eindTijd'] ?? 0;
+  }
+
+  // DateTime _naamLocatie(dynamic location){
+  //   // print(job['startTijd'].toString());
+  //   return location[''] ?? 0;
+  // }
+
+  String _land(dynamic location){
+    return location['land'] ?? "Niet opgegeven";
+  }
+
+  String _postcode(dynamic location){
+    return location['postcode'] ?? "Niet opgegeven";
+  }
+  String _straat(dynamic location){
+    return location['straat'] ?? "Niet opgegeven";
+  }
+
+  String _huisnummer(dynamic location){
+    return location['huisnummer'] ?? "Niet opgegeven";
+  }
+
+  String _plaats(dynamic location){
+    return location['plaats'] ?? "Niet opgegeven";
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Workshop'),
-        backgroundColor: mainColor,
-      ),
-      body: _workshop == null
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
+    return FutureBuilder<List<dynamic>>(
 
+      future: fetchUsers(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return PageView.builder(
 
-          :PageView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return SingleChildScrollView(
-
-              child: Column(children: <Widget>[
+              // padding: const EdgeInsets.all(8),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return
+                  Column(children: <Widget>[
               Row(
                 //ROW 1
                 children: [
                   Container(
                       margin: EdgeInsets.only(left: 25.0, top: 25.0),
                       child: Text(
-                        _workshop?.status.toString() ?? 'Naam workshop',
+                        _naam(snapshot.data[index]).toString(),
                         style: Theme.of(context).textTheme.bodyText1)
                       )
-                ],
-              ),
-              Row(//ROW 2
+                ]
+                ),
+                Row(//ROW 2
                   children: <Widget>[
                     Flexible(
                       flex: 1,
@@ -68,8 +107,7 @@ class _workshopDetail extends State<workShopDetail> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Beschrijving: \n'
-                              'Tijdens deze workshop wordt er gewerkt en aandacht gegeven aan de Big 5! Doorzettingsvermogen, Durven, Overwinnen, Respect en Zelfvertrouwen. Jij zorgt ervoor dat deze materialen worden meegenomen: \n\n -Kickbokshandschoenen \n -Stootkussens \n -Trapkussens \n -Pads \n *Geluidsbox mag eventueel ook mee',
+                              _beschrijving(snapshot.data[index]).toString(),
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ),
@@ -95,7 +133,8 @@ class _workshopDetail extends State<workShopDetail> {
                                 children: [
                                   Icon(Icons.schedule),
                                   Text(
-                                    'vrijdag 7-9',
+                                    "d",
+                                    // _startTijd(snapshot.data[index]).toString(),
                                     style: Theme.of(context).textTheme.bodyText1,
                                   ),
                                 ],
@@ -123,9 +162,17 @@ class _workshopDetail extends State<workShopDetail> {
                                 children: [
                                   Icon(Icons.location_on),
                                   Text(
-                                        'Mars',
+                                        _plaats(snapshot.data[index]).toString()+ ", ",
                                     style: Theme.of(context).textTheme.bodyText1,
                                   ),
+                                  Text(
+                                      _straat(snapshot.data[index]).toString()+ " ",
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    _huisnummer(snapshot.data[index]).toString(),
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  )
                                 ],
                               )
                           ),
@@ -151,7 +198,7 @@ class _workshopDetail extends State<workShopDetail> {
                                 children: [
                                   Icon(Icons.euro),
                                   Text(
-                                    '150 euro',
+                                    _salarisIndicatie(snapshot.data[index]).toString(),
                                     style: Theme.of(context).textTheme.bodyText1,
                                   ),
                                 ],
@@ -183,30 +230,29 @@ class _workshopDetail extends State<workShopDetail> {
                     ),
                   ),
                 ),
-              Row(
-                children: <Widget>[
-                  SizedBox(height: 20,)
                 ],
-              ),
-
-              // Row(// ROW 3
-              //     children: [
-              //       Container(
-              //         color: Colors.orange,
-              //         margin: EdgeInsets.all(25.0),
-              //         child: FlutterLogo(
-              //           size: 190.0,
-              //         ),
-              //       ),
-              //     ]),
-            ])
-            );
-          },
-
-      ),
-
-
+                  );
+              });
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
 
+class WorkshopDetailPage extends StatelessWidget {
+  const WorkshopDetailPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        title: const Text('Workshop'),
+        automaticallyImplyLeading: false,
+      ),
+      body: WorkshopWidget(),
+    );
+  }
+}

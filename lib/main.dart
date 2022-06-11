@@ -22,7 +22,7 @@ class Main extends StatelessWidget {
       theme: customLightTheme(),
       initialRoute: '/workshop',
       routes: {
-        '/workshop' : (BuildContext context) => workShopDetail(),
+        '/workshop' : (BuildContext context) => WorkshopDetailPage(),
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),

@@ -3,6 +3,7 @@ class apis {
   static String login = '/api/auth/login';
   static String usersEndpoint = '/user';
   static String fileUpload = '/api/';
-    static String getWorkshopDetail = '/api/auth/login';
+    static String getWorkshopDetail = '/api/job/';
     static String getOpdracht = '/api/job';
+    static String profiles = '/api/user?isAccepted=1';
 }
