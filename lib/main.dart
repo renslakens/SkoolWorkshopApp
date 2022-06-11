@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/profiles.dart';
+import 'package:skoolworkshop/profileview.dart';
 import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 
@@ -27,6 +28,7 @@ class Main extends StatelessWidget {
         '/': (BuildContext context) => const SkoolWorkshopApp(),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
+        '/profile' : (BuildContext context) => const singleProfilePage(),
       },
     );
   }
