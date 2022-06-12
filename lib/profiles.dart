@@ -9,7 +9,7 @@ class ProfileWidget extends StatelessWidget {
 
   ProfileWidget({Key? key}) : super(key: key);
 
-  final String apiUrl = apis.baseUrl + apis.profiles;
+  final String apiUrl = apis.baseUrl + apis.acceptedProfiles;
 
   Future<List<dynamic>> fetchUsers() async {
 
@@ -18,9 +18,12 @@ class ProfileWidget extends StatelessWidget {
 
   }
 
+  String _id(dynamic user) {
+    return user['id'];
+  }
+
   String _naam(dynamic user){
     return user['naam'] + " " +  user['achternaam'];
-
   }
 
   String _emailadres(dynamic user){
