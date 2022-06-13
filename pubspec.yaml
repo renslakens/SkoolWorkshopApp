@@ -33,13 +33,17 @@ dependencies:
   blobs: ^2.0.0
   built_value: any
   json_annotation: any
+  #Adds rounded date picker plugin.
+  flutter_rounded_date_picker: 3.0.1
   flutter:
     sdk: flutter
+
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  multi_select_flutter: ^4.1.2
 
 dev_dependencies:
   retrofit_generator: any
