@@ -47,7 +47,7 @@ class ProfilePictureWidget extends StatelessWidget {
     child: buildCircle(
           color: color,
           all: 4,
-          child: Icon(
+          child: const Icon(
             Icons.edit,
             color: Colors.white,
             size: 20,
