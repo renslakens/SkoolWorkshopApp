@@ -56,18 +56,18 @@ import 'apis.dart';
       }
   }
 
-class ApiService {
-  Future<List<UserModel>?> getUsers() async {
-    try {
-      var url = Uri.parse(apis.baseUrl + apis.getUsers);
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        List<UserModel> _model = userModelFromJson(response.body);
-        return _model;
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-}
+// class ApiService {
+//
+//   Future<List<UserModel>> getUsers() async {
+//     try {
+//       var url = Uri.parse(apis.baseUrl + apis.getUsers);
+//       var response = await http.get(url);
+//       if (response.statusCode == 200) {
+//         List<UserModel> model = List<UserModel>.from( JsonResult['result'].map( (x) => UserModel.fromJson(x)));        return model;
+//       }
+//     } catch (e) {
+//       log(e.toString());
+//     }
+//   }
+// }
 // }

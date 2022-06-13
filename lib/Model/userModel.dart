@@ -1,17 +1,37 @@
-// To parse required this JSON data, do
+// To parse this JSON data, do
 //
-// final UserModel = userModelFromJson(jsonString);
+//     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
 
-List<UserModel> userModelFromJson(String str) =>
-    List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
-
-String userModelToJson(List<UserModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class UserModel {
   UserModel({
+    required this.status,
+    required this.result,
+  });
+
+  int status;
+  List result;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      UserModel(
+        status: json["status"] == null ? null : json["status"],
+        result: json["result"]
+      );
+
+  Map<String, dynamic> toJson() =>
+      {
+        "status": status == null ? null : status,
+        "result": result == null ? null : List<dynamic>.from(result.map((x) => x.toJson())),
+      };
+}
+
+class Result {
+
+  Result userModelFromJson(String str) => Result.fromJson(json.decode(str));
+  String userModelToJson(UserModel data) => json.encode(data.toJson());
+
+  Result({
     required this.docentId,
     required this.naam,
     required this.achternaam,
@@ -32,11 +52,12 @@ class UserModel {
     required this.isAccepted,
     this.isFlexwerker,
   });
+
   int docentId;
   String naam;
   String achternaam;
   String emailadres;
-  DateTime geboortedatum;
+  String geboortedatum;
   String geboorteplaats;
   dynamic maxRijafstand;
   dynamic heeftRijbewijs;
@@ -52,47 +73,53 @@ class UserModel {
   int isAccepted;
   dynamic isFlexwerker;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        docentId: json["docentID"],
-        naam: json["naam"],
-        achternaam: json["achternaam"],
-        emailadres: json["emailadres"],
-        geboortedatum: DateTime.parse(json["geboortedatum"]),
-        geboorteplaats: json["geboorteplaats"],
+  factory Result.fromJson(Map<String, dynamic> json) =>
+      Result(
+        docentId: json["docentID"] == null ? null : json["docentID"],
+        naam: json["naam"] == null ? null : json["naam"],
+        achternaam: json["achternaam"] == null ? null : json["achternaam"],
+        emailadres: json["emailadres"] == null ? null : json["emailadres"],
+        geboortedatum: json["geboortedatum"] == null ? null : (json["geboortedatum"]),
+        geboorteplaats: json["geboorteplaats"] == null
+            ? null
+            : json["geboorteplaats"],
         maxRijafstand: json["maxRijafstand"],
         heeftRijbewijs: json["heeftRijbewijs"],
         heeftAuto: json["heeftAuto"],
-        straat: json["straat"],
-        huisnummer: json["huisnummer"],
-        geslacht: json["geslacht"],
-        nationaliteit: json["nationaliteit"],
-        woonplaats: json["woonplaats"],
-        postcode: json["postcode"],
-        land: json["land"],
-        wachtwoord: json["wachtwoord"],
-        isAccepted: json["isAccepted"],
+        straat: json["straat"] == null ? null : json["straat"],
+        huisnummer: json["huisnummer"] == null ? null : json["huisnummer"],
+        geslacht: json["geslacht"] == null ? null : json["geslacht"],
+        nationaliteit: json["nationaliteit"] == null
+            ? null
+            : json["nationaliteit"],
+        woonplaats: json["woonplaats"] == null ? null : json["woonplaats"],
+        postcode: json["postcode"] == null ? null : json["postcode"],
+        land: json["land"] == null ? null : json["land"],
+        wachtwoord: json["wachtwoord"] == null ? null : json["wachtwoord"],
+        isAccepted: json["isAccepted"] == null ? null : json["isAccepted"],
         isFlexwerker: json["isFlexwerker"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "docentID": docentId,
-        "naam": naam,
-        "achternaam": achternaam,
-        "emailadres": emailadres,
-        "geboortedatum": geboortedatum.toIso8601String(),
-        "geboorteplaats": geboorteplaats,
+  Map<String, dynamic> toJson() =>
+      {
+        "docentID": docentId == null ? null : docentId,
+        "naam": naam == null ? null : naam,
+        "achternaam": achternaam == null ? null : achternaam,
+        "emailadres": emailadres == null ? null : emailadres,
+        "geboortedatum": geboortedatum == null ? null : geboortedatum,
+        "geboorteplaats": geboorteplaats == null ? null : geboorteplaats,
         "maxRijafstand": maxRijafstand,
         "heeftRijbewijs": heeftRijbewijs,
         "heeftAuto": heeftAuto,
-        "straat": straat,
-        "huisnummer": huisnummer,
-        "geslacht": geslacht,
-        "nationaliteit": nationaliteit,
-        "woonplaats": woonplaats,
-        "postcode": postcode,
-        "land": land,
-        "wachtwoord": wachtwoord,
-        "isAccepted": isAccepted,
+        "straat": straat == null ? null : straat,
+        "huisnummer": huisnummer == null ? null : huisnummer,
+        "geslacht": geslacht == null ? null : geslacht,
+        "nationaliteit": nationaliteit == null ? null : nationaliteit,
+        "woonplaats": woonplaats == null ? null : woonplaats,
+        "postcode": postcode == null ? null : postcode,
+        "land": land == null ? null : land,
+        "wachtwoord": wachtwoord == null ? null : wachtwoord,
+        "isAccepted": isAccepted == null ? null : isAccepted,
         "isFlexwerker": isFlexwerker,
       };
 }
