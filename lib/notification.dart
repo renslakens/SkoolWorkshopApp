@@ -48,7 +48,7 @@ class NotificationPage extends StatelessWidget {
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
                           title: Text(_naam(snapshot.data[index])),
-                          subtitle: Text(_emailadres(snapshot.data[index])),
+                          subtitle: Text(_emailadres(snapshot.data[index]) + "\n" + _geboortedatum(snapshot.data[index])),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -86,9 +86,6 @@ class NotificationPage extends StatelessWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +97,6 @@ class ProfilePage extends StatelessWidget {
       body: NotificationPage(),
     );
   }
-}
 
 
 // import 'dart:convert';
