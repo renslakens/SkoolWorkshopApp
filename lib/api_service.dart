@@ -50,6 +50,27 @@ Future<loginModel> login(
   }
 }
 
+Future<workshopDetail> getWorkshopDetail(String id) async {
+  final reponse = await http.post(
+    Uri.parse(apis.baseUrl + apis.getWorkshopDetail + id),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+  if (reponse.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    print("test");
+    return workshopDetail.fromJson(jsonDecode(reponse.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    print(reponse.statusCode);
+    // return errorFile.fromJson(jsonDecode(reponse.body));
+    throw Exception('Failed to create album.');
+  }
+}
+
 uploadFile(String filePath) async {
   var file = http.MultipartFile.fromBytes(
       'file', await File.fromUri(Uri.parse(filePath)).readAsBytes());

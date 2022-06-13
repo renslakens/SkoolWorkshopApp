@@ -46,6 +46,7 @@ dev_dependencies:
   build_runner: any
   built_value_generator: any
   json_serializable: any
+  intl: ^0.17.0
   flutter_test:
     sdk: flutter
 

@@ -6,4 +6,7 @@ class apis {
   static String acceptedProfiles = '/api/user?isAccepted=1';
   static String deleteProfile = '/api/user/';
   static String jobs = '/api/job/';
+    static String getWorkshopDetail = '/api/job/';
+    static String getOpdracht = '/api/job';
+    static String profiles = '/api/user?isAccepted=1';
 }

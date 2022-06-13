@@ -21,7 +21,7 @@ class loginModel {
 
 
   factory loginModel.fromJson(Map<String, dynamic> json) => loginModel(
-      status: json['status'] ?? "na",
+      status: json['status'] ?? 999,
       message: json['message'] ?? "na",
       result: Result.fromJson(json["result"]),
       // naam: json['naam'],
@@ -56,7 +56,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
       token: json['token'] ?? "na",
-      isAccepted: json['isAccepted'] ?? "na",
+      isAccepted: json['isAccepted'] ?? 99,
   );
 
   Map<String, dynamic> toJson() => {
