@@ -6,6 +6,17 @@ ThemeData customLightTheme() {
     return base.copyWith(
       headline1: base.headline1?.copyWith(
         fontFamily: 'Oswald',
+        fontSize: 28.0,
+        color: OswaldColor,
+      ),
+      headline2: base.headline2?.copyWith(
+        fontFamily: 'Heebo',
+        fontSize: 24.0,
+        color: OswaldColor,
+        fontWeight: FontWeight.bold,
+      ),
+      headline3: base.headline3?.copyWith(
+        fontFamily: 'Heebo',
         fontSize: 22.0,
         color: OswaldColor,
       ),
