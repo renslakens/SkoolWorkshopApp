@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/notification.dart';
+import 'package:skoolworkshop/profileview.dart';
 
 import 'colors.dart';
 import 'home.dart';
@@ -23,7 +24,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     awaitingProfile(),
     awaitingProfile(),
     NotificationPage(),
-    LoginPage(),
+    singleProfilePage(),
   ];
 
   @override
