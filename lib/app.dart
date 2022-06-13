@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/colors.dart';
 import 'package:skoolworkshop/notification.dart';
 import 'package:skoolworkshop/register.dart';
 
@@ -27,3 +28,4 @@ class SkoolWorkshopApp extends StatelessWidget {
 }
 
 //Themas hieronder plaatsen
+
