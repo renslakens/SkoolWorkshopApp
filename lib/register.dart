@@ -7,11 +7,20 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:skoolworkshop/Model/registerModel.dart';
+import 'package:skoolworkshop/api_service.dart';
 //import 'package:open_file/open_file.dart';
+import 'app.dart';
 import 'colors.dart';
+import 'package:intl/intl.dart';
+
+import 'login.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
+
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -67,6 +76,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
+  Future<registerModel>? _futureRegister;
+  final DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
+  String? formattedDate;
+
   int _activeCurrentStep = 0;
   String? gender;
   String? drivers_liscence;
@@ -83,6 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _pincodeController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
+  final _kvkNumberController = TextEditingController();
+  final _btwNumberController = TextEditingController();
 
   List<Step> stepList() => [
     Step(
@@ -233,11 +248,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       initialDate:DateTime.now(),
                       firstDate:DateTime(1900),
                       lastDate: DateTime(2100),
-                      // helpText: 'Select birth date',
-                      // cancelText: 'poep',
-                      // confirmText: 'Confirm',
+                      helpText: 'Selecteer geboortedatum',
+                      cancelText: 'Annuleer',
+                      confirmText: 'Bevestig',
                   );
-                  _birthDateController.text = date.toString().substring(0,10);
+                  // _birthDateController.text = date.toString().substring(0,10);
+                  DateTime _birthDateController = DateTime.now();
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(_birthDateController);
                 },
               ),
               const SizedBox(
@@ -302,7 +319,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _addressController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Straat + nr.',
@@ -315,7 +331,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _pincodeController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Postcode',
@@ -328,7 +343,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _cityController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Woonplaats',
@@ -341,7 +355,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _countryController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Land',
@@ -376,7 +389,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 TextField(
-                  controller: _countryController,
+                  controller: _kvkNumberController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -389,7 +402,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 TextField(
-                  controller: _countryController,
+                  controller: _btwNumberController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -465,7 +478,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "male",
+                      value: "Yes",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -477,7 +490,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "female",
+                      value: "No",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -499,7 +512,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "male",
+                      value: "Yes",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -511,7 +524,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "female",
+                      value: "No",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -585,6 +598,8 @@ class _RegisterPageState extends State<RegisterPage> {
             setState(() {
               _activeCurrentStep += 1;
             });
+          }else{
+              _handleRegister();
           }
         },
 
@@ -609,88 +624,45 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-}
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('register'),
-  //     ),
-  //     body: SafeArea(
-  //       child: ListView(
-  //         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-  //         children: <Widget>[
-  //
-  //           const SizedBox(height:35.0),
-  //           Image.asset('assets/images/Skool-Workshop_Logo.png'),
-  //
-  //           const SizedBox(height: 60.0),
-  //           TextField(
-  //             controller: _nameController,
-  //             cursorColor: mainColor,
-  //             decoration: InputDecoration(
-  //               labelText: 'Voornaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Achternaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'E-mail',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             obscureText: !this._showPassword,
-  //             decoration: InputDecoration(
-  //               labelText: 'Wachtwoord',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //
-  //               suffixIcon: IconButton(
-  //                 icon: Icon(
-  //                   Icons.remove_red_eye,
-  //                   color: this._showPassword ? Colors.blue : Colors.grey,
-  //                 ),
-  //                 onPressed: () {
-  //                   setState(() => this._showPassword = !this._showPassword);
-  //                 },
-  //               ),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 50.0),
-  //           ElevatedButton(
-  //             child: const Text('Terug'),
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             style: ElevatedButton.styleFrom(
-  //               elevation: 8.0,
-  //               primary: mainColor,
-  //               shape: const RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.all(Radius.circular(100.0)),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+  Future<void> _handleRegister() async {
+    _futureRegister = apiRegister(context, _firstNameController.text.toString(), _lastNameController.text.toString(), _emailController.text.toString(),
+    _passwordController.text.toString(), gender.toString(), formattedDate.toString(), _birthPlaceController.text.toString(), _mobilePhoneController.text.toString(), _addressController.text.toString(), _pincodeController.text.toString(), _cityController.text.toString(), _countryController.text.toString(), _kvkNumberController.text.toString(), _btwNumberController.text.toString(), drivers_liscence.toString(), car.toString());
+    print("loginDetails: " +
+    _emailController.text +
+    ', ' +
+    _passwordController.text);
+
+    future:
+    _futureRegister;
+
+    registerModel res = await apiRegister(
+    context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), formattedDate.toString(), _birthPlaceController.text, _mobilePhoneController.text, _addressController.text, _pincodeController.text, _cityController.text, _countryController.text, _kvkNumberController.text, _btwNumberController.text, drivers_liscence.toString(), car.toString());
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    //   //checks if there is no error in the response body.
+    //   //if error is not present, navigate the users to Login Screen.
+
+    {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => const LoginPage()));
+    }
+    {
+    //if error is present, display a snackbar showing the error messsage
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text('Error: '),
+    backgroundColor: errorColor,
+    ));
+    }
+
+  }
+  }
+
+// class DateFormat {
+//   DateFormat(String s);
+//
+//   String format(TextEditingController birthDateController) {}
 // }
+

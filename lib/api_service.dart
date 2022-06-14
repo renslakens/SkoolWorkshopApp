@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:skoolworkshop/Model/loginModel.dart';
+import 'package:skoolworkshop/Model/registerModel.dart';
 import 'package:skoolworkshop/Model/userModel.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'apis.dart';
@@ -118,6 +119,57 @@ Future<loginModel> apiLogin(
       ScaffoldMessenger.of(context).clearSnackBars();
       print(reponse.statusCode);
       return loginModel.fromJson(jsonDecode(reponse.body));
+    case 401:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldig wachtwoord'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception('Invalid password');
+    case 404:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldige email'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception('Could not find emailaddress');
+    default:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalide gegevens'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception("Could not log in");
+  }
+}
+
+Future<registerModel> apiRegister(
+    BuildContext context, String firstName, String lastName, String email, String wachtwoord, String gender,
+    String birthDate, String birthPlace, String mobilePhone, String adres, String pincode, String city, String country,
+    String kvk_number, String btw_number, String drivers_liscence, String car_possesion) async {
+  final reponse = await http
+      .post(
+    Uri.parse(apis.baseUrl + apis.register),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'voornaam': firstName, 'achternaam': lastName, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': gender, 'geboortedatum': birthDate, 'geboorteplaats': birthPlace, 'mobiele telefoonnummer': mobilePhone, 'straat + nr.': adres, 'postcode': pincode, 'woonplaats': city, 'land': country, 'kvk-nummer': kvk_number, 'btw-nummer': btw_number, 'rijbewijs?': drivers_liscence.toString(), 'in bezit van auto?': car_possesion.toString()}),
+  )
+      .catchError((onError) {
+    print(onError);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Kon geen verbinding maken'),
+      backgroundColor: errorColor,
+      duration: Duration(seconds: 30),
+    ));
+  });
+  switch (reponse.statusCode) {
+    case 201:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      print(reponse.statusCode);
+      return registerModel.fromJson(jsonDecode(reponse.body));
     case 401:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
