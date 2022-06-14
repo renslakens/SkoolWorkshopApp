@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/profileview.dart';
 
 class NotificationWidget extends StatefulWidget {
-
   const NotificationWidget({Key? key}) : super(key: key);
 
   @override
@@ -20,14 +20,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   final String acceptDocent = apis.baseUrl + apis.acceptDocent;
 
   Future<List<dynamic>> fetchUsers() async {
-
     var result = await http.get(Uri.parse(getUnAcceptedProfilesUrl));
     return json.decode(result.body)['result'];
-
   }
 
   Future deleteUser(String id) async {
-    http.Response response = await http.delete(Uri.parse(deleteProfileUrl + id));
+    http.Response response =
+        await http.delete(Uri.parse(deleteProfileUrl + id));
     if (response.statusCode == 200) {
       print("Deleted");
     } else {
@@ -46,15 +45,15 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return user['docentID'];
   }
 
-  String _naam(dynamic user){
-    return user['naam'] + " " +  user['achternaam'];
+  String _naam(dynamic user) {
+    return user['naam'] + " " + user['achternaam'];
   }
 
-  String _loginEmail(dynamic user){
+  String _loginEmail(dynamic user) {
     return user['loginEmail'];
   }
 
-  String _geboortedatum(dynamic user){
+  String _geboortedatum(dynamic user) {
     return "Geboortedatum: " + user['geboortedatum'].toString();
   }
 
@@ -68,7 +67,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               padding: const EdgeInsets.all(8),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                return Card(
+                return InkWell(
+                  child: Card(
                     child: Column(
                       children: <Widget>[
                         ListTile(
@@ -81,7 +81,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      acceptUser(_id(snapshot.data[index]).toString());
+                                      acceptUser(
+                                          _id(snapshot.data[index]).toString());
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -93,7 +94,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      deleteUser(_id(snapshot.data[index]).toString());
+                                      deleteUser(
+                                          _id(snapshot.data[index]).toString());
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -101,12 +103,17 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                   ),
                                   child: const Icon(Icons.clear),
                                 ),
-                              ]
-                          ),
+                              ]),
                         ),
                       ],
                     ),
-                  );
+                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const singleProfilePage()));
+                    //TODO Navigate to profiles page with _id(snapshot.data[index]).toString()
+                  },
+                );
+                ;
               });
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -131,4 +138,3 @@ class NotificationPage extends StatelessWidget {
     );
   }
 }
-
