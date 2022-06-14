@@ -19,17 +19,18 @@ class _singleProfilePageState extends State<singleProfilePage> {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        'Profiel',
-        style: Theme.of(context).textTheme.headline1,
-      )),
+            'Profiel',
+            style: Theme.of(context).textTheme.headline1,
+          ),
+          automaticallyImplyLeading: false),
       body: ListView(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(20),
         children: [
           ProfilePictureWidget(
             imagePath:
-                // "https://cdn.dribbble.com/users/113499/screenshots/12787572/media/3a8bf7d51271e03e8beaef830c5babf2.png?compress=1&resize=1600x1200&vertical=top"
-                "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg",
+                "https://cdn.dribbble.com/users/113499/screenshots/12787572/media/3a8bf7d51271e03e8beaef830c5babf2.png?compress=1&resize=1600x1200&vertical=top",
+            //"https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg",
             onClicked: () async {},
           ),
           const SizedBox(height: 12),
@@ -41,9 +42,9 @@ class _singleProfilePageState extends State<singleProfilePage> {
             thickness: 1,
             color: Colors.black,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           buildInfo(),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           const Divider(
             height: 20,
             thickness: 1,
@@ -81,12 +82,12 @@ class _singleProfilePageState extends State<singleProfilePage> {
                 Expanded(
                     child: Text(
                         "Geslacht: "
-                        "Vrouw "
-                        "Geboortedatum: "
+                        "Vrouw\n"
+                        "Geboortedatum:\n"
                         "01-01-2000",
                         style: Theme.of(context).textTheme.bodyText1)),
                 Expanded(
-                    child: Text("Rijbewijs: " "Ja         " "Auto: " "Nee",
+                    child: Text("Rijbewijs: " "Ja\n" "Auto: " "Nee",
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),
@@ -98,21 +99,18 @@ class _singleProfilePageState extends State<singleProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    child: Text("Telefoonnummer: " "06-12345678",
+                    child: Text("Telefoonnummer:\n" "06-12345678",
                         style: Theme.of(context).textTheme.bodyText1)),
                 Expanded(
                     child: Text(
                         "Adres: "
-                        "straat  "
+                        "straat\n"
                         "nr "
                         "postcode "
                         "woonplaats",
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),
-            const SizedBox(
-              height: 10,
-            )
           ],
         ),
       );

@@ -4,11 +4,13 @@ import 'package:skoolworkshop/colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
   final String imagePath;
+  final bool isEdit;
   final VoidCallback onClicked;
 
   const ProfilePictureWidget({
     Key? key,
     required this.imagePath,
+    this.isEdit = false,
     required this.onClicked,
   }) : super(key: key);
 
@@ -47,10 +49,10 @@ class ProfilePictureWidget extends StatelessWidget {
     child: buildCircle(
           color: color,
           all: 4,
-          child: const Icon(
-            Icons.edit,
+          child: Icon(
+            isEdit ? Icons.add_a_photo : Icons.edit,
             color: Colors.white,
-            size: 20,
+            size: isEdit ? 15 : 20,
           ),
         ),
   );
