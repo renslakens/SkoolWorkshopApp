@@ -13,6 +13,10 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  String? gender;
+  String? rijbewijs;
+  String? auto;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,14 +97,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       text: "06-12345678",
                       onChanged: (telefoonnummer) {}),
                 ),
-                const SizedBox(width: 30),
+                const SizedBox(width: 28),
                 Expanded(
-                  child: TextFieldWidget(
-                      label: 'Geslacht',
-                      text: "Something",
-                      onChanged: (Geslacht) {}),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Geslacht",
+                          style: Theme.of(context).textTheme.headline4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: 1,
+                              groupValue: gender,
+                              onChanged: (geslacht) {}),
+                          Text(
+                            'Vrouw',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: "Man",
+                              groupValue: gender,
+                              onChanged: (geslacht) {}),
+                          Text('Man',
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 20),
               ],
             ),
             Row(
@@ -162,17 +192,71 @@ class _EditProfilePageState extends State<EditProfilePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: TextFieldWidget(
-                      label: 'In bezit van rijbewijs?',
-                      text: "Something",
-                      onChanged: (rijbewijs) {}),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("In bezit van rijbewijs?",
+                          style: Theme.of(context).textTheme.headline4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: 1,
+                              groupValue: rijbewijs,
+                              onChanged: (rijbewijs) {}),
+                          Text(
+                            'Ja',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: 0,
+                              groupValue: rijbewijs,
+                              onChanged: (rijbewijs) {}),
+                          Text('Nee',
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
-                  child: TextFieldWidget(
-                      label: 'In bezit van auto?',
-                      text: "Something",
-                      onChanged: (rijbewijs) {}),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("In bezit van een auto?",
+                          style: Theme.of(context).textTheme.headline4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: 1,
+                              groupValue: auto,
+                              onChanged: (auto) {}),
+                          Text(
+                            'Ja',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                              value: 0,
+                              groupValue: auto,
+                              onChanged: (auto) {}),
+                          Text('Nee',
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 20),
               ],
