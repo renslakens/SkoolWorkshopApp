@@ -1,26 +1,45 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
 
-  ProfileWidget({Key? key}) : super(key: key);
+  const ProfileWidget({Key? key}) : super(key: key);
 
-  final String apiUrl = apis.baseUrl + apis.profiles;
+  @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends State<ProfileWidget> {
+  final String getAcceptedProfilesUrl = apis.baseUrl + apis.acceptedProfiles;
+  final String deleteProfileUrl = apis.baseUrl + apis.deleteProfile;
 
   Future<List<dynamic>> fetchUsers() async {
 
-    var result = await http.get(Uri.parse(apiUrl));
-    return json.decode(result.body)['results'];
+    var result = await http.get(Uri.parse(getAcceptedProfilesUrl));
+    return json.decode(result.body)['result'];
 
+  }
+
+  Future deleteUser(String id) async {
+    http.Response response = await http.delete(Uri.parse(deleteProfileUrl + id));
+    if (response.statusCode == 200) {
+      print("Deleted");
+    } else {
+      throw "Sorry! Unable to delete this post.";
+    }
+  }
+
+  int _id(dynamic user) {
+    return user['docentID'];
   }
 
   String _naam(dynamic user){
     return user['naam'] + " " +  user['achternaam'];
-
   }
 
   String _emailadres(dynamic user){
@@ -47,7 +66,7 @@ class ProfileWidget extends StatelessWidget {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_naam(snapshot.data[index])),
+                          title: Text(_naam(snapshot.data[index]).toString()),
                           subtitle: Text(_emailadres(snapshot.data[index])),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -64,7 +83,9 @@ class ProfileWidget extends StatelessWidget {
                                 const SizedBox(width: 8),
                                 ElevatedButton(
                                   onPressed: () {
-                                    //TODO: Docent verwijdert de user
+                                    setState(() {
+                                      deleteUser(_id(snapshot.data[index]).toString());
+                                    });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: errorColor,
