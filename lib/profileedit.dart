@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:skoolworkshop/main.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:skoolworkshop/colors.dart';
 
 import 'Widgets/profile_widget.dart';
 import 'Widgets/textfield_widget.dart';
@@ -12,10 +14,81 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
+class Workshop {
+  final int id;
+  final String name;
+
+  Workshop({
+    required this.id,
+    required this.name,
+  });
+}
+
+class Target {
+  final int id;
+  final String target;
+
+  Target({
+    required this.id,
+    required this.target,
+  });
+}
+
 class _EditProfilePageState extends State<EditProfilePage> {
   String? gender;
   String? rijbewijs;
   String? auto;
+
+  static final List<Workshop> _workshops = [
+    Workshop(id: 1, name: "Bootcamp"),
+    Workshop(id: 2, name: "Caribbean Drums"),
+    Workshop(id: 3, name: "Flashmob"),
+    Workshop(id: 4, name: "Ghetto Drums"),
+    Workshop(id: 5, name: "HipHop"),
+    Workshop(id: 6, name: "Light Graffiti"),
+    Workshop(id: 7, name: "Moderene Dans"),
+    Workshop(id: 8, name: "Pannavoetbal"),
+    Workshop(id: 9, name: "Photoshop"),
+    Workshop(id: 10, name: "Rap"),
+    Workshop(id: 11, name: "Smartphone Fotografie"),
+    Workshop(id: 12, name: "Soap Acteren"),
+    Workshop(id: 13, name: "Stage Fighting"),
+    Workshop(id: 14, name: "Streetdance"),
+    Workshop(id: 15, name: "Theatersport"),
+    Workshop(id: 16, name: "T-shirt Ontwewrpen"),
+    Workshop(id: 17, name: "Videoclip Maken"),
+    Workshop(id: 18, name: "Zelfverdediging"),
+    Workshop(id: 19, name: "Breakdance"),
+    Workshop(id: 20, name: "Dance-Fit"),
+    Workshop(id: 21, name: "Freerunning"),
+    Workshop(id: 22, name: "Graffiti"),
+    Workshop(id: 23, name: "Kickboksen"),
+    Workshop(id: 24, name: "Live Looping"),
+    Workshop(id: 25, name: "Percussie"),
+    Workshop(id: 26, name: "Popstar"),
+    Workshop(id: 27, name: "Stepping"),
+    Workshop(id: 28, name: "Stop Motion"),
+    Workshop(id: 29, name: "Vloggen"),
+  ];
+
+  final _workshopitems = _workshops
+      .map((workshop) => MultiSelectItem<Workshop>(workshop, workshop.name))
+      .toList();
+
+  static final List<Target> _targets = [
+    Target(id: 1, target: "BSO"),
+    Target(id: 2, target: "Primaire Onderwijs"),
+    Target(id: 3, target: "Voortgezet Onderwijs"),
+    Target(id: 4, target: "MBO en HBO"),
+    Target(id: 5, target: "Kinderfeestjes"),
+    Target(id: 6, target: "Vrijgezellenfeesten"),
+    Target(id: 7, target: "Bedrijfsuitjes/Teambuilding"),
+    Target(id: 8, target: "Speciaal Onderwijs"),
+  ];
+
+  final _targetitems = _targets
+      .map((target) => MultiSelectItem<Target>(target, target.target))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +129,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 20,
             thickness: 1,
             color: Colors.black,
-          )
+          ),
+          const SizedBox(height: 6),
+          buildWorkshopSelect(),
+          const SizedBox(height: 6),
+          buildTargetSelect(),
         ],
       ),
     );
@@ -108,9 +185,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: 1,
-                              groupValue: gender,
-                              onChanged: (geslacht) {}),
+                            activeColor: mainColor,
+                            value: "Vrouw",
+                            groupValue: gender,
+                            onChanged: (value) {
+                              setState(() {
+                                gender = value.toString();
+                              });
+                            },
+                          ),
                           Text(
                             'Vrouw',
                             style: Theme.of(context).textTheme.bodyText1,
@@ -121,9 +204,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: "Man",
-                              groupValue: gender,
-                              onChanged: (geslacht) {}),
+                            activeColor: mainColor,
+                            value: "Man",
+                            groupValue: gender,
+                            onChanged: (value) {
+                              setState(() {
+                                gender = value.toString();
+                              });
+                            },
+                          ),
                           Text('Man',
                               style: Theme.of(context).textTheme.bodyText1),
                         ],
@@ -195,15 +284,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("In bezit van rijbewijs?",
+                      Text("In bezit van een rijbewijs?",
                           style: Theme.of(context).textTheme.headline4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: 1,
-                              groupValue: rijbewijs,
-                              onChanged: (rijbewijs) {}),
+                            activeColor: mainColor,
+                            value: "Ja",
+                            groupValue: rijbewijs,
+                            onChanged: (value) {
+                              setState(() {
+                                rijbewijs = value.toString();
+                              });
+                            },
+                          ),
                           Text(
                             'Ja',
                             style: Theme.of(context).textTheme.bodyText1,
@@ -214,9 +309,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: 0,
-                              groupValue: rijbewijs,
-                              onChanged: (rijbewijs) {}),
+                            activeColor: mainColor,
+                            value: "Nee",
+                            groupValue: rijbewijs,
+                            onChanged: (value) {
+                              setState(() {
+                                rijbewijs = value.toString();
+                              });
+                            },
+                          ),
                           Text('Nee',
                               style: Theme.of(context).textTheme.bodyText1),
                         ],
@@ -235,9 +336,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: 1,
-                              groupValue: auto,
-                              onChanged: (auto) {}),
+                            activeColor: mainColor,
+                            value: "Ja",
+                            groupValue: auto,
+                            onChanged: (value) {
+                              setState(() {
+                                auto = value.toString();
+                              });
+                            },
+                          ),
                           Text(
                             'Ja',
                             style: Theme.of(context).textTheme.bodyText1,
@@ -248,9 +355,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Radio(
-                              value: 0,
-                              groupValue: auto,
-                              onChanged: (auto) {}),
+                            activeColor: mainColor,
+                            value: "Nee",
+                            groupValue: auto,
+                            onChanged: (value) {
+                              setState(() {
+                                auto = value.toString();
+                              });
+                            },
+                          ),
                           Text('Nee',
                               style: Theme.of(context).textTheme.bodyText1),
                         ],
@@ -264,4 +377,56 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ],
         ),
       );
+
+  buildWorkshopSelect() => Container(
+        padding: EdgeInsets.all(5),
+        child: MultiSelectDialogField(
+          items: _workshopitems,
+          title: Text("Workshops",style: Theme.of(context).textTheme.headline2),
+          selectedColor: mainColor,
+          decoration: BoxDecoration(
+            color: mainColor.withOpacity(0.1),
+            borderRadius: BorderRadius.all(Radius.circular(40)),
+            border: Border.all(
+              color: mainColor ,
+              width: 2,
+            ),
+          ),
+          buttonIcon: const Icon(
+            Icons.accessibility,
+            color: mainColor,
+          ),
+          buttonText: Text("Workshops die je wilt geven",
+              style: Theme.of(context).textTheme.bodyText1),
+          onConfirm: (results) {
+            //_selectedAnimals = results;
+          },
+        ),
+      );
+
+  buildTargetSelect() => Container(
+    padding: EdgeInsets.all(5),
+    child: MultiSelectDialogField(
+      items: _targetitems,
+      title: Text("Doelgroepen", style: Theme.of(context).textTheme.headline2),
+      selectedColor: mainColor,
+      decoration: BoxDecoration(
+        color: mainColor.withOpacity(0.1),
+        borderRadius: BorderRadius.all(Radius.circular(40)),
+        border: Border.all(
+          color: mainColor,
+          width: 2,
+        ),
+      ),
+      buttonIcon: const Icon(
+        Icons.accessibility,
+        color: mainColor,
+      ),
+      buttonText: Text("Gewenste doelgroepen",
+          style: Theme.of(context).textTheme.bodyText1),
+      onConfirm: (results) {
+        //_selectedAnimals = results;
+      },
+    ),
+  );
 }
