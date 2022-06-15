@@ -141,6 +141,8 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       print("token: " + res.result.token);
+      print("rol: " + res.result.rol);
+      String rol = res.result.rol;
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
@@ -148,10 +150,14 @@ class _LoginPageState extends State<LoginPage> {
         if (res.result.isAccepted == 0) {
           Navigator.pushReplacementNamed(context, '/awaiting');
         } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const SkoolWorkshopApp()));
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
+                rol: rol,
+              ),
+            ),
+          );
         }
       } else {
         //if error is present, display a snackbar showing the error messsage

@@ -47,20 +47,24 @@ class loginModel {
 
 class Result {
   String token;
+  String rol;
   int isAccepted;
 
   Result({
     required this.token,
+    required this.rol,
     required this.isAccepted,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
       token: json['token'] ?? "na",
+      rol: json['rol'] ?? "Docent",
       isAccepted: json['isAccepted'] ?? 99,
   );
 
   Map<String, dynamic> toJson() => {
     "token": token,
+    "rol": rol,
     "isAccepted": isAccepted,
   };
 }
