@@ -74,22 +74,22 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   ];
 
   showScreens() {
-    if(widget.rol == "Docent") {
-      TeacherScreens[currentIndex];
-    } else if(widget.rol == "Medewerker") {
-      EmployeeScreens[currentIndex];
+    if(widget.rol.toString() == "Docent") {
+      return TeacherScreens[currentIndex];
+    } else if(widget.rol.toString() == "Medewerker") {
+      return EmployeeScreens[currentIndex];
     } else {
-      Center(child: Text("Error showing screens"));
+      return Center(child: Text("Error showing screens"));
     }
   }
 
   showButtons() {
-    if(widget.rol == "Docent") {
-      TeacherButtons;
-    } else if(widget.rol == "Medewerker") {
-      EmployeeButtons;
+    if(widget.rol.toString() == "Docent") {
+      return TeacherButtons;
+    } else if(widget.rol.toString() == "Medewerker") {
+      return EmployeeButtons;
     } else {
-      EmployeeButtons;
+      return TeacherButtons;
     }
   }
 

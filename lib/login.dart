@@ -3,6 +3,7 @@ import 'package:skoolworkshop/register.dart';
 import 'Model/loginModel.dart';
 import 'api_service.dart';
 import 'app.dart';
+import 'awaitingProfile.dart';
 import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -148,7 +149,13 @@ class _LoginPageState extends State<LoginPage> {
       //   //if error is not present, navigate the users to Login Screen.
       if (res.result.token != null) {
         if (res.result.isAccepted == 0) {
-          Navigator.pushReplacementNamed(context, '/awaiting');
+          // Navigator.pushReplacementNamed(context, '/awaiting');
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => awaitingProfile()
+            ),
+          );
         } else {
           Navigator.of(context).push(
             PageRouteBuilder(
