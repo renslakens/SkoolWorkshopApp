@@ -28,10 +28,10 @@ class Main extends StatelessWidget {
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),
-        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "",),
+        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", token: "",),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
-        '/profile' : (BuildContext context) => const singleProfilePage(),
+        '/profile' : (BuildContext context) => const singleProfilePage(token: "",),
       },
     );
   }
