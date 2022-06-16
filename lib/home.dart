@@ -85,15 +85,22 @@ class HomePage extends StatelessWidget {
                     value: 2,
                     child: Text("Workshop toevoegen"),
                   ),
+
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Text("Locatie toevoegen"),
+                  ),
                 ];
               },
               onSelected:(value){
                 if(value == 0){
-                  print("My account menu is selected.");
+                  print("opdracht");
                 }else if(value == 1){
-                  print("Settings menu is selected.");
+                  print("klant");
                 }else if(value == 2){
-                  print("Logout menu is selected.");
+                  print("workshop");
+                }else if(value == 3){
+                  print("locatie");
                 }
               }
           ),
@@ -112,21 +119,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      // appBar: AppBar(
-      //   title: const Text('Home'),
-      //   automaticallyImplyLeading: false,
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(
-      //         Icons.add,
-      //         color: Colors.white,
-      //       ),
-      //       onPressed: () {
-      //         //TODO: Dropdown menu laten zien met workshop, opdracht en klant om toe te voegen
-      //       },
-      //     )
-      //   ],
-      // ),
       appBar: checkRole(),
       body: WorkshopWidget(),
     );
