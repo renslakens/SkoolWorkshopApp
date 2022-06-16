@@ -1,14 +1,13 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:skoolworkshop/profileview.dart';
+import 'package:intl/intl.dart';
 
 class NotificationWidget extends StatefulWidget {
-  const NotificationWidget({Key? key}) : super(key: key);
+  NotificationWidget({Key? key}) : super(key: key);
 
   @override
   State<NotificationWidget> createState() => _NotificationWidgetState();
@@ -16,17 +15,19 @@ class NotificationWidget extends StatefulWidget {
 
 class _NotificationWidgetState extends State<NotificationWidget> {
   final String getUnAcceptedProfilesUrl = apis.baseUrl + apis.unAcceptedDocent;
-  final String deleteProfileUrl = apis.baseUrl + apis.deleteProfile;
+  final String deleteDocent = apis.baseUrl + apis.deleteProfile;
   final String acceptDocent = apis.baseUrl + apis.acceptDocent;
+  DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
+  DateFormat properDate = DateFormat("yyyy-dd-MM");
 
   Future<List<dynamic>> fetchUsers() async {
     var result = await http.get(Uri.parse(getUnAcceptedProfilesUrl));
     return json.decode(result.body)['result'];
   }
 
-  Future deleteUser(String id) async {
+  Future delDocent(String emailLogin) async {
     http.Response response =
-        await http.delete(Uri.parse(deleteProfileUrl + id));
+        await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
       print("Deleted");
     } else {
@@ -34,10 +35,10 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  Future acceptUser(String id) async {
+  Future accDocent(String id) async {
     http.Response response = await http.put(Uri.parse(acceptDocent + id));
     if (response.statusCode == 200) {
-      print('User with ID $id succesfully Accepted');
+      print('User with ID $id successfully Accepted');
     }
   }
 
@@ -54,7 +55,73 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   }
 
   String _geboortedatum(dynamic user) {
-    return "Geboortedatum: " + user['geboortedatum'].toString();
+    String geboortedatum = user['geboortedatum'] ?? 0;
+    DateTime newtime = dateFormat.parse(geboortedatum.replaceAll("T", " "));
+    return properDate.format(newtime);
+  }
+
+  Future<void> _acceptedMyDialog(context, snapshot, index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Goedkeuren"),
+          content: Text(
+              "Weet je zeker dat je ${_naam(snapshot.data[index])} ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                setState(() {
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+            TextButton(
+              child: Text("Geef toegang"),
+              onPressed: () {
+                setState(() {
+                  accDocent(_id(snapshot.data[index]).toString());
+                  Navigator.of(context).pop();
+                });
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _denyMyDialog(context, snapshot, index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Goedkeuren"),
+          content: Text(
+              "Weet je zeker dat je ${_naam(snapshot.data[index])} ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Verwijder"),
+              onPressed: () {
+                setState(() {
+                  accDocent(_id(snapshot.data[index]).toString());
+                  Navigator.of(context).pop();
+                });
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -74,15 +141,16 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
                           title: Text(_naam(snapshot.data[index]).toString()),
-                          subtitle: Text(_loginEmail(snapshot.data[index]) + "\n" + _geboortedatum(snapshot.data[index])),
+                          subtitle: Text(
+                              "${_loginEmail(snapshot.data[index])}\nGeboortedatum: ${_geboortedatum(snapshot.data[index])}"),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      acceptUser(
-                                          _id(snapshot.data[index]).toString());
+                                      _acceptedMyDialog(
+                                          context, snapshot, index);
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -94,8 +162,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      deleteUser(
-                                          _id(snapshot.data[index]).toString());
+                                      _denyMyDialog(context, snapshot, index);
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -109,11 +176,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const singleProfilePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const singleProfilePage()));
                     //TODO Navigate to profiles page with _id(snapshot.data[index]).toString()
                   },
                 );
-                ;
               });
         } else {
           return const Center(child: CircularProgressIndicator());
