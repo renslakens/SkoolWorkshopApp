@@ -26,8 +26,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   }
 
   Future delDocent(String emailLogin) async {
-    http.Response response =
-        await http.delete(Uri.parse(deleteDocent + emailLogin));
+    http.Response response = await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
       print("Deleted");
     } else {
@@ -46,19 +45,23 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return user['docentID'];
   }
 
-  String _naam(dynamic user) {
-    return user['naam'] + " " + user['achternaam'];
-  }
+  // String _naam(dynamic user) {
+  //   return user['naam'] + " " + user['achternaam'];
+  // }
 
   String _loginEmail(dynamic user) {
-    return user['loginEmail'];
+    return user['emailadres'];
   }
 
-  String _geboortedatum(dynamic user) {
-    String geboortedatum = user['geboortedatum'] ?? 0;
-    DateTime newtime = dateFormat.parse(geboortedatum.replaceAll("T", " "));
-    return properDate.format(newtime);
+  String _rol(dynamic user) {
+    return user['rol'];
   }
+
+  // String _geboortedatum(dynamic user) {
+  //   String geboortedatum = user['geboortedatum'] ?? 0;
+  //   DateTime newtime = dateFormat.parse(geboortedatum.replaceAll("T", " "));
+  //   return properDate.format(newtime);
+  // }
 
   Future<void> _acceptedMyDialog(context, snapshot, index) async {
     return showDialog<void>(
@@ -68,7 +71,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
         return AlertDialog(
           title: Text("Goedkeuren"),
           content: Text(
-              "Weet je zeker dat je ${_naam(snapshot.data[index])} ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
+              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
           actions: [
             TextButton(
               child: Text("Cancel"),
@@ -101,7 +104,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
         return AlertDialog(
           title: Text("Goedkeuren"),
           content: Text(
-              "Weet je zeker dat je ${_naam(snapshot.data[index])} ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
+              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
           actions: [
             TextButton(
               child: Text("Cancel"),
@@ -113,7 +116,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  accDocent(_loginEmail(snapshot.data[index]).toString());
+                  delDocent(_loginEmail(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -140,9 +143,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_naam(snapshot.data[index]).toString()),
+                          title: Text(_loginEmail(snapshot.data[index]).toString()),
                           subtitle: Text(
-                              "${_loginEmail(snapshot.data[index])}\nGeboortedatum: ${_geboortedatum(snapshot.data[index])}"),
+                              "Rol: ${_rol(snapshot.data[index])}"),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
