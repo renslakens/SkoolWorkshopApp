@@ -7,7 +7,8 @@ import 'package:skoolworkshop/profiles.dart';
 import 'Widgets/profile_widget.dart';
 
 class singleProfilePage extends StatefulWidget {
-  const singleProfilePage({Key? key}) : super(key: key);
+  const singleProfilePage({Key? key, required this.emailadres}) : super(key: key);
+  final String emailadres;
 
   @override
   State<singleProfilePage> createState() => _singleProfilePageState();

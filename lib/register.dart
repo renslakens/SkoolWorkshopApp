@@ -1,17 +1,17 @@
-import 'dart:convert';
 //import 'dart:html';
 
 //import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 //import 'package:open_file/open_file.dart';
+import 'Model/registerModel.dart';
+import 'api_service.dart';
+import 'app.dart';
 import 'colors.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key, required this.rol}) : super(key: key);
+  final String rol;
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -71,6 +71,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String? gender;
   String? drivers_liscence;
   String? car;
+
+  Future<registerModel>? _futureRegister;
+
   // bool _showPassword = false;
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -194,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ListTile(
                     title: Text("Man"),
                     leading: Radio(
-                        value: "male",
+                        value: "man",
                         groupValue: gender,
                         onChanged: (value){
                           setState(() {
@@ -206,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ListTile(
                     title: Text("Vrouw"),
                     leading: Radio(
-                        value: "female",
+                        value: "vrouw",
                         groupValue: gender,
                         onChanged: (value){
                           setState(() {
@@ -233,9 +236,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       initialDate:DateTime.now(),
                       firstDate:DateTime(1900),
                       lastDate: DateTime(2100),
-                      // helpText: 'Select birth date',
-                      // cancelText: 'poep',
-                      // confirmText: 'Confirm',
+                      helpText: 'Selecteer geboortedatum',
+                      cancelText: 'Anulleer',
+                      confirmText: 'Bevestig',
                   );
                   _birthDateController.text = date.toString().substring(0,10);
                 },
@@ -302,7 +305,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _addressController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Straat + nr.',
@@ -315,7 +317,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _pincodeController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Postcode',
@@ -328,7 +329,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _cityController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Woonplaats',
@@ -341,7 +341,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
               TextField(
                 controller: _countryController,
-                obscureText: true,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
                   labelText: 'Land',
@@ -375,41 +374,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 12,
                 ),
 
-                TextField(
-                  controller: _countryController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                    labelText: 'KVK Nummer',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-
-                TextField(
-                  controller: _countryController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                    labelText: 'Btw, indentificatienummer',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-
                 ListTile(
                   title: ElevatedButton(
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -435,7 +405,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -465,7 +435,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "male",
+                      value: "ja",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -477,7 +447,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "female",
+                      value: "nee",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -499,7 +469,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "male",
+                      value: "ja",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -511,7 +481,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "female",
+                      value: "nee",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -522,35 +492,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
-
-                MultiSelectDialogField(
-                  items: _items,
-                  title: Text("Workshops"),
-                  selectedColor: Colors.orangeAccent,
-                  decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                    border: Border.all(
-                      color: Colors.orangeAccent,
-                      width: 2,
-                    ),
-                  ),
-                  buttonIcon: Icon(
-                    Icons.accessibility,
-                    color: Colors.orangeAccent,
-                  ),
-                  buttonText: Text(
-                    "Workshops die je wilt geven",
-                    style: TextStyle(
-                      color: Colors.orangeAccent[800],
-                      fontSize: 16,
-                    ),
-                  ),
-                  onConfirm: (results) {
-                    //_selectedAnimals = results;
-                  },
-                ),
-                SizedBox(height: 50),
 
               ],
             )
@@ -585,6 +526,10 @@ class _RegisterPageState extends State<RegisterPage> {
             setState(() {
               _activeCurrentStep += 1;
             });
+          } else  {
+            setState(() {
+              _handleRegister();
+            });
           }
         },
 
@@ -605,92 +550,85 @@ class _RegisterPageState extends State<RegisterPage> {
             _activeCurrentStep = index;
           });
         },
+
+        controlsBuilder: (BuildContext context, ControlsDetails details){
+          return Row(
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('Bevestig',
+                    style: TextStyle(fontFamily: 'Heebo')),
+                onPressed: details.onStepContinue,
+                style: ElevatedButton.styleFrom(
+                  elevation: 8.0,
+                  primary: mainColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                child: const Text('Annuleer',
+                    style: TextStyle(fontFamily: 'Heebo')),
+                onPressed: details.onStepCancel,
+                style: ElevatedButton.styleFrom(
+                  elevation: 8.0,
+                  primary: mainColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              ),
+            ],
+          );
+        },
+
       ),
       ),
     );
   }
-}
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('register'),
-  //     ),
-  //     body: SafeArea(
-  //       child: ListView(
-  //         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-  //         children: <Widget>[
-  //
-  //           const SizedBox(height:35.0),
-  //           Image.asset('assets/images/Skool-Workshop_Logo.png'),
-  //
-  //           const SizedBox(height: 60.0),
-  //           TextField(
-  //             controller: _nameController,
-  //             cursorColor: mainColor,
-  //             decoration: InputDecoration(
-  //               labelText: 'Voornaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'Achternaam',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             decoration: InputDecoration(
-  //               labelText: 'E-mail',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 12.0),
-  //           TextField(
-  //             obscureText: !this._showPassword,
-  //             decoration: InputDecoration(
-  //               labelText: 'Wachtwoord',
-  //               labelStyle: TextStyle(fontSize: 18, color: Colors.black54),
-  //               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-  //
-  //               suffixIcon: IconButton(
-  //                 icon: Icon(
-  //                   Icons.remove_red_eye,
-  //                   color: this._showPassword ? Colors.blue : Colors.grey,
-  //                 ),
-  //                 onPressed: () {
-  //                   setState(() => this._showPassword = !this._showPassword);
-  //                 },
-  //               ),
-  //             ),
-  //           ),
-  //
-  //           const SizedBox(height: 50.0),
-  //           ElevatedButton(
-  //             child: const Text('Terug'),
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             style: ElevatedButton.styleFrom(
-  //               elevation: 8.0,
-  //               primary: mainColor,
-  //               shape: const RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.all(Radius.circular(100.0)),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-// }
+
+  Future<void> _handleRegister() async {
+    if (!(_emailController.text.toString().contains("@"))) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldige email'),
+        backgroundColor: errorColor,
+      ));
+    } else if (!(_passwordController.text.length > 7)) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldig wachtwoord'),
+        backgroundColor: errorColor,
+      ));
+    } else {
+
+      future:
+      _futureRegister;
+
+      registerModel res = await apiRegister(
+          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), 'nederlands', _birthDateController.text, _birthPlaceController.text, _addressController.text, '1', _pincodeController.text, _cityController.text, 'geen', _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      //   //checks if there is no error in the response body.
+      //   //if error is not present, navigate the users to Login Screen.
+     {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
+                  builder: (context) => const SkoolWorkshopApp(rol: "Docent", emailadres: "",)));
+        }
+      {
+        //if error is present, display a snackbar showing the error messsage
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Error: '),
+          backgroundColor: errorColor,
+        ));
+      }
+    }
+  }
+}

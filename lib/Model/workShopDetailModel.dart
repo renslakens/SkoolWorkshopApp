@@ -30,7 +30,6 @@ class Result {
   String naam;
   String beschrijving;
 
-
   Result({
     required this.naam,
     required this.beschrijving

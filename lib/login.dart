@@ -3,6 +3,7 @@ import 'package:skoolworkshop/register.dart';
 import 'Model/loginModel.dart';
 import 'api_service.dart';
 import 'app.dart';
+import 'awaitingProfile.dart';
 import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -95,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  MaterialPageRoute(builder: (context) => const RegisterPage(rol: "",)),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -126,12 +127,6 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: errorColor,
       ));
     } else {
-      _futureLogin = apiLogin(context, _emailController.text.toString(),
-          _passwordController.text.toString());
-      print("loginDetails: " +
-          _emailController.text +
-          ', ' +
-          _passwordController.text);
 
       future:
       _futureLogin;
@@ -141,17 +136,30 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       print("token: " + res.result.token);
+      print("rol: " + res.result.rol);
+      String rol = res.result.rol;
+      String emailadres = res.result.emailadres;
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
       if (res.result.token != null) {
         if (res.result.isAccepted == 0) {
-          Navigator.pushReplacementNamed(context, '/awaiting');
+          // Navigator.pushReplacementNamed(context, '/awaiting');
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => awaitingProfile()
+            ),
+          );
         } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const SkoolWorkshopApp()));
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
+                rol: rol, emailadres: emailadres,
+              ),
+            ),
+          );
         }
       } else {
         //if error is present, display a snackbar showing the error messsage

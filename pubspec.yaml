@@ -30,6 +30,7 @@ dependencies:
   dio: any
   retrofit: any
   http: any
+  get: ^4.6.5
   blobs: ^2.0.0
   built_value: any
   json_annotation: any
