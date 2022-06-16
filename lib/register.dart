@@ -1,11 +1,7 @@
-import 'dart:convert';
 //import 'dart:html';
 
 //import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
@@ -622,7 +618,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SkoolWorkshopApp()));
+                  builder: (context) => SkoolWorkshopApp(token: '', rol: '',)));
         }
       {
         //if error is present, display a snackbar showing the error messsage
