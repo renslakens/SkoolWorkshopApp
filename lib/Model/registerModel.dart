@@ -1,8 +1,7 @@
-class loginModel {
+class registerModel {
 
   int status;
   String message;
-  Result result;
   // final String naam;
   // final String achternaam;
   // final String emailadres;
@@ -13,33 +12,20 @@ class loginModel {
     return status;
   }
 
-  loginModel({
+  registerModel({
     required this.status,
-    required this.result,
     required this.message
   });
 
 
-  factory loginModel.fromJson(Map<String, dynamic> json) => loginModel(
-      status: json['status'] ?? 999,
-      message: json['message'] ?? "na",
-      result: Result.fromJson(json["result"]),
-      // naam: json['naam'],
-      // achternaam: json['achternaam'],
-      // emailadres: json['emailadres'],
-      // wachtwoord: json['wachtwoord']
-    );
+  factory registerModel.fromJson(Map<String, dynamic> json) => registerModel(
+    status: json['status'] ?? 999,
+    message: json['message'] ?? "na");
+
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "result": result.toJson(),
-    // "username": lastName,
-    // "email": emailAdress,
-    // "address": address.toJson(),
-    // "phone": phone,
-    // "website": website,
-    // "company": company.toJson(),
   };
 }
 
@@ -47,24 +33,20 @@ class loginModel {
 
 class Result {
   String token;
-  String rol;
   int isAccepted;
 
   Result({
     required this.token,
-    required this.rol,
     required this.isAccepted,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-      token: json['token'] ?? "na",
-      rol: json['rol'] ?? "Docent",
-      isAccepted: json['isAccepted'] ?? 99,
+    token: json['token'] ?? "na",
+    isAccepted: json['isAccepted'] ?? 99,
   );
 
   Map<String, dynamic> toJson() => {
     "token": token,
-    "rol": rol,
     "isAccepted": isAccepted,
   };
 }

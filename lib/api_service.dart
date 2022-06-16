@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:skoolworkshop/Model/loginModel.dart';
+import 'package:skoolworkshop/Model/registerModel.dart';
 import 'package:skoolworkshop/Model/userModel.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'apis.dart';
@@ -118,6 +119,55 @@ Future<loginModel> apiLogin(
       ScaffoldMessenger.of(context).clearSnackBars();
       print(reponse.statusCode);
       return loginModel.fromJson(jsonDecode(reponse.body));
+    case 401:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldig wachtwoord'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception('Invalid password');
+    case 404:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldige email'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception('Could not find emailaddress');
+    default:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalide gegevens'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception("Could not log in");
+  }
+}
+
+Future<registerModel> apiRegister(
+    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+  final reponse = await http
+      .post(
+    Uri.parse(apis.baseUrl + apis.register),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'straat': straat, 'geslacht': geslacht, 'woonplaats': woonplaats, 'postcode': postcode, 'land': land, 'rol':rol }),
+  )
+      .catchError((onError) {
+    print(onError);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Kon geen verbinding maken'),
+      backgroundColor: errorColor,
+      duration: Duration(seconds: 30),
+    ));
+  });
+  switch (reponse.statusCode) {
+    case 201:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      print(reponse.statusCode);
+      return registerModel.fromJson(jsonDecode(reponse.body));
     case 401:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
