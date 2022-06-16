@@ -5,7 +5,7 @@ class apis {
   static String fileUpload = '/api/';
   static String acceptedProfiles = '/api/Docent?isAccepted=1';
 
-  static String acceptDocent = '/api/docent/';
+  static String acceptUser = '/api/auth/';
   static String deleteDocent = '/api/auth/';
   static String unAcceptedDocent = '/api/Docent?isAccepted=0';
 
