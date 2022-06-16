@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'app.dart';
 import 'colors.dart';
 
 class AddJobWidget extends StatefulWidget {
@@ -130,7 +131,9 @@ class _AddJobWidgetState extends State<AddJobWidget> {
 }
 
 class AddJobPage extends StatelessWidget {
-  const AddJobPage({Key? key}) : super(key: key);
+  const AddJobPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  final String rol;
+  final String emailadres;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +141,19 @@ class AddJobPage extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: const Text('Opdracht toevoegen'),
+          leading: GestureDetector(
+            child: Icon( Icons.arrow_back,),
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
+                    rol: rol, emailadres: emailadres,
+                  ),
+                ),
+              );
+            } ,
+          ),
           backgroundColor: mainColor
       ),
       body: AddJobWidget(),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'app.dart';
 import 'colors.dart';
 
 class AddCustomerWidget extends StatefulWidget {
@@ -154,7 +155,9 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
 }
 
 class AddCustomerPage extends StatelessWidget {
-  const AddCustomerPage({Key? key}) : super(key: key);
+  const AddCustomerPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  final String rol;
+  final String emailadres;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +165,19 @@ class AddCustomerPage extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: const Text('Klant toevoegen'),
+          leading: GestureDetector(
+            child: Icon( Icons.arrow_back,),
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
+                    rol: rol, emailadres: emailadres,
+                  ),
+                ),
+              );
+            } ,
+          ),
           backgroundColor: mainColor
       ),
       body: AddCustomerWidget(),

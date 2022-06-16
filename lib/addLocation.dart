@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'app.dart';
 import 'colors.dart';
 
 class AddLocationWidget extends StatefulWidget {
@@ -106,7 +107,9 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
 }
 
 class AddLocationPage extends StatelessWidget {
-  const AddLocationPage({Key? key}) : super(key: key);
+  const AddLocationPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  final String rol;
+  final String emailadres;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +117,19 @@ class AddLocationPage extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: const Text('Locatie toevoegen'),
+          leading: GestureDetector(
+            child: Icon( Icons.arrow_back,),
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
+                    rol: rol, emailadres: emailadres,
+                  ),
+                ),
+              );
+            } ,
+          ),
           backgroundColor: mainColor
       ),
       body: AddLocationWidget(),

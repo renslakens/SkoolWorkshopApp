@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/profiles.dart';
@@ -14,14 +15,14 @@ import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
 
-void main() => runApp(const Main());
+void main() => runApp(Main());
 
 class Main extends StatelessWidget {
-  const Main({Key? key}) : super(key: key);
+  Main({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'SkoolWorkshop',
       theme: customLightTheme(),
       initialRoute: '/login',
@@ -34,8 +35,8 @@ class Main extends StatelessWidget {
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
         '/profile' : (BuildContext context) => const singleProfilePage(emailadres: "",),
-        '/addlocation' : (BuildContext context) => const AddLocationPage(),
-        '/addworkshop' : (BuildContext context) => const AddWorkshopPage(),
+        '/addlocation' : (BuildContext context) => const AddLocationPage(rol: "", emailadres: "",),
+        '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "",),
       },
     );
   }

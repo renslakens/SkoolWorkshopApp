@@ -23,7 +23,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   int currentIndex = 0;
 
   late final TeacherScreens = [
-    HomePage(rol: widget.rol,),
+    HomePage(rol: widget.rol, emailadres: widget.emailadres,),
     awaitingProfile(),
     awaitingProfile(),
     NotificationPage(),
@@ -31,7 +31,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   ];
 
   late final EmployeeScreens = [
-    HomePage(rol: widget.rol,),
+    HomePage(rol: widget.rol, emailadres: widget.emailadres,),
     NotificationPage(),
     ProfilePage(),
   ];
