@@ -182,7 +182,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const singleProfilePage(token: "",)));
+                            builder: (context) => singleProfilePage(emailadres: _loginEmail((snapshot.data[index]).toString()))));
                     //TODO Navigate to profiles page with _id(snapshot.data[index]).toString()
                   },
                 );

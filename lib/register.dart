@@ -620,7 +620,7 @@ class _RegisterPageState extends State<RegisterPage> {
               context,
               MaterialPageRoute(
                 //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
-                  builder: (context) => const SkoolWorkshopApp(rol: "Docent", token: "",)));
+                  builder: (context) => const SkoolWorkshopApp(rol: "Docent", emailadres: "",)));
         }
       {
         //if error is present, display a snackbar showing the error messsage
