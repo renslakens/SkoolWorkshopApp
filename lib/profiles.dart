@@ -42,6 +42,37 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return user['emailadres'];
   }
 
+  Future<void> _denyMyDialog(context, snapshot, index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Goedkeuren"),
+          content: Text(
+              "Weet je zeker dat je ${_emailadres(snapshot.data[index])} wilt verwijderen?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Verwijder"),
+              onPressed: () {
+                setState(() {
+                  deleteUser(_emailadres(snapshot.data[index]).toString());
+                  Navigator.of(context).pop();
+                });
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
@@ -76,7 +107,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      deleteUser(_emailadres(snapshot.data[index]).toString());
+                                      _denyMyDialog(context, snapshot, index);
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(

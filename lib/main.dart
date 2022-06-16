@@ -24,7 +24,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       title: 'SkoolWorkshop',
       theme: customLightTheme(),
-      initialRoute: '/addworkshop',
+      initialRoute: '/login',
       routes: {
         '/workshop' : (BuildContext context) => WorkshopDetailPage(),
         '/notification' : (BuildContext context) => const NotificationPage(),
