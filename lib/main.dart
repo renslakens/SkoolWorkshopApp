@@ -7,6 +7,8 @@ import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 import 'package:skoolworkshop/workshopDetail.dart';
 
+import 'addLocation.dart';
+import 'addWorkshop.dart';
 import 'app.dart';
 import 'home.dart';
 import 'login.dart';
@@ -22,7 +24,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
       title: 'SkoolWorkshop',
       theme: customLightTheme(),
-      initialRoute: '/login',
+      initialRoute: '/addworkshop',
       routes: {
         '/workshop' : (BuildContext context) => WorkshopDetailPage(),
         '/notification' : (BuildContext context) => const NotificationPage(),
@@ -32,6 +34,8 @@ class Main extends StatelessWidget {
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
         '/profile' : (BuildContext context) => const singleProfilePage(token: "",),
+        '/addlocation' : (BuildContext context) => const AddLocationPage(),
+        '/addworkshop' : (BuildContext context) => const AddWorkshopPage(),
       },
     );
   }
