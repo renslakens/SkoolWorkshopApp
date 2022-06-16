@@ -25,8 +25,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   }
 
-  Future deleteUser(String id) async {
-    http.Response response = await http.delete(Uri.parse(deleteProfileUrl + id));
+  Future deleteUser(String emailadres) async {
+    http.Response response = await http.delete(Uri.parse(deleteProfileUrl + emailadres));
     if (response.statusCode == 200) {
       print("Deleted");
     } else {
@@ -34,20 +34,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     }
   }
 
-  int _id(dynamic user) {
-    return user['docentID'];
-  }
-
-  String _naam(dynamic user){
-    return user['naam'] + " " +  user['achternaam'];
+  String _rol(dynamic user){
+    return user['rol'];
   }
 
   String _emailadres(dynamic user){
     return user['emailadres'];
-  }
-
-  String _geboortedatum(dynamic user){
-    return "Geboortedatum: " + user['geboortedatum'].toString();
   }
 
   @override
@@ -66,8 +58,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_naam(snapshot.data[index]).toString()),
-                          subtitle: Text(_emailadres(snapshot.data[index])),
+                          title: Text(_emailadres(snapshot.data[index]).toString()),
+                          subtitle: Text(_rol(snapshot.data[index])),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -84,7 +76,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(() {
-                                      deleteUser(_id(snapshot.data[index]).toString());
+                                      deleteUser(_emailadres(snapshot.data[index]).toString());
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
