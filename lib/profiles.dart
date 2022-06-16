@@ -59,7 +59,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
                           title: Text(_emailadres(snapshot.data[index]).toString()),
-                          subtitle: Text(_rol(snapshot.data[index])),
+                          subtitle: Text("Rol: ${_rol(snapshot.data[index])}"),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
