@@ -12,7 +12,6 @@ import 'Model/registerModel.dart';
 import 'api_service.dart';
 import 'app.dart';
 import 'colors.dart';
-import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -90,7 +89,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _pincodeController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
-
 
   List<Step> stepList() => [
     Step(
@@ -380,10 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 ListTile(
-                  title: SizedBox(
-                    width: 30,
-                    height: 38,
-                    child: ElevatedButton(
+                  title: ElevatedButton(
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
@@ -398,7 +393,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                ),
                   leading: Text("Kopie ID toevoegen:", style: TextStyle(
                     fontFamily: 'Heebo',
                     fontSize: 17.0,
@@ -410,10 +404,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 ListTile(
-                  title: SizedBox(
-                    // width: 900,
-                    // height: 38,
-                    child: ElevatedButton(
+                  title: ElevatedButton(
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
@@ -428,7 +419,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                ),
                   leading: Text("Vog toevoegen:", style: TextStyle(
                     fontFamily: 'Heebo',
                     fontSize: 17.0,
@@ -544,7 +534,6 @@ class _RegisterPageState extends State<RegisterPage> {
               _handleRegister();
             });
           }
-
         },
 
         // onStepCancel takes us to the previous step
