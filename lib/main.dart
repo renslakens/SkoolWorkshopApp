@@ -33,6 +33,7 @@ class Main extends StatelessWidget {
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
         '/profile' : (BuildContext context) => const singleProfilePage(),
+        '/editprofile' : (BuildContext context) => const ProfileEditPage(),
       },
     );
   }
