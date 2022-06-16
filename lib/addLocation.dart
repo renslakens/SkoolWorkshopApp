@@ -15,7 +15,7 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
   final _countryController = TextEditingController();
   final _subcodeController = TextEditingController();
   final _streetController = TextEditingController();
-  final _housenumberDateController = TextEditingController();
+  final _housenumberController = TextEditingController();
   final _cityController = TextEditingController();
 
   @override
@@ -70,7 +70,7 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
             ),
           ),
           TextField(
-            controller: _housenumberDateController,
+            controller: _housenumberController,
             decoration: const InputDecoration(
               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
               labelText: 'Huisnummer',
