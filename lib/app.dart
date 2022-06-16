@@ -11,9 +11,9 @@ import 'awaitingProfile.dart';
 import 'register.dart';
 
 class SkoolWorkshopApp extends StatefulWidget {
-  const SkoolWorkshopApp({Key? key, required this.rol, required this.token}) : super(key: key);
+  const SkoolWorkshopApp({Key? key, required this.rol, required this.emailadres}) : super(key: key);
   final String rol;
-  final String token;
+  final String emailadres;
 
   @override
   _SkoolWorkshopAppState createState() => _SkoolWorkshopAppState();
@@ -27,7 +27,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     awaitingProfile(),
     awaitingProfile(),
     NotificationPage(),
-    singleProfilePage(token: widget.token,),
+    singleProfilePage(emailadres: widget.emailadres,),
   ];
 
   final EmployeeScreens = [

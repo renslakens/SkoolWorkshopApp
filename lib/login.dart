@@ -135,10 +135,10 @@ class _LoginPageState extends State<LoginPage> {
           context, _emailController.text, _passwordController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      print("token: " + res.result.token);
+      print("emailadres: " + res.result.emailadres);
       print("rol: " + res.result.rol);
       String rol = res.result.rol;
-      String token = res.result.token;
+      String emailadres = res.result.emailadres;
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-                rol: rol, token: token,
+                rol: rol, emailadres: emailadres,
               ),
             ),
           );

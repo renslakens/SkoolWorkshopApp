@@ -23,17 +23,17 @@ class Main extends StatelessWidget {
     return MaterialApp(
       title: 'SkoolWorkshop',
       theme: customLightTheme(),
-      initialRoute: '/editprofile',
+      initialRoute: '/profile',
       routes: {
         '/workshop' : (BuildContext context) => WorkshopDetailPage(),
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(),
-        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", token: "",),
+        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", emailadres: "",),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
-        '/profile' : (BuildContext context) => const singleProfilePage(token: "",),
-        '/editprofile' : (BuildContext context) => const ProfileEditPage(),
+        '/profile' : (BuildContext context) => const singleProfilePage(emailadres: "",),
+        '/editprofile' : (BuildContext context) => const ProfileEditPage(emailadres: "",),
       },
     );
   }

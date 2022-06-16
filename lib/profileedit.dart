@@ -7,12 +7,15 @@ import 'package:skoolworkshop/colors.dart';
 import 'package:intl/intl.dart';
 
 class EditProfileWidget extends StatelessWidget {
-  EditProfileWidget({Key? key}) : super(key: key);
+
+  EditProfileWidget({Key? key,  required this.emailadres}) : super(key: key);
+
+  String emailadres;
 
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
   DateFormat properDate = DateFormat("yyyy-dd-MM");
   DateFormat timeOnly = DateFormat("HH:mm");
-  final String apiUrl = apis.baseUrl + apis.getWorkshopDetail + "0";
+  final String apiUrl = apis.baseUrl + apis.getWorkshopDetail;
 
   Future<List<dynamic>> fetchUsers() async {
     var result = await http.get(Uri.parse(apiUrl));
@@ -271,7 +274,8 @@ class EditProfileWidget extends StatelessWidget {
 }
 
 class ProfileEditPage extends StatelessWidget {
-  const ProfileEditPage({Key? key}) : super(key: key);
+  const ProfileEditPage({Key? key, required this.emailadres}) : super(key: key);
+  final String emailadres;
 
   @override
   Widget build(BuildContext context) {
@@ -281,7 +285,7 @@ class ProfileEditPage extends StatelessWidget {
         title: const Text('Workshop'),
         automaticallyImplyLeading: false,
       ),
-      body: EditProfileWidget(),
+      body: EditProfileWidget(emailadres: emailadres,),
     );
   }
 }

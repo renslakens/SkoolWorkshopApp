@@ -618,7 +618,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SkoolWorkshopApp(token: '', rol: '',)));
+                  builder: (context) => SkoolWorkshopApp(emailadres: '', rol: '',)));
         }
       {
         //if error is present, display a snackbar showing the error messsage
