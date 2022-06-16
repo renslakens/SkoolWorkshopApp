@@ -10,7 +10,8 @@ import 'app.dart';
 import 'colors.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key, required this.rol}) : super(key: key);
+  final String rol;
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -378,7 +379,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -404,7 +405,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -609,7 +610,7 @@ class _RegisterPageState extends State<RegisterPage> {
       _futureRegister;
 
       registerModel res = await apiRegister(
-          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'docent');
+          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), 'nederlands', _birthDateController.text, _birthPlaceController.text, _addressController.text, '1', _pincodeController.text, _cityController.text, 'geen', _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       //   //checks if there is no error in the response body.
@@ -618,7 +619,8 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SkoolWorkshopApp(token: '', rol: '',)));
+                //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
+                  builder: (context) => const SkoolWorkshopApp(rol: "Docent", token: "",)));
         }
       {
         //if error is present, display a snackbar showing the error messsage

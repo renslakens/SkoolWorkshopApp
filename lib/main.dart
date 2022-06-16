@@ -27,7 +27,7 @@ class Main extends StatelessWidget {
         '/workshop' : (BuildContext context) => WorkshopDetailPage(),
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
-        '/register': (BuildContext context) => const RegisterPage(),
+        '/register': (BuildContext context) => const RegisterPage(rol: "",),
         '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", token: "",),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),

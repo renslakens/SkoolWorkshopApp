@@ -144,7 +144,7 @@ Future<loginModel> apiLogin(
 }
 
 Future<registerModel> apiRegister(
-    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String nationaliteit, String woonplaats, String postcode, String land, String doelgroep, String rol ) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.register),
@@ -152,7 +152,7 @@ Future<registerModel> apiRegister(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'straat': straat, 'geslacht': geslacht, 'woonplaats': woonplaats, 'postcode': postcode, 'land': land, 'rol':rol }),
+        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'straat': straat, 'huisnummer': huisnummer, 'geslacht': geslacht, 'nationaliteit': nationaliteit, 'woonplaats': woonplaats, 'postcode': postcode, 'land': land, 'doelgroep':doelgroep, 'rol':rol }),
   )
       .catchError((onError) {
     print(onError);
@@ -188,6 +188,6 @@ Future<registerModel> apiRegister(
         content: Text('Invalide gegevens'),
         backgroundColor: errorColor,
       ));
-      throw Exception("Could not log in");
+      throw Exception("Could not register");
   }
 }
