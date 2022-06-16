@@ -14,9 +14,9 @@ class NotificationWidget extends StatefulWidget {
 }
 
 class _NotificationWidgetState extends State<NotificationWidget> {
-  final String getUnAcceptedProfilesUrl = apis.baseUrl + apis.unAcceptedDocent;
-  final String deleteDocent = apis.baseUrl + apis.deleteProfile;
-  final String acceptDocent = apis.baseUrl + apis.acceptUser;
+  final String getUnAcceptedProfilesUrl = apis.baseUrl + apis.unAcceptedProfiles;
+  final String deleteDocent = apis.baseUrl + apis.authRoute;
+  final String acceptDocent = apis.baseUrl + apis.authRoute;
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
   DateFormat properDate = DateFormat("yyyy-dd-MM");
 

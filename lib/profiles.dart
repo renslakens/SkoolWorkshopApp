@@ -16,7 +16,7 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget> {
   final String getAcceptedProfilesUrl = apis.baseUrl + apis.acceptedProfiles;
-  final String deleteProfileUrl = apis.baseUrl + apis.deleteProfile;
+  final String deleteProfileUrl = apis.baseUrl + apis.authRoute;
 
   Future<List<dynamic>> fetchUsers() async {
 

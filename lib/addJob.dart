@@ -23,108 +23,110 @@ class _AddJobWidgetState extends State<AddJobWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Text("Opdracht info", style: Theme.of(context).textTheme.headline2,),
-          TextField(
-            controller: _numberofteachersController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Naam',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text("Opdracht info", style: Theme.of(context).textTheme.headline2,),
+            TextField(
+              controller: _numberofteachersController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Naam',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _salaryController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Land',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _salaryController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Land',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _starttimeController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Postcode',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _starttimeController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Postcode',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _endtimeController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Straat',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _endtimeController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Straat',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _locationController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Huisnummer',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _locationController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Huisnummer',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _workshopController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Plaats',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _workshopController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Plaats',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _customerController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Plaats',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _customerController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Plaats',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          TextField(
-            controller: _taController,
-            decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-              labelText: 'Plaats',
-              labelStyle: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
+            TextField(
+              controller: _taController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                labelText: 'Plaats',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(onPressed: () {
+            const SizedBox(height: 16),
+            ElevatedButton(onPressed: () {
 
-          }, child: Text("Toevoegen", style: Theme.of(context).textTheme.bodyText2,), style: ElevatedButton.styleFrom(
-            primary: mainColor, shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(100.0)),
-          ),
-          ),)
-        ],
+            }, child: Text("Toevoegen", style: Theme.of(context).textTheme.bodyText2,), style: ElevatedButton.styleFrom(
+              primary: mainColor, shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(100.0)),
+            ),
+            ),)
+          ],
+        ),
       ),
     );
   }
