@@ -6,4 +6,3 @@ const HeeboColor = Color(0xFFF555555);
 const OswaldColor = Color(0xFFF130c00);
 const errorColor = Color(0xFFFE53935);
 const infoColor = Color(0xFFF1790FC);
-const acceptColor = Color(0xFFF00db3d);

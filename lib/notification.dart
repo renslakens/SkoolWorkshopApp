@@ -35,10 +35,10 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  Future accDocent(String id) async {
-    http.Response response = await http.put(Uri.parse(acceptDocent + id));
+  Future accDocent(String emailLogin) async {
+    http.Response response = await http.put(Uri.parse(acceptDocent + emailLogin));
     if (response.statusCode == 200) {
-      print('User with ID $id successfully Accepted');
+      print('User with ID $emailLogin successfully Accepted');
     }
   }
 
@@ -113,7 +113,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  accDocent(_id(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
