@@ -8,7 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 //import 'package:open_file/open_file.dart';
+import 'Model/registerModel.dart';
+import 'api_service.dart';
+import 'app.dart';
 import 'colors.dart';
+import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -71,6 +75,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String? gender;
   String? drivers_liscence;
   String? car;
+
+  Future<registerModel>? _futureRegister;
+
   // bool _showPassword = false;
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -83,8 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _pincodeController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
-  final _kvkNumberController = TextEditingController();
-  final _btwNumberController = TextEditingController();
+
 
   List<Step> stepList() => [
     Step(
@@ -196,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ListTile(
                     title: Text("Man"),
                     leading: Radio(
-                        value: "male",
+                        value: "man",
                         groupValue: gender,
                         onChanged: (value){
                           setState(() {
@@ -208,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ListTile(
                     title: Text("Vrouw"),
                     leading: Radio(
-                        value: "female",
+                        value: "vrouw",
                         groupValue: gender,
                         onChanged: (value){
                           setState(() {
@@ -373,35 +379,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 12,
                 ),
 
-                TextField(
-                  controller: _kvkNumberController,
-                  decoration: const InputDecoration(
-                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                    labelText: 'KVK Nummer',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-
-                TextField(
-                  controller: _btwNumberController,
-                  decoration: const InputDecoration(
-                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                    labelText: 'Btw, indentificatienummer',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Heebo',
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-
                 ListTile(
-                  title: ElevatedButton(
+                  title: SizedBox(
+                    width: 30,
+                    height: 38,
+                    child: ElevatedButton(
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
@@ -416,6 +398,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+                ),
                   leading: Text("Kopie ID toevoegen:", style: TextStyle(
                     fontFamily: 'Heebo',
                     fontSize: 17.0,
@@ -427,7 +410,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 ListTile(
-                  title: ElevatedButton(
+                  title: SizedBox(
+                    // width: 900,
+                    // height: 38,
+                    child: ElevatedButton(
                     child: const Text('Uploaden',
                         style: TextStyle(fontFamily: 'Heebo')),
                     onPressed: () {
@@ -442,6 +428,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+                ),
                   leading: Text("Vog toevoegen:", style: TextStyle(
                     fontFamily: 'Heebo',
                     fontSize: 17.0,
@@ -461,7 +448,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "yes",
+                      value: "ja",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -473,7 +460,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "no",
+                      value: "nee",
                       groupValue: drivers_liscence,
                       onChanged: (value){
                         setState(() {
@@ -495,7 +482,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Ja"),
                   leading: Radio(
-                      value: "yes",
+                      value: "ja",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -507,7 +494,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ListTile(
                   title: Text("Nee"),
                   leading: Radio(
-                      value: "no",
+                      value: "nee",
                       groupValue: car,
                       onChanged: (value){
                         setState(() {
@@ -518,35 +505,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
-
-                MultiSelectDialogField(
-                  items: _items,
-                  title: Text("Workshops"),
-                  selectedColor: Colors.orangeAccent,
-                  decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                    border: Border.all(
-                      color: Colors.orangeAccent,
-                      width: 2,
-                    ),
-                  ),
-                  buttonIcon: Icon(
-                    Icons.accessibility,
-                    color: Colors.orangeAccent,
-                  ),
-                  buttonText: Text(
-                    "Workshops die je wilt geven",
-                    style: TextStyle(
-                      color: Colors.orangeAccent[800],
-                      fontSize: 16,
-                    ),
-                  ),
-                  onConfirm: (results) {
-                    //_selectedAnimals = results;
-                  },
-                ),
-                SizedBox(height: 50),
 
               ],
             )
@@ -581,7 +539,12 @@ class _RegisterPageState extends State<RegisterPage> {
             setState(() {
               _activeCurrentStep += 1;
             });
+          } else  {
+            setState(() {
+              _handleRegister();
+            });
           }
+
         },
 
         // onStepCancel takes us to the previous step
@@ -601,10 +564,46 @@ class _RegisterPageState extends State<RegisterPage> {
             _activeCurrentStep = index;
           });
         },
+
+        controlsBuilder: (BuildContext context, ControlsDetails details){
+          return Row(
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('Bevestig',
+                    style: TextStyle(fontFamily: 'Heebo')),
+                onPressed: details.onStepContinue,
+                style: ElevatedButton.styleFrom(
+                  elevation: 8.0,
+                  primary: mainColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                child: const Text('Annuleer',
+                    style: TextStyle(fontFamily: 'Heebo')),
+                onPressed: details.onStepCancel,
+                style: ElevatedButton.styleFrom(
+                  elevation: 8.0,
+                  primary: mainColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                  ),
+                ),
+              ),
+              ),
+            ],
+          );
+        },
+
       ),
       ),
     );
   }
+
 
   Future<void> _handleRegister() async {
     if (!(_emailController.text.toString().contains("@"))) {
@@ -620,34 +619,23 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: errorColor,
       ));
     } else {
-      _futureLogin = apiLogin(context, _emailController.text.toString(),
-          _passwordController.text.toString());
-      print("loginDetails: " +
-          _emailController.text +
-          ', ' +
-          _passwordController.text);
 
       future:
-      _futureLogin;
+      _futureRegister;
 
-      loginModel res = await apiLogin(
-          context, _emailController.text, _passwordController.text);
+      registerModel res = await apiRegister(
+          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'docent');
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      print("token: " + res.result.token);
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
-      if (res.result.token != null) {
-        if (res.result.isAccepted == 0) {
-          Navigator.pushReplacementNamed(context, '/awaiting');
-        } else {
+     {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const SkoolWorkshopApp()));
+                  builder: (context) => SkoolWorkshopApp()));
         }
-      } else {
+      {
         //if error is present, display a snackbar showing the error messsage
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Error: '),

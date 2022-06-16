@@ -126,12 +126,6 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: errorColor,
       ));
     } else {
-      _futureLogin = apiLogin(context, _emailController.text.toString(),
-          _passwordController.text.toString());
-      print("loginDetails: " +
-          _emailController.text +
-          ', ' +
-          _passwordController.text);
 
       future:
       _futureLogin;
