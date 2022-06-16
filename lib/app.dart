@@ -11,8 +11,9 @@ import 'awaitingProfile.dart';
 import 'register.dart';
 
 class SkoolWorkshopApp extends StatefulWidget {
-  const SkoolWorkshopApp({Key? key, required this.rol}) : super(key: key);
+  const SkoolWorkshopApp({Key? key, required this.rol, required this.token}) : super(key: key);
   final String rol;
+  final String token;
 
   @override
   _SkoolWorkshopAppState createState() => _SkoolWorkshopAppState();
@@ -21,12 +22,12 @@ class SkoolWorkshopApp extends StatefulWidget {
 class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   int currentIndex = 0;
 
-  final TeacherScreens = [
+  late final TeacherScreens = [
     HomePage(),
     awaitingProfile(),
     awaitingProfile(),
     NotificationPage(),
-    singleProfilePage(),
+    singleProfilePage(token: widget.token,),
   ];
 
   final EmployeeScreens = [
