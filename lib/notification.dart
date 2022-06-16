@@ -44,9 +44,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  int _id(dynamic user) {
-    return user['docentID'];
-  }
+  // int _id(dynamic user) {
+  //   return user['docentID'];
+  // }
 
   String _naam(dynamic user) {
     return user['naam'] + " " + user['achternaam'];
@@ -84,7 +84,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Geef toegang"),
               onPressed: () {
                 setState(() {
-                  accDocent(_id(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -115,7 +115,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  accDocent(_id(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
