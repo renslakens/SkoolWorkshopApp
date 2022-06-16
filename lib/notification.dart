@@ -82,7 +82,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Geef toegang"),
               onPressed: () {
                 setState(() {
-                  accDocent(_id(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -154,7 +154,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: acceptColor,
+                                    primary: Colors.green,
                                   ),
                                   child: const Icon(Icons.check),
                                 ),
