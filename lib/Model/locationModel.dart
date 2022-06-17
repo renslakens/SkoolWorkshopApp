@@ -1,7 +1,6 @@
 class locationModel {
 
   int status;
-  Result result;
 
 
   int getStatus(){
@@ -10,54 +9,15 @@ class locationModel {
 
   locationModel({
     required this.status,
-    required this.result
   });
 
 
   factory locationModel.fromJson(Map<String, dynamic> json) => locationModel(
-    status: json['status'] ?? 999, result: Result.fromJson(json['result']));
+    status: json['status'] ?? 999);
 
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "result": result.toJson(),
+    "status": status
   };
 }
 
-
-
-class Result {
-  String naam;
-  String land;
-  String postcode;
-  String straat;
-  String huisnummer;
-  String plaats;
-
-  Result({
-    required this.naam,
-    required this.land,
-    required this.postcode,
-    required this.straat,
-    required this.huisnummer,
-    required this.plaats,
-  });
-
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-    naam: json['naam'] ?? "na",
-    land: json['land'] ?? "na",
-    postcode: json['postcode'] ?? "na",
-    straat: json['straat'] ?? "na",
-    huisnummer: json['huisnummer'] ?? "na",
-    plaats: json['plaats'] ?? "na"
-  );
-
-  Map<String, dynamic> toJson() => {
-    "naam": naam,
-    "land": land,
-    "postcode": postcode,
-    "straat": straat,
-    "huisnummer": huisnummer,
-    "plaats": plaats,
-  };
-}

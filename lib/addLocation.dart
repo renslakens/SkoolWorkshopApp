@@ -161,8 +161,8 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
     {
       //if error is present, display a snackbar showing the error messsage
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Error: '),
-        backgroundColor: errorColor,
+        content: Text('Added location: '),
+        backgroundColor: infoColor,
       ));
     }
   }
