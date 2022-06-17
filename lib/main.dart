@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
@@ -16,7 +18,10 @@ import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
 
-void main() => runApp(Main());
+void main() {
+  HttpOverrides.global = new MyHttpOverrides();
+  runApp(Main());
+}
 
 class Main extends StatelessWidget {
   Main({Key? key}) : super(key: key);
@@ -41,5 +46,13 @@ class Main extends StatelessWidget {
         '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "",),
       },
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback=  (X509Certificate cert,String host,int port) => true;
   }
 }
