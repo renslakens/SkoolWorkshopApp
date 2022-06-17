@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/profiles.dart';
