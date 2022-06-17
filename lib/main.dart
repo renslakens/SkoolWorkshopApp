@@ -33,7 +33,7 @@ class Main extends StatelessWidget {
         '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", emailadres: "",),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
-        '/profile' : (BuildContext context) => const singleProfilePage(emailadres: "",),
+        '/profile' : (BuildContext context) => singleProfilePage(emailadres: "",),
         '/addlocation' : (BuildContext context) => const AddLocationPage(),
         '/addworkshop' : (BuildContext context) => const AddWorkshopPage(),
       },
