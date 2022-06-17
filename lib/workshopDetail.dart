@@ -12,7 +12,7 @@ class WorkshopWidget extends StatelessWidget {
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
   DateFormat properDate = DateFormat("yyyy-dd-MM");
   DateFormat timeOnly = DateFormat("HH:mm");
-  final String apiUrl = apis.baseUrl + apis.getWorkshopDetail + "1";
+  final String apiUrl = apis.baseUrl + apis.jobRoute + "1";
 
   Future<List<dynamic>> fetchUsers() async {
     var result = await http.get(Uri.parse(apiUrl));
