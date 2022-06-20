@@ -610,7 +610,7 @@ class _RegisterPageState extends State<RegisterPage> {
       _futureRegister;
 
       registerModel res = await apiRegister(
-          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), 'nederlands', _birthDateController.text, _birthPlaceController.text, _addressController.text, '1', _pincodeController.text, _cityController.text, 'geen', _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
+          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, '1', _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       //   //checks if there is no error in the response body.
