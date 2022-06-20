@@ -33,7 +33,7 @@ class WorkshopWidget extends StatelessWidget {
                         //TODO: Docent accepteert workshop, admin moet nu goedkeuren
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
+                        primary: green,
                       ),
                       child: const Icon(Icons.check),
                     ),

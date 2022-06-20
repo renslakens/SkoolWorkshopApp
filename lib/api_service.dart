@@ -12,20 +12,6 @@ import 'package:skoolworkshop/colors.dart';
 import 'Model/locationModel.dart';
 import 'apis.dart';
 
-// class ApiService {
-//   Future<List<UserModel>?> getUsers() async {
-//     try {
-//       var url = Uri.parse(apis.baseUrl + apis.usersEndpoint);
-//       var response = await http.get(url);
-//       if (response.statusCode == 200) {
-//         List<UserModel> _model = userModelFromJson(response.body) as List<UserModel>;
-//         return _model;
-//       }
-//     } catch (e) {
-//       log(e.toString());
-//     }
-//   }
-// }
 Future<loginModel> login(
     String naam, String lastName, String email, String wachtwoord) async {
   final reponse = await http.post(
@@ -109,6 +95,7 @@ Future<loginModel> apiLogin(
         <String, String>{'emailadres': email, 'wachtwoord': wachtwoord}),
   )
       .catchError((onError) {
+
     print(onError);
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -166,6 +153,7 @@ Future<registerModel> apiRegister(
       duration: Duration(seconds: 30),
     ));
   });
+
   switch (reponse.statusCode) {
     case 201:
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -296,6 +284,6 @@ Future<customerModel> apiAddCustomer(
         content: Text('Invalide gegevens'),
         backgroundColor: errorColor,
       ));
-      throw Exception("Kon geen locatie toevoegen");
+      throw Exception("Kon geen klant toevoegen");
   }
 }

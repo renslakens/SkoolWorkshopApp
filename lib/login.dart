@@ -114,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _handleRegister() async {
+
     if (!(_emailController.text.toString().contains("@"))) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -130,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
 
       future:
       _futureLogin;
-
       loginModel res = await apiLogin(
           context, _emailController.text, _passwordController.text);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
