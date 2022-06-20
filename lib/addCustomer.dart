@@ -25,7 +25,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
   final _countryController = TextEditingController();
   final _contactpersonController = TextEditingController();
 
-  String dropdownvalue = "BSO";
+  String dropdownvalue = "na";
   Future<customerModel>? _futureAddCustomer;
 
   @override
@@ -205,39 +205,124 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
     future:
     _futureAddCustomer;
 
-    customerModel res = await apiAddCustomer(
-      context,
-      _nameController.text,
-      _surnameController.text,
-      _subcodeController.text,
-      _phonenumberController.text,
-      _streetController.text,
-      _housenumberController.text,
-      _cityController.text,
-    dropdownvalue,
-    _countryController.text,
-    _contactpersonController.text);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    String pattern = r'(^(?:[+0]6)?[0-9]{10,12}$)';
+    RegExp phoneReg = new RegExp(pattern);
+    String postalPattern = r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$";
+    RegExp postalReg = new RegExp(postalPattern);
 
-    //   //checks if there is no error in the response body.
-    //   //if error is not present, navigate the users to Login Screen.
-    {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-            rol: "Medewerker",
-            emailadres: "",
-          ),
-        ),
-      );
-    }
-    {
-      //if error is present, display a snackbar showing the error messsage
+    if(_nameController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Error: '),
+        content: Text('Vul een naam in'),
         backgroundColor: errorColor,
       ));
+    }
+    else if(_surnameController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een achternaam in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(!postalReg.hasMatch(_subcodeController.text)){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldige postcode'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(!phoneReg.hasMatch(_phonenumberController.text)){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldig telefoonnummer'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_streetController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een straat in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_housenumberController.text.isEmpty || _housenumberController.text.length < 6){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een huisnummer in'),
+        backgroundColor: errorColor,
+      )); 
+    }
+    else if(_cityController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een plaats in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(dropdownvalue.startsWith("na")){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een klant type in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_countryController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een land in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_contactpersonController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een contact persoon in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else {
+      customerModel res = await apiAddCustomer(
+          context,
+          _nameController.text,
+          _surnameController.text,
+          _subcodeController.text,
+          _phonenumberController.text,
+          _streetController.text,
+          _housenumberController.text,
+          _cityController.text,
+          dropdownvalue,
+          _countryController.text,
+          _contactpersonController.text);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (res.status == 201) {
+        //   //checks if there is no error in the response body.
+        //   //if error is not present, navigate the users to Login Screen.
+        {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) =>
+                  SkoolWorkshopApp(
+                    rol: "Medewerker",
+                    emailadres: "",
+                  ),
+            ),
+          );
+        }
+        {
+          //if error is present, display a snackbar showing the error messsage
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Klant is toegevoegd'),
+            backgroundColor: green,
+          ));
+        }
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Klant is niet toegevoegd'),
+          backgroundColor: errorColor,
+        ));
+      }
     }
   }
 }

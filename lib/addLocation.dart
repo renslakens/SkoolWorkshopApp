@@ -134,36 +134,90 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
     future:
     _futureAddLocation;
 
-    locationModel res = await apiAddLocation(
-        context,
-        _nameController.text,
-        _countryController.text,
-        _subcodeController.text,
-        _streetController.text,
-        _housenumberController.text,
-        _cityController.text);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    String postalPattern = r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$";
+    RegExp postalReg = new RegExp(postalPattern);
 
-    //   //checks if there is no error in the response body.
-    //   //if error is not present, navigate the users to Login Screen.
-    {
-      Navigator.of(context).push(
-        PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) =>
-              SkoolWorkshopApp(
-                rol: "Medewerker",
-                emailadres: "",
-              ),
-        ),
-      );
-    }
-    {
-      //if error is present, display a snackbar showing the error messsage
+    if(_nameController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Added location: '),
-        backgroundColor: infoColor,
+        content: Text('Vul een naam in'),
+        backgroundColor: errorColor,
       ));
+    }
+    else if(_countryController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een land in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(!postalReg.hasMatch(_subcodeController.text)){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldige postcode'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_streetController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een straat in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_housenumberController.text.isEmpty || _housenumberController.text.length > 5){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Ongeldig huisnummer'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else if(_cityController.text.isEmpty){
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Vul een plaats in'),
+        backgroundColor: errorColor,
+      ));
+    }
+    else {
+      locationModel res = await apiAddLocation(
+          context,
+          _nameController.text,
+          _countryController.text,
+          _subcodeController.text,
+          _streetController.text,
+          _housenumberController.text,
+          _cityController.text);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if(res.status == 201) {
+        //   //checks if there is no error in the response body.
+        //   //if error is not present, navigate the users to Login Screen.
+        {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) =>
+                  SkoolWorkshopApp(
+                    rol: "Medewerker",
+                    emailadres: "",
+                  ),
+            ),
+          );
+        }
+        {
+          //if error is present, display a snackbar showing the error messsage
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Locatie is toegevoegd'),
+            backgroundColor: green,
+          ));
+        }
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Locatie is niet toegevoegd'),
+          backgroundColor: errorColor,
+        ));
+      }
     }
   }
 }
