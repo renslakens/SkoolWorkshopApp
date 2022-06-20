@@ -102,7 +102,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren"),
+          title: Text("Verwijderen"),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
           actions: [
