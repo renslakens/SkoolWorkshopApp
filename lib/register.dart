@@ -2,6 +2,7 @@
 
 //import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
@@ -83,6 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _birthPlaceController = TextEditingController();
   final _mobilePhoneController = TextEditingController();
   final _addressController = TextEditingController();
+  final _housenumberController = TextEditingController();
   final _pincodeController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
@@ -303,17 +305,34 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 12,
               ),
 
+              Row(
+                children: [
               TextField(
                 controller: _addressController,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'Straat + nr.',
+                  labelText: 'Straatnaam',
                   labelStyle: TextStyle(
                     fontFamily: 'Heebo',
                     color: Colors.black,
                   ),
                 ),
               ),
+
+              TextField(
+                controller: _housenumberController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Huisnummer',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              ),
+              ]),
 
               TextField(
                 controller: _pincodeController,
@@ -610,7 +629,7 @@ class _RegisterPageState extends State<RegisterPage> {
       _futureRegister;
 
       registerModel res = await apiRegister(
-          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, '1', _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
+          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, _housenumberController.toString(), _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       //   //checks if there is no error in the response body.
