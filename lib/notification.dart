@@ -69,12 +69,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren"),
+          title: Text("Goedkeuren",
+              style: Theme.of(context).textTheme.headline3),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: Text("Annuleer"),
               onPressed: () {
                 setState(() {
                   Navigator.of(context).pop();
@@ -102,9 +103,11 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Verwijderen"),
+          title: Text("Verwijderen",
+              style: Theme.of(context).textTheme.headline3),
           content: Text(
-              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
+              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?",
+              style: Theme.of(context).textTheme.bodyText1),
           actions: [
             TextButton(
               child: Text("Cancel"),
@@ -143,9 +146,11 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_loginEmail(snapshot.data[index]).toString()),
+                          title: Text(_loginEmail(snapshot.data[index]).toString(),
+                              style: Theme.of(context).textTheme.subtitle1),
                           subtitle: Text(
-                              "Rol: ${_rol(snapshot.data[index])}"),
+                              "Rol: ${_rol(snapshot.data[index])}",
+                              style: Theme.of(context).textTheme.bodyText1),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -203,7 +208,8 @@ class NotificationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('Meldingen'),
+        title: Text('Meldingen',
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       ),
       body: NotificationWidget(),
