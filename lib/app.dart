@@ -103,9 +103,10 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
       body: showScreens(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: mainColor,
-        selectedItemColor: Colors.black,
+        backgroundColor: Colors.white,
+        selectedItemColor: mainColor,
         currentIndex: currentIndex,
+        elevation: 10000.0,
         onTap: (index) => setState(() => currentIndex = index),
         items: showButtons(),
       ),
