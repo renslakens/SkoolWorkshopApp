@@ -19,6 +19,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
         'Profiel',
         style: Theme.of(context).textTheme.headline1,
