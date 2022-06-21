@@ -134,7 +134,7 @@ Future<loginModel> apiLogin(
 }
 
 Future<registerModel> apiRegister(
-    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String telefoonnummer, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.register),
@@ -142,7 +142,7 @@ Future<registerModel> apiRegister(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': geslacht, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'straat': straat, 'huisnummer': huisnummer, 'postcode': postcode, 'woonplaats': woonplaats, 'land': land, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'rol':rol }),
+        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': geslacht, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'postcode': postcode, 'woonplaats': woonplaats, 'land': land, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'rol':rol }),
   )
       .catchError((onError) {
     print(onError);
