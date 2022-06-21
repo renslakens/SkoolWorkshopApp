@@ -305,9 +305,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 12,
               ),
 
-              Row(
-                children: [
-              TextField(
+              Container(
+                child: Row(
+                  children: [
+              Expanded( child:TextField(
                 controller: _addressController,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -317,9 +318,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Colors.black,
                   ),
                 ),
-              ),
+              ),),
+                    const SizedBox(
+                      width: 25,
+                    ),
 
-              TextField(
+              Expanded(
+              child: TextField(
                 controller: _housenumberController,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -331,8 +336,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-              ),
-              ]),
+              ),),
+          ],
+        ),
+    ),
+
 
               TextField(
                 controller: _pincodeController,
