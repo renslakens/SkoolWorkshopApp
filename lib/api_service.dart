@@ -287,3 +287,39 @@ Future<customerModel> apiAddCustomer(
       throw Exception("Kon geen klant toevoegen");
   }
 }
+
+Future<customerModel> apiAddJob(
+    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String naamContactpersoon) async {
+  final reponse = await http
+      .post(
+    Uri.parse(apis.baseUrl + apis.customerRoute),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'naamContactpersoon': naamContactpersoon}),
+  )
+      .catchError((onError) {
+    print(onError);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Kon geen verbinding maken'),
+      backgroundColor: errorColor,
+      duration: Duration(seconds: 30),
+    ));
+  });
+  switch (reponse.statusCode) {
+    case 201:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      print(reponse.statusCode);
+      return customerModel.fromJson(jsonDecode(reponse.body));
+    default:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalide gegevens'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception("Kon geen klant toevoegen");
+  }
+}
+

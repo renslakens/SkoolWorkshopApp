@@ -31,6 +31,7 @@ dependencies:
   retrofit: any
   http: any
   get: ^4.6.5
+  numberpicker: ^2.1.1
   blobs: ^2.0.0
   built_value: any
   json_annotation: any
