@@ -254,7 +254,7 @@ Future<workshopDetail> apiAddWorkshop(
 }
 
 Future<customerModel> apiAddCustomer(
-    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String naamContactpersoon) async {
+    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String emailContactpersoon) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.customerRoute),
@@ -262,7 +262,7 @@ Future<customerModel> apiAddCustomer(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'naamContactpersoon': naamContactpersoon}),
+        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'emailContactpersoon': emailContactpersoon}),
   )
       .catchError((onError) {
     print(onError);

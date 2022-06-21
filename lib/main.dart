@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
+import 'package:skoolworkshop/addCustomer.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/profiles.dart';
 import 'package:skoolworkshop/profileview.dart';
@@ -37,6 +38,7 @@ class Main extends StatelessWidget {
         '/profile' : (BuildContext context) => singleProfilePage(emailadres: "",),
         '/addlocation' : (BuildContext context) => const AddLocationPage(rol: "", emailadres: "",),
         '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "",),
+        '/addcustomer' : (BuildContext context) => const AddCustomerPage(rol: "", emailadres: "",),
       },
     );
   }
