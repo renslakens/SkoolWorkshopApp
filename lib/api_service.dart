@@ -153,7 +153,7 @@ Future<registerModel> apiRegister(
       duration: Duration(seconds: 30),
     ));
   });
-
+  print(reponse.statusCode);
   switch (reponse.statusCode) {
     case 201:
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -166,20 +166,20 @@ Future<registerModel> apiRegister(
         backgroundColor: errorColor,
       ));
       throw Exception('Invalid password');
-    case 404:
+    case 409:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldige email'),
+        content: Text('Kon niet registreren'),
         backgroundColor: errorColor,
       ));
-      throw Exception('Could not find emailaddress');
+      throw Exception('Could not register');
     default:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Invalide gegevens'),
         backgroundColor: errorColor,
       ));
-      throw Exception("Could not register");
+      throw Exception("Error");
   }
 }
 

@@ -2,6 +2,7 @@
 
 //import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
@@ -82,6 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _birthPlaceController = TextEditingController();
   final _mobilePhoneController = TextEditingController();
   final _addressController = TextEditingController();
+  final _housenumberController = TextEditingController();
   final _pincodeController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
@@ -596,7 +598,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 String pattern = r'(^(?:[+0]6)?[0-9]{10,12}$)';
                 RegExp phoneReg = new RegExp(pattern);
                 String postalPattern = r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$";
-                RegExp postalReg = new RegExp(postalPattern);
+                RegExp postalReg = new RegExp(postalPattern, caseSensitive: false);
                 if (gender == null) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -621,14 +623,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     content: Text('Ongeldig telefoonnummer'),
                     backgroundColor: errorColor,
                   ));
-                } else if (_addressController.text.toString().length > 5) {
+                } else if (_addressController.text.isEmpty) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Ongeldig adres'),
+                    content: Text('Vul een huisnummer in'),
                     backgroundColor: errorColor,
                   ));
+                }
+                else if (_housenumberController.text.toString().length > 5 || _housenumberController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldig huisnummer'),
+                    backgroundColor: errorColor,
+                  ));
+
                 } else if (!postalReg
-                    .hasMatch(_pincodeController.text.toString())) {
+                    .hasMatch(_pincodeController.text)) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Ongeldige postcode'),
@@ -736,20 +746,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   Future<void> _handleRegister() async {
-    if (!(_emailController.text.toString().contains("@"))) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldige email'),
-        backgroundColor: errorColor,
-      ));
-    } else if (!(_passwordController.text.length > 7)) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldig wachtwoord'),
-        backgroundColor: errorColor,
-      ));
-    } else {
-
       future:
       _futureRegister;
 
@@ -760,14 +756,12 @@ class _RegisterPageState extends State<RegisterPage> {
           _emailController.text,
           _passwordController.text,
           gender.toString(),
-          'nederlands',
           _birthDateController.text,
           _birthPlaceController.text,
           _addressController.text,
-          '1',
+          _housenumberController.text.toString(),
           _pincodeController.text,
           _cityController.text,
-          'geen',
           _countryController.text,
           drivers_liscence.toString(),
           car.toString(),
@@ -777,10 +771,16 @@ class _RegisterPageState extends State<RegisterPage> {
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
       {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Succesvol geregistreerd'),
+          backgroundColor: green,
+        ));
         Navigator.push(
             context,
             MaterialPageRoute(
                 //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
+
                 builder: (context) => const SkoolWorkshopApp(
                       rol: "Docent",
                       emailadres: "",
@@ -793,6 +793,5 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: errorColor,
         ));
       }
-    }
   }
 }
