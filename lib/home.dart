@@ -123,7 +123,7 @@ class HomePage extends StatelessWidget {
       );
     } else {
       return AppBar(
-        title: Text('Home',
+        title: Text('Home', 
             style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       );
