@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skoolworkshop/Model/customerModel.dart';
 
 import 'api_service.dart';
@@ -32,7 +33,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
             Text(
@@ -44,7 +45,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: mainColor)),
-                labelText: 'Naam',
+                labelText: 'Voornaam',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
@@ -64,18 +65,6 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
               ),
             ),
             TextField(
-              controller: _subcodeController,
-              decoration: const InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: mainColor)),
-                labelText: 'Postcode',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            TextField(
               controller: _phonenumberController,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(
@@ -87,30 +76,56 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                 ),
               ),
             ),
+
+            Container(
+              child: Row(
+                children: [
+                  Expanded( child:TextField(
+                    controller: _streetController,
+                    decoration: const InputDecoration(
+                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                      labelText: 'Straatnaam',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),),
+                  const SizedBox(
+                    width: 25,
+                  ),
+
+                  Expanded(
+                    child: TextField(
+                      controller: _housenumberController,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                        labelText: 'Huisnummer',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Heebo',
+                          color: Colors.black,
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    ),),
+                ],
+              ),
+            ),
+
             TextField(
-              controller: _streetController,
+              controller: _subcodeController,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: mainColor)),
-                labelText: 'Straat',
+                labelText: 'Postcode',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
                 ),
               ),
             ),
-            TextField(
-              controller: _housenumberController,
-              decoration: const InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: mainColor)),
-                labelText: 'Huisnummer',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
-              ),
-            ),
+
             TextField(
               controller: _cityController,
               decoration: const InputDecoration(
@@ -123,6 +138,20 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                 ),
               ),
             ),
+
+            TextField(
+              controller: _countryController,
+              decoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: mainColor)),
+                labelText: 'Land',
+                labelStyle: TextStyle(
+                  fontFamily: 'Heebo',
+                  color: Colors.black,
+                ),
+              ),
+            ),
+
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: DropdownButton<String>(
@@ -153,24 +182,13 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                 }).toList(),
               ),
             ),
-            TextField(
-              controller: _countryController,
-              decoration: const InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: mainColor)),
-                labelText: 'Land',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
-              ),
-            ),
+
             TextField(
               controller: _contactpersonController,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: mainColor)),
-                labelText: 'Naam contactpersoon',
+                labelText: 'Email contactpersoon',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
@@ -276,7 +294,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
     else if(_contactpersonController.text.isEmpty){
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Vul een contact persoon in'),
+        content: Text('Vul een email in'),
         backgroundColor: errorColor,
       ));
     }
