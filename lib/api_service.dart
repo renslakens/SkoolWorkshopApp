@@ -95,7 +95,6 @@ Future<loginModel> apiLogin(
         <String, String>{'emailadres': email, 'wachtwoord': wachtwoord}),
   )
       .catchError((onError) {
-
     print(onError);
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -134,15 +133,45 @@ Future<loginModel> apiLogin(
 }
 
 Future<registerModel> apiRegister(
-    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+    BuildContext context,
+    String voornaam,
+    String achternaam,
+    String email,
+    String wachtwoord,
+    String geboortedatum,
+    String geboorteplaats,
+    String heeftRijbewijs,
+    String heeftAuto,
+    String straat,
+    String huisnummer,
+    String geslacht,
+    String woonplaats,
+    String postcode,
+    String land,
+    String rol) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.register),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(
-        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': geslacht, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'straat': straat, 'huisnummer': huisnummer, 'postcode': postcode, 'woonplaats': woonplaats, 'land': land, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'rol':rol }),
+    body: jsonEncode(<String, String>{
+      'voornaam': voornaam,
+      'achternaam': achternaam,
+      'emailadres': email,
+      'wachtwoord': wachtwoord,
+      'geslacht': geslacht,
+      'geboortedatum': geboortedatum,
+      'geboorteplaats': geboorteplaats,
+      'straat': straat,
+      'huisnummer': huisnummer,
+      'postcode': postcode,
+      'woonplaats': woonplaats,
+      'land': land,
+      'heeftRijbewijs': heeftRijbewijs,
+      'heeftAuto': heeftAuto,
+      'rol': rol
+    }),
   )
       .catchError((onError) {
     print(onError);
@@ -184,15 +213,27 @@ Future<registerModel> apiRegister(
 }
 
 Future<locationModel> apiAddLocation(
-    BuildContext context, String voornaam, String land, String postcode, String straat, String huisnummer, String plaats) async {
+    BuildContext context,
+    String voornaam,
+    String land,
+    String postcode,
+    String straat,
+    String huisnummer,
+    String plaats) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.locationRoute),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(
-        <String, String>{'naam': voornaam, 'land': land, 'postcode': postcode, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats}),
+    body: jsonEncode(<String, String>{
+      'naam': voornaam,
+      'land': land,
+      'postcode': postcode,
+      'straat': straat,
+      'huisnummer': huisnummer,
+      'plaats': plaats
+    }),
   )
       .catchError((onError) {
     print(onError);
@@ -254,15 +295,35 @@ Future<workshopDetail> apiAddWorkshop(
 }
 
 Future<customerModel> apiAddCustomer(
-    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String emailContactpersoon) async {
+    BuildContext context,
+    String voornaam,
+    String achternaam,
+    String postcode,
+    String telefoonnummer,
+    String straat,
+    String huisnummer,
+    String plaats,
+    String klantType,
+    String land,
+    String emailContactpersoon) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.customerRoute),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(
-        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'emailContactpersoon': emailContactpersoon}),
+    body: jsonEncode(<String, String>{
+      'voornaam': voornaam,
+      'achternaam': achternaam,
+      'postcode': postcode,
+      'telefoonnummer': telefoonnummer,
+      'straat': straat,
+      'huisnummer': huisnummer,
+      'plaats': plaats,
+      'klantType': klantType,
+      'land': land,
+      'emailContactpersoon': emailContactpersoon
+    }),
   )
       .catchError((onError) {
     print(onError);
