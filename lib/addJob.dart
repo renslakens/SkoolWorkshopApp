@@ -44,7 +44,7 @@ class _AddJobWidgetState extends State<AddJobWidget> {
               controller: _salaryController,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                labelText: 'Land',
+                labelText: 'Salaris',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
@@ -53,25 +53,53 @@ class _AddJobWidgetState extends State<AddJobWidget> {
             ),
             TextField(
               controller: _starttimeController,
+              readOnly: true,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                labelText: 'Postcode',
+                labelText: 'Kies starttijd',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
                 ),
               ),
+              onTap: () async {
+                var date =  await showDatePicker(
+                  context: context,
+                  // theme: ThemeData(primarySwatch: Colors.pink),
+                  initialDate:DateTime.now(),
+                  firstDate:DateTime(1900),
+                  lastDate: DateTime(2100),
+                  helpText: 'Selecteer starttijd',
+                  cancelText: 'Annuleer',
+                  confirmText: 'Bevestig',
+                );
+                _starttimeController.text = date.toString().substring(0,10);
+              },
             ),
             TextField(
               controller: _endtimeController,
+              readOnly: true,
               decoration: const InputDecoration(
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                labelText: 'Straat',
+                labelText: 'Kies eindtijd',
                 labelStyle: TextStyle(
                   fontFamily: 'Heebo',
                   color: Colors.black,
                 ),
               ),
+              onTap: () async {
+                var date =  await showDatePicker(
+                  context: context,
+                  // theme: ThemeData(primarySwatch: Colors.pink),
+                  initialDate:DateTime.now(),
+                  firstDate:DateTime(1900),
+                  lastDate: DateTime(2100),
+                  helpText: 'Selecteer eindtijd',
+                  cancelText: 'Annuleer',
+                  confirmText: 'Bevestig',
+                );
+                _endtimeController.text = date.toString().substring(0,10);
+              },
             ),
             TextField(
               controller: _locationController,
