@@ -72,8 +72,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
           title: Text("Goedkeuren",
               style: Theme.of(context).textTheme.headline3),
           content: Text(
-              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?",
-          style: Theme.of(context).textTheme.bodyText1),
+              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
           actions: [
             TextButton(
               child: Text("Annuleer"),
@@ -104,7 +103,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren",
+          title: Text("Verwijderen",
               style: Theme.of(context).textTheme.headline3),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?",

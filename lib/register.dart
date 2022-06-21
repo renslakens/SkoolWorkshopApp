@@ -207,6 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                         }),
                   ),
+
                   ListTile(
                     title: Text("Vrouw",
                         style: Theme.of(context).textTheme.subtitle1),
@@ -219,151 +220,175 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                         }),
                   ),
-                  TextField(
-                    controller: _birthDateController,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Kies geboortedatum',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                    onTap: () async {
-                      var date = await showDatePicker(
-                        context: context,
-                        // theme: ThemeData(primarySwatch: Colors.pink),
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
-                        helpText: 'Selecteer geboortedatum',
-                        cancelText: 'Anulleer',
-                        confirmText: 'Bevestig',
-                      );
-                      _birthDateController.text =
-                          date.toString().substring(0, 10);
-                    },
+
+              TextField(
+                controller: _birthDateController,
+                readOnly: true,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Kies geboortedatum',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextField(
-                    controller: _birthPlaceController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Geboorteplaats',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextField(
-                    controller: _mobilePhoneController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Mobiel nummer',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'bestand uploaden',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text("Adres",
-                      style: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  TextField(
-                    controller: _addressController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Straat + nr.',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    controller: _pincodeController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Postcode',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    controller: _cityController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Woonplaats',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    controller: _countryController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
-                      labelText: 'Land',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+                onTap: () async {
+                  var date =  await showDatePicker(
+                      context: context,
+                      // theme: ThemeData(primarySwatch: Colors.pink),
+                      initialDate:DateTime.now(),
+                      firstDate:DateTime(1900),
+                      lastDate: DateTime(2100),
+                      helpText: 'Selecteer geboortedatum',
+                      cancelText: 'Anulleer',
+                      confirmText: 'Bevestig',
+                  );
+                  _birthDateController.text = date.toString().substring(0,10);
+                },
               ),
-            )),
-        Step(
-            state: _activeCurrentStep <= 2
-                ? StepState.editing
-                : StepState.complete,
-            isActive: _activeCurrentStep >= 2,
-            title: Text('Stap 3', style: Theme.of(context).textTheme.subtitle1),
-            content: Container(
-                child: Column(
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _birthPlaceController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Geboorteplaats',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _mobilePhoneController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Mobiel nummer',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'bestand uploaden',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+
+              Text("Adres", style: TextStyle(
+                fontFamily: 'Heebo',
+                color: Colors.black,
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              )),
+              const SizedBox(
+                height: 12,
+              ),
+
+              Container(
+                child: Row(
+                  children: [
+              Expanded( child:TextField(
+                controller: _addressController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Straatnaam',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),),
+                    const SizedBox(
+                      width: 25,
+                    ),
+
+              Expanded(
+              child: TextField(
+                controller: _housenumberController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Huisnummer',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              ),),
+          ],
+        ),
+    ),
+
+
+              TextField(
+                controller: _pincodeController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Postcode',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
+              TextField(
+                controller: _cityController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Woonplaats',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
+              TextField(
+                controller: _countryController,
+                decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+                  labelText: 'Land',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Heebo',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        )),
+
+    Step(
+        state:_activeCurrentStep <= 2 ? StepState.editing : StepState.complete,
+        isActive: _activeCurrentStep >= 2,
+        title: const Text('Stap 3'),
+        content: Container(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -377,6 +402,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
+
                 ListTile(
                   title: ElevatedButton(
                     child: const Text('Uploaden',
@@ -408,6 +434,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
+
                 ListTile(
                   title: ElevatedButton(
                     child: const Text('Uploaden',
@@ -457,6 +484,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         });
                       }),
                 ),
+
                 ListTile(
                   title:
                       Text("Nee", style: Theme.of(context).textTheme.subtitle1),
@@ -490,6 +518,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         });
                       }),
                 ),
+
                 ListTile(
                   title:
                       Text("Nee", style: Theme.of(context).textTheme.subtitle1),
@@ -505,6 +534,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
+
               ],
             )))
       ];
@@ -704,19 +734,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+
   Future<void> _handleRegister() async {
-    // if (_firstNameController.text.isEmpty) {
-    //   ScaffoldMessenger.of(context).clearSnackBars();
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //     content: Text('Vul een voornaam in'),
-    //     backgroundColor: errorColor,
-    //   ));
-    //   if (_emailController.text.isEmpty) {
-    //     ScaffoldMessenger.of(context).clearSnackBars();
-    //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //       content: Text('Vul een achternaam in'),
-    //       backgroundColor: errorColor,
-    //     ));
     if (!(_emailController.text.toString().contains("@"))) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -730,6 +749,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: errorColor,
       ));
     } else {
+
       future:
       _futureRegister;
 
