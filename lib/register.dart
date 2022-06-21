@@ -478,7 +478,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   title:
                       Text("Ja", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "ja",
+                      value: "true",
                       groupValue: drivers_liscence,
                       onChanged: (value) {
                         setState(() {
@@ -491,7 +491,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   title:
                       Text("Nee", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "nee",
+                      value: "false",
                       groupValue: drivers_liscence,
                       onChanged: (value) {
                         setState(() {
@@ -512,7 +512,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   title:
                       Text("Ja", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "ja",
+                      value: "true",
                       groupValue: car,
                       onChanged: (value) {
                         setState(() {
@@ -525,7 +525,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   title:
                       Text("Nee", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "nee",
+                      value: "false",
                       groupValue: car,
                       onChanged: (value) {
                         setState(() {
