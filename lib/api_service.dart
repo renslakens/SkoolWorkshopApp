@@ -142,7 +142,7 @@ Future<registerModel> apiRegister(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'straat': straat, 'huisnummer': huisnummer, 'geslacht': geslacht, 'woonplaats': woonplaats, 'postcode': postcode, 'land': land, 'rol':rol }),
+        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': geslacht, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'straat': straat, 'huisnummer': huisnummer, 'postcode': postcode, 'woonplaats': woonplaats, 'land': land, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'rol':rol }),
   )
       .catchError((onError) {
     print(onError);
