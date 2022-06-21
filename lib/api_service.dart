@@ -134,7 +134,7 @@ Future<loginModel> apiLogin(
 }
 
 Future<registerModel> apiRegister(
-    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String telefoonnummer, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geslacht, String geboortedatum, String geboorteplaats, String telefoonnummer, String straat, String huisnummer, String postcode, String woonplaats, String land, String heeftRijbewijs, String heeftAuto, String rol ) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.register),
