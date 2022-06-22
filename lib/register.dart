@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:skoolworkshop/awaitingProfile.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
 import 'api_service.dart';
@@ -74,11 +75,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<registerModel>? _futureRegister;
 
-  // bool _showPassword = false;
+  bool _showPassword = false;
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _checkPasswordController = TextEditingController();
   final _birthDateController = TextEditingController();
   final _birthPlaceController = TextEditingController();
   final _mobilePhoneController = TextEditingController();
@@ -151,19 +153,50 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 8,
                   ),
+
+
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: mainColor)),
+                    obscureText: !this._showPassword,
+                    cursorColor: mainColor,
+                    decoration: InputDecoration(
                       labelText: 'Wachtwoord',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Heebo',
-                        color: Colors.black,
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: this._showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() => this._showPassword = !this._showPassword);
+                        },
                       ),
                     ),
                   ),
+
+                  TextField(
+                    controller: _checkPasswordController,
+                    obscureText: !this._showPassword,
+                    cursorColor: mainColor,
+                    decoration: InputDecoration(
+                      labelText: 'Bevestig wachtwoord',
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: this._showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() => this._showPassword = !this._showPassword);
+                        },
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             )),
@@ -242,7 +275,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       firstDate:DateTime(1900),
                       lastDate: DateTime(2100),
                       helpText: 'Selecteer geboortedatum',
-                      cancelText: 'Anulleer',
+                      cancelText: 'Annuleer',
                       confirmText: 'Bevestig',
                   );
                   _birthDateController.text = date.toString().substring(0,10);
@@ -282,21 +315,21 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 8,
               ),
 
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'bestand uploaden',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              // TextField(
+              //   controller: _passwordController,
+              //   obscureText: true,
+              //   decoration: const InputDecoration(
+              //     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+              //     labelText: 'bestand uploaden',
+              //     labelStyle: TextStyle(
+              //       fontFamily: 'Heebo',
+              //       color: Colors.black,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 30,
+              // ),
 
               Text("Adres", style: TextStyle(
                 fontFamily: 'Heebo',
@@ -405,69 +438,69 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 12,
                 ),
 
-                ListTile(
-                  title: ElevatedButton(
-                    child: const Text('Uploaden',
-                        style: TextStyle(fontFamily: 'Heebo')),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage(
-                                  rol: "",
-                                )),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 8.0,
-                      primary: mainColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                      ),
-                    ),
-                  ),
-                  leading: Text("Kopie ID toevoegen:",
-                      style: TextStyle(
-                        fontFamily: 'Heebo',
-                        fontSize: 17.0,
-                        color: Colors.black,
-                      )),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
+                // ListTile(
+                //   title: ElevatedButton(
+                //     child: const Text('Uploaden',
+                //         style: TextStyle(fontFamily: 'Heebo')),
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => RegisterPage(
+                //                   rol: "",
+                //                 )),
+                //       );
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       elevation: 8.0,
+                //       primary: mainColor,
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                //       ),
+                //     ),
+                //   ),
+                //   leading: Text("Kopie ID toevoegen:",
+                //       style: TextStyle(
+                //         fontFamily: 'Heebo',
+                //         fontSize: 17.0,
+                //         color: Colors.black,
+                //       )),
+                // ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
 
-                ListTile(
-                  title: ElevatedButton(
-                    child: const Text('Uploaden',
-                        style: TextStyle(fontFamily: 'Heebo')),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage(
-                                  rol: "",
-                                )),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 8.0,
-                      primary: mainColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                      ),
-                    ),
-                  ),
-                  leading: Text("Vog toevoegen:",
-                      style: TextStyle(
-                        fontFamily: 'Heebo',
-                        fontSize: 17.0,
-                        color: Colors.black,
-                      )),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
+                // ListTile(
+                //   title: ElevatedButton(
+                //     child: const Text('Uploaden',
+                //         style: TextStyle(fontFamily: 'Heebo')),
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => RegisterPage(
+                //                   rol: "",
+                //                 )),
+                //       );
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       elevation: 8.0,
+                //       primary: mainColor,
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                //       ),
+                //     ),
+                //   ),
+                //   leading: Text("Vog toevoegen:",
+                //       style: TextStyle(
+                //         fontFamily: 'Heebo',
+                //         fontSize: 17.0,
+                //         color: Colors.black,
+                //       )),
+                // ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
                 Text("Rijbewijs?",
                     style: TextStyle(
                       fontFamily: 'Heebo',
@@ -570,22 +603,42 @@ class _RegisterPageState extends State<RegisterPage> {
                     content: Text('Vul een voornaam in'),
                     backgroundColor: errorColor,
                   ));
-                } else if (_emailController.text.isEmpty) {
+                } else if (_lastNameController.text.isEmpty) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Vul een achternaam in'),
                     backgroundColor: errorColor,
                   ));
-                } else if (!(_emailController.text.toString().contains("@"))) {
+                } else if (_emailController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een emailadres in'),
+                    backgroundColor: errorColor,
+                  ));
+                }
+                else if (!(_emailController.text.toString().contains("@"))) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Ongeldige email'),
                     backgroundColor: errorColor,
                   ));
-                } else if (!(_passwordController.text.length > 7)) {
+                } else if (_passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een wachtwoord in'),
+                    backgroundColor: errorColor,
+                  ));
+                }
+                else if (!(_passwordController.text.length > 7)) {
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Ongeldig wachtwoord'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if(!(_checkPasswordController.text == _passwordController.text)) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Wachtwoorden matchen niet'),
                     backgroundColor: errorColor,
                   ));
                 } else {
@@ -775,17 +828,14 @@ class _RegisterPageState extends State<RegisterPage> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Succesvol geregistreerd'),
-          backgroundColor: green,
+          backgroundColor: Colors.green,
         ));
         Navigator.push(
             context,
             MaterialPageRoute(
                 //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
 
-                builder: (context) => const SkoolWorkshopApp(
-                      rol: "Docent",
-                      emailadres: "",
-                    )));
+                builder: (context) => const awaitingProfile()));
       }
       {
         //if error is present, display a snackbar showing the error messsage
