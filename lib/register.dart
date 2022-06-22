@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:skoolworkshop/awaitingProfile.dart';
+import 'package:skoolworkshop/mailer.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
 import 'api_service.dart';
@@ -802,6 +803,9 @@ class _RegisterPageState extends State<RegisterPage> {
       future:
       _futureRegister;
 
+      //Send mail to registered person
+      acountregistered(_emailController.text, _firstNameController.text);
+
       registerModel res = await apiRegister(
           context,
           _firstNameController.text,
@@ -833,10 +837,8 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
-
                 builder: (context) => const awaitingProfile()));
-      }
+          }
       {
         //if error is present, display a snackbar showing the error messsage
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/mailer.dart';
 import 'package:skoolworkshop/profileview.dart';
 import 'package:intl/intl.dart';
 
@@ -25,7 +26,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return json.decode(result.body)['result'];
   }
 
-  Future delDocent(String emailLogin) async {
+  Future delDocent(String emailLogin, String voornaam) async {
+    accountdeleted(emailLogin, voornaam);
     http.Response response = await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
       print("Deleted");
@@ -34,7 +36,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  Future accDocent(String emailLogin) async {
+  Future accDocent(String emailLogin, String voornaam) async {
+    accountaccepted(emailLogin, voornaam);
     http.Response response = await http.put(Uri.parse(acceptDocent + emailLogin));
     if (response.statusCode == 200) {
       print('User with ID $emailLogin successfully Accepted');
@@ -45,9 +48,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return user['docentID'];
   }
 
-  // String _naam(dynamic user) {
-  //   return user['naam'] + " " + user['achternaam'];
-  // }
+  String _voornaam(dynamic user) {
+    return user['voornaam'];
+  }
 
   String _loginEmail(dynamic user) {
     return user['emailadres'];
@@ -86,7 +89,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Geef toegang"),
               onPressed: () {
                 setState(() {
-                  accDocent(_loginEmail(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -119,7 +122,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  delDocent(_loginEmail(snapshot.data[index]).toString());
+                  delDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },

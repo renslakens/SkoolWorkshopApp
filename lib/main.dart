@@ -8,6 +8,7 @@ import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 import 'package:skoolworkshop/workshopDetail.dart';
 
+import 'addCustomer.dart';
 import 'addLocation.dart';
 import 'addWorkshop.dart';
 import 'app.dart';
