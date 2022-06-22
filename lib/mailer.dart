@@ -121,7 +121,7 @@ acountregistered(String recipient, String naam) async {
                                                         <tr>
                                                             <td>
                                                                 <div style="color:#000000;direction:ltr;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;">
-                                                                    <p style="margin: 0;">Beste {{NAAM}},<br/><br/>Leuk dat je een account heb aangemaakt voor Skool Workshop!<br/><br/>Jouw account wordt zo spoedig mogelijk gecontroleerd door één van onze medewerkers. Je krijgt
+                                                                    <p style="margin: 0;">Beste {{NAAM}},<br/><br/>Leuk dat je een account hebt aangemaakt voor Skool Workshop!<br/><br/>Jouw account wordt zo spoedig mogelijk gecontroleerd door één van onze medewerkers. Je krijgt
                                                                         een mailtje zodra dit gedaan is.<br/><br/><strong>Team Skool Workshop</strong></p>
                                                                 </div>
                                                             </td>
