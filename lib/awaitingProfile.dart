@@ -18,6 +18,7 @@ class awaitingProfile extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/login');}
           ),
         ),
+        backgroundColor: backgroundColor,
         body: Padding(
           padding: EdgeInsets.all(80.0),
           child: Center(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
-import 'package:skoolworkshop/addCustomer.dart';
 import 'package:skoolworkshop/awaitingprofile.dart';
 import 'package:skoolworkshop/profiles.dart';
 import 'package:skoolworkshop/profileview.dart';
@@ -9,6 +8,7 @@ import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 import 'package:skoolworkshop/workshopDetail.dart';
 
+import 'addCustomer.dart';
 import 'addLocation.dart';
 import 'addWorkshop.dart';
 import 'app.dart';

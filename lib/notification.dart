@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/mailer.dart';
 import 'package:skoolworkshop/profileview.dart';
 import 'package:intl/intl.dart';
 
@@ -49,9 +50,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return user['docentID'];
   }
 
-  // String _naam(dynamic user) {
-  //   return user['naam'] + " " + user['achternaam'];
-  // }
+  String _voornaam(dynamic user) {
+    return user['voornaam'];
+  }
 
   String _loginEmail(dynamic user) {
     return user['emailadres'];
