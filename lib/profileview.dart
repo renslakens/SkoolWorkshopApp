@@ -32,6 +32,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
   Future<List<dynamic>> fetchUsers() async {
     var result =
         await http.get(Uri.parse(apis.baseUrl + apis.unAcceptedProfiles));
+    print(result.body);
     final filteredUser = json.decode(result.body)['result'].where(
           (um) =>
               um.results.indexWhere(
@@ -39,6 +40,8 @@ class _singleProfilePageState extends State<singleProfilePage> {
               ) >=
               0,
         );
+    // print("user: " + filteredUser[0].results[0].toString());
+
     return filteredUser[0].results[0];
   }
 
@@ -47,7 +50,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
   }
 
   String _achternaam(dynamic user) {
-    return user['achternaam'];
+    return user['wachtwoord'];
   }
 
   String _geboorteplaats(dynamic user) {
@@ -154,7 +157,9 @@ class _singleProfilePageState extends State<singleProfilePage> {
   Widget buildName(BuildContext context) => Column(
         children: [
           Text(
-            "${fetchUsers()} ${_achternaam(fetchUsers)}",
+            // _achternaam(fetchUsers()).toString(),
+            // "${fetchUsers()} ${_achternaam(fetchUsers)}",
+            "d",
             style: Theme.of(context).textTheme.headline2,
           ),
           Text("Emailadres", style: Theme.of(context).textTheme.bodyText1)

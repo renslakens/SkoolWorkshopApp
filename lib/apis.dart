@@ -1,5 +1,5 @@
 class apis {
-  static String baseUrl = 'http://145.49.40.160:3000';
+  static String baseUrl = 'http://145.49.34.77:3000';
   static String login = '/api/auth/login';
   static String register = '/api/auth/register';
   static String acceptedProfiles = '/api/auth/?isAccepted=1';
