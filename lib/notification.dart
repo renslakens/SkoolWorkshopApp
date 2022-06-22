@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/mailer.dart';
 import 'package:skoolworkshop/profileview.dart';
 import 'package:intl/intl.dart';
 
@@ -25,7 +26,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return json.decode(result.body)['result'];
   }
 
-  Future delDocent(String emailLogin) async {
+  Future delDocent(String emailLogin, String voornaam) async {
+    accountdeleted(emailLogin, voornaam);
     http.Response response = await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
       print("Deleted");
@@ -34,7 +36,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  Future accDocent(String emailLogin) async {
+  Future accDocent(String emailLogin, String voornaam) async {
+    accountaccepted(emailLogin, voornaam);
     http.Response response = await http.put(Uri.parse(acceptDocent + emailLogin));
     if (response.statusCode == 200) {
       print('User with ID $emailLogin successfully Accepted');
@@ -45,9 +48,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return user['docentID'];
   }
 
-  // String _naam(dynamic user) {
-  //   return user['naam'] + " " + user['achternaam'];
-  // }
+  String _voornaam(dynamic user) {
+    return user['voornaam'];
+  }
 
   String _loginEmail(dynamic user) {
     return user['emailadres'];
@@ -69,12 +72,13 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren"),
+          title: Text("Goedkeuren",
+              style: Theme.of(context).textTheme.headline3),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: Text("Annuleer"),
               onPressed: () {
                 setState(() {
                   Navigator.of(context).pop();
@@ -85,7 +89,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Geef toegang"),
               onPressed: () {
                 setState(() {
-                  accDocent(_loginEmail(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -102,9 +106,11 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Verwijderen"),
+          title: Text("Verwijderen",
+              style: Theme.of(context).textTheme.headline3),
           content: Text(
-              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?"),
+              "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?",
+              style: Theme.of(context).textTheme.bodyText1),
           actions: [
             TextButton(
               child: Text("Cancel"),
@@ -116,7 +122,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  delDocent(_loginEmail(snapshot.data[index]).toString());
+                  delDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -143,9 +149,11 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_loginEmail(snapshot.data[index]).toString()),
+                          title: Text(_loginEmail(snapshot.data[index]).toString(),
+                              style: Theme.of(context).textTheme.subtitle1),
                           subtitle: Text(
-                              "Rol: ${_rol(snapshot.data[index])}"),
+                              "Rol: ${_rol(snapshot.data[index])}",
+                              style: Theme.of(context).textTheme.bodyText1),
                           trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -203,7 +211,8 @@ class NotificationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('Meldingen'),
+        title: Text('Meldingen',
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       ),
       body: NotificationWidget(),

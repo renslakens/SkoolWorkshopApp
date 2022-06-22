@@ -26,7 +26,6 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     HomePage(rol: widget.rol, emailadres: widget.emailadres,),
     awaitingProfile(),
     awaitingProfile(),
-    NotificationPage(),
     singleProfilePage(emailadres: widget.emailadres,),
   ];
 
@@ -48,10 +47,6 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     BottomNavigationBarItem(
       icon: Icon(Icons.access_time),
       label: 'Afwachting',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.circle_notifications_outlined),
-      label: 'Meldingen',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle_outlined),
@@ -103,9 +98,10 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
       body: showScreens(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: mainColor,
-        selectedItemColor: Colors.black,
+        backgroundColor: Colors.white,
+        selectedItemColor: mainColor,
         currentIndex: currentIndex,
+        elevation: 10000.0,
         onTap: (index) => setState(() => currentIndex = index),
         items: showButtons(),
       ),

@@ -134,7 +134,7 @@ Future<loginModel> apiLogin(
 }
 
 Future<registerModel> apiRegister(
-    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geboortedatum, String geboorteplaats, String heeftRijbewijs, String heeftAuto, String straat, String huisnummer, String geslacht, String woonplaats, String postcode, String land, String rol ) async {
+    BuildContext context, String voornaam, String achternaam, String email, String wachtwoord, String geslacht, String geboortedatum, String geboorteplaats, String telefoonnummer, String straat, String huisnummer, String postcode, String woonplaats, String land, String heeftRijbewijs, String heeftAuto, String rol ) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.register),
@@ -142,7 +142,7 @@ Future<registerModel> apiRegister(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'straat': straat, 'huisnummer': huisnummer, 'geslacht': geslacht, 'woonplaats': woonplaats, 'postcode': postcode, 'land': land, 'rol':rol }),
+        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'emailadres': email, 'wachtwoord': wachtwoord, 'geslacht': geslacht, 'geboortedatum': geboortedatum, 'geboorteplaats': geboorteplaats, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'postcode': postcode, 'woonplaats': woonplaats, 'land': land, 'heeftRijbewijs': heeftRijbewijs, 'heeftAuto': heeftAuto, 'rol':rol }),
   )
       .catchError((onError) {
     print(onError);
@@ -153,7 +153,7 @@ Future<registerModel> apiRegister(
       duration: Duration(seconds: 30),
     ));
   });
-
+  print(reponse.statusCode);
   switch (reponse.statusCode) {
     case 201:
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -166,20 +166,20 @@ Future<registerModel> apiRegister(
         backgroundColor: errorColor,
       ));
       throw Exception('Invalid password');
-    case 404:
+    case 409:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldige email'),
+        content: Text('Kon niet registreren'),
         backgroundColor: errorColor,
       ));
-      throw Exception('Could not find emailaddress');
+      throw Exception('Could not register');
     default:
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Invalide gegevens'),
         backgroundColor: errorColor,
       ));
-      throw Exception("Could not register");
+      throw Exception("Error");
   }
 }
 
@@ -254,7 +254,7 @@ Future<workshopDetail> apiAddWorkshop(
 }
 
 Future<customerModel> apiAddCustomer(
-    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String naamContactpersoon) async {
+    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String emailContactpersoon) async {
   final reponse = await http
       .post(
     Uri.parse(apis.baseUrl + apis.customerRoute),
@@ -262,7 +262,7 @@ Future<customerModel> apiAddCustomer(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'naamContactpersoon': naamContactpersoon}),
+        <String, String>{'voornaam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'emailContactpersoon': emailContactpersoon}),
   )
       .catchError((onError) {
     print(onError);

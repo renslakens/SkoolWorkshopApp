@@ -6,6 +6,8 @@ import 'package:skoolworkshop/apis.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:http/http.dart' as http;
 
+import 'mailer.dart';
+
 class ProfileWidget extends StatefulWidget {
 
   const ProfileWidget({Key? key}) : super(key: key);
@@ -25,7 +27,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   }
 
-  Future deleteUser(String emailadres) async {
+  Future deleteUser(String emailadres, String voornaam) async {
+    accountdeleted(emailadres, voornaam);
     http.Response response = await http.delete(Uri.parse(deleteProfileUrl + emailadres));
     if (response.statusCode == 200) {
       print("Deleted");
@@ -40,6 +43,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   String _emailadres(dynamic user){
     return user['emailadres'];
+  }
+
+  String _voornaam(dynamic user) {
+    return user['voornaam'];
   }
 
   Future<void> _denyMyDialog(context, snapshot, index) async {
@@ -62,7 +69,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  deleteUser(_emailadres(snapshot.data[index]).toString());
+                  deleteUser(_emailadres(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },

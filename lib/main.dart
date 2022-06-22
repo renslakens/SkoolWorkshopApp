@@ -8,6 +8,7 @@ import 'package:skoolworkshop/register.dart';
 import 'package:skoolworkshop/theme.dart';
 import 'package:skoolworkshop/workshopDetail.dart';
 
+import 'addCustomer.dart';
 import 'addLocation.dart';
 import 'addWorkshop.dart';
 import 'app.dart';
@@ -37,6 +38,7 @@ class Main extends StatelessWidget {
         '/profile' : (BuildContext context) => singleProfilePage(emailadres: "",),
         '/addlocation' : (BuildContext context) => const AddLocationPage(rol: "", emailadres: "",),
         '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "",),
+        '/addcustomer' : (BuildContext context) => const AddCustomerPage(rol: "", emailadres: "",),
       },
     );
   }

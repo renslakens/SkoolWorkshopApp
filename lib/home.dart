@@ -20,10 +20,12 @@ class WorkshopWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const ListTile(
+                ListTile(
                   //leading: Icon(Icons.album),
-                  title: Text('Titel'),
-                  subtitle: Text('Beschrijving'),
+                  title: Text('Titel',
+                  style: Theme.of(context).textTheme.headline3),
+                  subtitle: Text('Beschrijving',
+                  style: Theme.of(context).textTheme.bodyText1),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -65,12 +67,14 @@ class HomePage extends StatelessWidget {
   checkRole() {
     if (rol == "Docent") {
       return AppBar(
-        title: const Text('Home'),
+        title: Text('Home',
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       );
     } else if (rol == "Medewerker") {
       return AppBar(
-        title: const Text('Home'),
+        title: const Text('Home',
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
         actions: [
           PopupMenuButton(
@@ -119,7 +123,8 @@ class HomePage extends StatelessWidget {
       );
     } else {
       return AppBar(
-        title: const Text('Home'),
+        title: Text('Home', 
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       );
     }

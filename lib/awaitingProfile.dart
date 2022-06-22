@@ -18,13 +18,13 @@ class awaitingProfile extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/login');}
           ),
         ),
-        body: const Padding(
+        backgroundColor: backgroundColor,
+        body: Padding(
           padding: EdgeInsets.all(80.0),
           child: Center(
             child: Text(
               'Je profiel is nog niet beoordeeld, je krijgt een mailtje zodra dit is gebeurd.',
-              style: TextStyle(
-                  fontFamily: 'Heebo', fontSize: 25, color: HeeboColor),
+              style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
           ),

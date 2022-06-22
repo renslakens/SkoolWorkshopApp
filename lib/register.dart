@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:skoolworkshop/awaitingProfile.dart';
+import 'package:skoolworkshop/mailer.dart';
 //import 'package:open_file/open_file.dart';
 import 'Model/registerModel.dart';
 import 'api_service.dart';
@@ -29,8 +31,7 @@ class Workshop {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
-  static List<Workshop> _workshops = [
+  static final List<Workshop> _workshops = [
     Workshop(id: 1, name: "Bootcamp"),
     Workshop(id: 2, name: "Caribbean Drums"),
     Workshop(id: 3, name: "Flashmob"),
@@ -75,11 +76,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<registerModel>? _futureRegister;
 
-  // bool _showPassword = false;
+  bool _showPassword = false;
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _checkPasswordController = TextEditingController();
   final _birthDateController = TextEditingController();
   final _birthPlaceController = TextEditingController();
   final _mobilePhoneController = TextEditingController();
@@ -90,118 +92,152 @@ class _RegisterPageState extends State<RegisterPage> {
   final _countryController = TextEditingController();
 
   List<Step> stepList() => [
-    Step(
-        state: _activeCurrentStep <= 0 ? StepState.editing : StepState.complete,
-        isActive: _activeCurrentStep >= 0,
-        title: const Text('Stap 1'),
-        content: Container(
-          child: Column(
-            children: [
-
-              Text("Inloggegevens", style: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
-              )),
-
-              TextField(
-                controller: _firstNameController,
-                cursorColor: mainColor,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'Voornaam',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-
-              TextField(
-                controller: _lastNameController,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'Achternaam',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'Email',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'Wachtwoord',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )),
-
-    Step(
-        state:_activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
-        isActive: _activeCurrentStep >= 1,
-        title: const Text('Stap 2'),
-        content: Container(
-          child: Column(
-            children: [
-
-              Text("Persoonlijke gegevens", style: TextStyle(
-                fontFamily: 'Heebo',
-                color: Colors.black,
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
-              )),
-              const SizedBox(
-                height: 12,
-              ),
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Geslacht:",
-                  style: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                    fontSize: 18.0,
+        Step(
+            state: _activeCurrentStep <= 0
+                ? StepState.editing
+                : StepState.complete,
+            isActive: _activeCurrentStep >= 0,
+            title: Text('Stap 1', style: Theme.of(context).textTheme.subtitle1),
+            content: Container(
+              child: Column(
+                children: [
+                  const Text("Inloggegevens",
+                      style: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  TextField(
+                    controller: _firstNameController,
+                    cursorColor: mainColor,
+                    decoration: const InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: mainColor)),
+                      labelText: 'Voornaam',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                      ),
                     ),
-                ),
-              ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextField(
+                    controller: _lastNameController,
+                    decoration: const InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: mainColor)),
+                      labelText: 'Achternaam',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: mainColor)),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
 
+
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: !this._showPassword,
+                    cursorColor: mainColor,
+                    decoration: InputDecoration(
+                      labelText: 'Wachtwoord',
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: this._showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() => this._showPassword = !this._showPassword);
+                        },
+                      ),
+                    ),
+                  ),
+
+                  TextField(
+                    controller: _checkPasswordController,
+                    obscureText: !this._showPassword,
+                    cursorColor: mainColor,
+                    decoration: InputDecoration(
+                      labelText: 'Bevestig wachtwoord',
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: const BorderSide(color: mainColor)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: this._showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() => this._showPassword = !this._showPassword);
+                        },
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            )),
+        Step(
+            state: _activeCurrentStep <= 1
+                ? StepState.editing
+                : StepState.complete,
+            isActive: _activeCurrentStep >= 1,
+            title: Text('Stap 2', style: Theme.of(context).textTheme.subtitle1),
+            content: Container(
+              child: Column(
+                children: [
+                  Text("Persoonlijke gegevens",
+                      style: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Geslacht:",
+                      style: TextStyle(
+                        fontFamily: 'Heebo',
+                        color: Colors.black,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
                   ListTile(
-                    title: Text("Man"),
+                    title: Text("Man",
+                        style: Theme.of(context).textTheme.subtitle1),
                     leading: Radio(
                         value: "man",
                         groupValue: gender,
-                        onChanged: (value){
+                        onChanged: (value) {
                           setState(() {
                             gender = value.toString();
                           });
@@ -209,11 +245,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   ListTile(
-                    title: Text("Vrouw"),
+                    title: Text("Vrouw",
+                        style: Theme.of(context).textTheme.subtitle1),
                     leading: Radio(
                         value: "vrouw",
                         groupValue: gender,
-                        onChanged: (value){
+                        onChanged: (value) {
                           setState(() {
                             gender = value.toString();
                           });
@@ -239,7 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       firstDate:DateTime(1900),
                       lastDate: DateTime(2100),
                       helpText: 'Selecteer geboortedatum',
-                      cancelText: 'Anulleer',
+                      cancelText: 'Annuleer',
                       confirmText: 'Bevestig',
                   );
                   _birthDateController.text = date.toString().substring(0,10);
@@ -279,21 +316,21 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 8,
               ),
 
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                  labelText: 'bestand uploaden',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Heebo',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              // TextField(
+              //   controller: _passwordController,
+              //   obscureText: true,
+              //   decoration: const InputDecoration(
+              //     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
+              //     labelText: 'bestand uploaden',
+              //     labelStyle: TextStyle(
+              //       fontFamily: 'Heebo',
+              //       color: Colors.black,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 30,
+              // ),
 
               Text("Adres", style: TextStyle(
                 fontFamily: 'Heebo',
@@ -305,9 +342,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 12,
               ),
 
-              Row(
-                children: [
-              TextField(
+              Container(
+                child: Row(
+                  children: [
+              Expanded( child:TextField(
                 controller: _addressController,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -317,9 +355,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Colors.black,
                   ),
                 ),
-              ),
+              ),),
+                    const SizedBox(
+                      width: 25,
+                    ),
 
-              TextField(
+              Expanded(
+              child: TextField(
                 controller: _housenumberController,
                 decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
@@ -331,8 +373,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-              ),
-              ]),
+              ),),
+          ],
+        ),
+    ),
+
 
               TextField(
                 controller: _pincodeController,
@@ -383,80 +428,93 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Info workshopdocent", style: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                )),
+                Text("Info workshopdocent",
+                    style: TextStyle(
+                      fontFamily: 'Heebo',
+                      color: Colors.black,
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                    )),
                 const SizedBox(
                   height: 12,
                 ),
 
-                ListTile(
-                  title: ElevatedButton(
-                    child: const Text('Uploaden',
-                        style: TextStyle(fontFamily: 'Heebo')),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 8.0,
-                      primary: mainColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                      ),
-                    ),
-                  ),
-                  leading: Text("Kopie ID toevoegen:", style: TextStyle(
-                    fontFamily: 'Heebo',
-                    fontSize: 17.0,
-                    color: Colors.black,
-                  )),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
+                // ListTile(
+                //   title: ElevatedButton(
+                //     child: const Text('Uploaden',
+                //         style: TextStyle(fontFamily: 'Heebo')),
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => RegisterPage(
+                //                   rol: "",
+                //                 )),
+                //       );
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       elevation: 8.0,
+                //       primary: mainColor,
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                //       ),
+                //     ),
+                //   ),
+                //   leading: Text("Kopie ID toevoegen:",
+                //       style: TextStyle(
+                //         fontFamily: 'Heebo',
+                //         fontSize: 17.0,
+                //         color: Colors.black,
+                //       )),
+                // ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
 
+                // ListTile(
+                //   title: ElevatedButton(
+                //     child: const Text('Uploaden',
+                //         style: TextStyle(fontFamily: 'Heebo')),
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => RegisterPage(
+                //                   rol: "",
+                //                 )),
+                //       );
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       elevation: 8.0,
+                //       primary: mainColor,
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                //       ),
+                //     ),
+                //   ),
+                //   leading: Text("Vog toevoegen:",
+                //       style: TextStyle(
+                //         fontFamily: 'Heebo',
+                //         fontSize: 17.0,
+                //         color: Colors.black,
+                //       )),
+                // ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
+                Text("Rijbewijs?",
+                    style: TextStyle(
+                      fontFamily: 'Heebo',
+                      fontSize: 17.0,
+                      color: Colors.black,
+                    )),
                 ListTile(
-                  title: ElevatedButton(
-                    child: const Text('Uploaden',
-                        style: TextStyle(fontFamily: 'Heebo')),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(rol: "",)),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 8.0,
-                      primary: mainColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                      ),
-                    ),
-                  ),
-                  leading: Text("Vog toevoegen:", style: TextStyle(
-                    fontFamily: 'Heebo',
-                    fontSize: 17.0,
-                    color: Colors.black,
-                  )),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-
-                Text("Rijbewijs?", style: TextStyle(
-                  fontFamily: 'Heebo',
-                  fontSize: 17.0,
-                  color: Colors.black,
-                )),
-
-                ListTile(
-                  title: Text("Ja"),
+                  title:
+                      Text("Ja", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "ja",
+                      value: "1",
                       groupValue: drivers_liscence,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           drivers_liscence = value.toString();
                         });
@@ -464,11 +522,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 ListTile(
-                  title: Text("Nee"),
+                  title:
+                      Text("Nee", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "nee",
+                      value: "0",
                       groupValue: drivers_liscence,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           drivers_liscence = value.toString();
                         });
@@ -477,20 +536,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 12,
                 ),
-
-                Text("Bezit van auto?", style: TextStyle(
-                  fontFamily: 'Heebo',
-                  fontSize: 17.0,
-                  color: Colors.black,
-                )),
-
-
+                Text("Bezit van auto?",
+                    style: TextStyle(
+                      fontFamily: 'Heebo',
+                      fontSize: 17.0,
+                      color: Colors.black,
+                    )),
                 ListTile(
-                  title: Text("Ja"),
+                  title:
+                      Text("Ja", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "ja",
+                      value: "1",
                       groupValue: car,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           car = value.toString();
                         });
@@ -498,11 +556,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 ListTile(
-                  title: Text("Nee"),
+                  title:
+                      Text("Nee", style: Theme.of(context).textTheme.subtitle1),
                   leading: Radio(
-                      value: "nee",
+                      value: "0",
                       groupValue: car,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           car = value.toString();
                         });
@@ -513,134 +572,273 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
               ],
-            )
-        )
-   )
-  ];
+            )))
+      ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('Registratie'),
-        backgroundColor: mainColor
-      ),
+          title: const Text('Registratie',
+              style: TextStyle(
+                  fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
+          backgroundColor: mainColor),
       body: Theme(
-      data: ThemeData(
-    primarySwatch: Colors.orange,
-    colorScheme: ColorScheme.light(
-    primary: mainColor,
-    )
-    ),
+        data: ThemeData(
+            primarySwatch: Colors.orange,
+            colorScheme: ColorScheme.light(
+              primary: mainColor,
+            )),
+        child: Stepper(
+          type: StepperType.horizontal,
+          currentStep: _activeCurrentStep,
+          steps: stepList(),
 
-      child:
-      Stepper(
-        type: StepperType.horizontal,
-        currentStep: _activeCurrentStep,
-        steps: stepList(),
+          onStepContinue: () {
+            if (_activeCurrentStep < (stepList().length - 1)) {
+              if (_activeCurrentStep == 0) {
+                if (_firstNameController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een voornaam in'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_lastNameController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een achternaam in'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_emailController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een emailadres in'),
+                    backgroundColor: errorColor,
+                  ));
+                }
+                else if (!(_emailController.text.toString().contains("@"))) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldige email'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een wachtwoord in'),
+                    backgroundColor: errorColor,
+                  ));
+                }
+                else if (!(_passwordController.text.length > 7)) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldig wachtwoord'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if(!(_checkPasswordController.text == _passwordController.text)) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Wachtwoorden matchen niet'),
+                    backgroundColor: errorColor,
+                  ));
+                } else {
+                  setState(() {
+                    _activeCurrentStep += 1;
+                    print(_activeCurrentStep);
+                  });
+                }
+              } else if (_activeCurrentStep == 1) {
+                String pattern = r'(^(?:[+0]6)?[0-9]{10,12}$)';
+                RegExp phoneReg = new RegExp(pattern);
+                String postalPattern = r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$";
+                RegExp postalReg = new RegExp(postalPattern, caseSensitive: false);
+                if (gender == null) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Geef een geslacht op'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_birthDateController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Geef een datum op'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_birthPlaceController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een geboorteplaats in'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (!phoneReg.hasMatch(_mobilePhoneController.text)) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldig telefoonnummer'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_addressController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een huisnummer in'),
+                    backgroundColor: errorColor,
+                  ));
+                }
+                else if (_housenumberController.text.toString().length > 5 || _housenumberController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldig huisnummer'),
+                    backgroundColor: errorColor,
+                  ));
 
-        onStepContinue: () {
-          if (_activeCurrentStep < (stepList().length - 1)) {
+                } else if (!postalReg
+                    .hasMatch(_pincodeController.text)) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Ongeldige postcode'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_cityController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een woonplaats in'),
+                    backgroundColor: errorColor,
+                  ));
+                } else if (_countryController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Vul een land in'),
+                    backgroundColor: errorColor,
+                  ));
+                } else {
+                  setState(() {
+                    _activeCurrentStep += 1;
+                    print(_activeCurrentStep);
+                  });
+                }
+              }
+              // setState(() {
+              //   _activeCurrentStep += 1;
+              //   print(_activeCurrentStep);
+              // });
+            } else {
+              if (drivers_liscence == null) {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Geef op of je een rijbewijs hebt'),
+                  backgroundColor: errorColor,
+                ));
+              } else if (car == null) {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Geef op of je een auto hebt'),
+                  backgroundColor: errorColor,
+                ));
+              }else {
+                setState(() {
+                  _handleRegister();
+                });
+              }
+            }
+          },
+
+          // onStepCancel takes us to the previous step
+          onStepCancel: () {
+            if (_activeCurrentStep == 0) {
+              return;
+            }
+
             setState(() {
-              _activeCurrentStep += 1;
+              _activeCurrentStep -= 1;
             });
-          } else  {
+          },
+
+          // onStepTap allows to directly click on the particular step we want
+          onStepTapped: (int index) {
             setState(() {
-              _handleRegister();
+              _activeCurrentStep = index;
             });
-          }
-        },
+          },
 
-        // onStepCancel takes us to the previous step
-        onStepCancel: () {
-          if (_activeCurrentStep == 0) {
-            return;
-          }
-
-          setState(() {
-            _activeCurrentStep -= 1;
-          });
-        },
-
-        // onStepTap allows to directly click on the particular step we want
-        onStepTapped: (int index) {
-          setState(() {
-            _activeCurrentStep = index;
-          });
-        },
-
-        controlsBuilder: (BuildContext context, ControlsDetails details){
-          return Row(
-            children: <Widget>[
-              ElevatedButton(
-                child: const Text('Bevestig',
-                    style: TextStyle(fontFamily: 'Heebo')),
-                onPressed: details.onStepContinue,
-                style: ElevatedButton.styleFrom(
-                  elevation: 8.0,
-                  primary: mainColor,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+          controlsBuilder: (BuildContext context, ControlsDetails details) {
+            return Row(
+              children: <Widget>[
+                ElevatedButton(
+                  child:
+                      Text('Bevestig', style: TextStyle(fontFamily: 'Heebo')),
+                  onPressed: details.onStepContinue,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 8.0,
+                    primary: mainColor,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.all(20.0),
-              child: ElevatedButton(
-                child: const Text('Annuleer',
-                    style: TextStyle(fontFamily: 'Heebo')),
-                onPressed: details.onStepCancel,
-                style: ElevatedButton.styleFrom(
-                  elevation: 8.0,
-                  primary: mainColor,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                Container(
+                  margin: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    child: const Text('Annuleer',
+                        style: TextStyle(fontFamily: 'Heebo')),
+                    onPressed: details.onStepCancel,
+                    style: ElevatedButton.styleFrom(
+                      elevation: 8.0,
+                      primary: mainColor,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              ),
-            ],
-          );
-        },
-
-      ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
 
   Future<void> _handleRegister() async {
-    if (!(_emailController.text.toString().contains("@"))) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldige email'),
-        backgroundColor: errorColor,
-      ));
-    } else if (!(_passwordController.text.length > 7)) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Ongeldig wachtwoord'),
-        backgroundColor: errorColor,
-      ));
-    } else {
-
       future:
       _futureRegister;
 
+      //Send mail to registered person
+      acountregistered(_emailController.text, _firstNameController.text);
+
       registerModel res = await apiRegister(
-          context, _firstNameController.text, _lastNameController.text, _emailController.text, _passwordController.text, gender.toString(), _birthDateController.text, _birthPlaceController.text, _addressController.text, _housenumberController.toString(), _pincodeController.text, _cityController.text, _countryController.text, drivers_liscence.toString(), car.toString(), 'Docent');
+          context,
+          _firstNameController.text,
+          _lastNameController.text,
+          _emailController.text,
+          _passwordController.text,
+          gender.toString(),
+          _birthDateController.text,
+          _birthPlaceController.text,
+          _mobilePhoneController.text,
+          _addressController.text,
+          _housenumberController.text.toString(),
+          _pincodeController.text,
+          _cityController.text,
+          _countryController.text,
+          drivers_liscence.toString(),
+          car.toString(),
+          'Docent');
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
-     {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                //TODO: res.result.rol meegeven aan rol in SkoolWorkshopApp
-                  builder: (context) => const SkoolWorkshopApp(rol: "Docent", emailadres: "",)));
-        }
+      {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Succesvol geregistreerd'),
+          backgroundColor: Colors.green,
+        ));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const awaitingProfile()));
+          }
       {
         //if error is present, display a snackbar showing the error messsage
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -648,6 +846,5 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: errorColor,
         ));
       }
-    }
   }
 }
