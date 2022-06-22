@@ -165,9 +165,10 @@ class _AddJobWidgetState extends State<AddJobWidget> {
 }
 
 class AddJobPage extends StatelessWidget {
-  const AddJobPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  const AddJobPage({Key? key, required this.rol, required this.emailadres, required this.voornaam}) : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +183,7 @@ class AddJobPage extends StatelessWidget {
                 PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-                    rol: rol, emailadres: emailadres,
+                    rol: rol, emailadres: emailadres, voornaam: voornaam,
                   ),
                 ),
               );

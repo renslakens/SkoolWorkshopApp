@@ -32,13 +32,13 @@ class Main extends StatelessWidget {
         '/notification' : (BuildContext context) => const NotificationPage(),
         '/login': (BuildContext context) => const LoginPage(),
         '/register': (BuildContext context) => const RegisterPage(rol: "",),
-        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", emailadres: "",),
+        '/': (BuildContext context) => const SkoolWorkshopApp(rol: "", emailadres: "", voornaam: "",),
         '/awaiting': (BuildContext context) => const awaitingProfile(),
         '/profiles': (BuildContext context) => const ProfilePage(),
         '/profile' : (BuildContext context) => singleProfilePage(emailadres: "",),
-        '/addlocation' : (BuildContext context) => const AddLocationPage(rol: "", emailadres: "",),
-        '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "",),
-        '/addcustomer' : (BuildContext context) => const AddCustomerPage(rol: "", emailadres: "",),
+        '/addlocation' : (BuildContext context) => const AddLocationPage(rol: "", emailadres: "", voornaam: '',),
+        '/addworkshop' : (BuildContext context) => const AddWorkshopPage(rol: "", emailadres: "", voornaam: '',),
+        '/addcustomer' : (BuildContext context) => const AddCustomerPage(rol: "", emailadres: "", voornaam: '',),
       },
     );
   }

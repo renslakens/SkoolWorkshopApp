@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:skoolworkshop/Model/customerModel.dart';
 import 'package:skoolworkshop/Model/loginModel.dart';
+import 'package:skoolworkshop/Model/opdrachtApplyModel.dart';
 import 'package:skoolworkshop/Model/registerModel.dart';
 import 'package:skoolworkshop/Model/userModel.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
@@ -289,15 +290,15 @@ Future<customerModel> apiAddCustomer(
 }
 
 Future<customerModel> apiAddJob(
-    BuildContext context, String voornaam, String achternaam, String postcode, String telefoonnummer, String straat, String huisnummer, String plaats, String klantType, String land, String naamContactpersoon) async {
+    BuildContext context, String aantalDocenten, String startTijd, String eindTijd, String locatieID, String workshopID, String klantID, String doelgroepID) async {
   final reponse = await http
       .post(
-    Uri.parse(apis.baseUrl + apis.customerRoute),
+    Uri.parse(apis.baseUrl + apis.jobRoute),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'naam': voornaam, 'achternaam': achternaam, 'postcode': postcode, 'telefoonnummer': telefoonnummer, 'straat': straat, 'huisnummer': huisnummer, 'plaats': plaats, 'klantType': klantType, 'land': land, 'naamContactpersoon': naamContactpersoon}),
+        <String, String>{'aantalDocenten': aantalDocenten, 'startTijd': startTijd, 'eindTijd': eindTijd, 'locatieID': locatieID, 'workshopID': workshopID, 'klantID': klantID, 'doelgroepID': doelgroepID}),
   )
       .catchError((onError) {
     print(onError);
@@ -319,7 +320,42 @@ Future<customerModel> apiAddJob(
         content: Text('Invalide gegevens'),
         backgroundColor: errorColor,
       ));
-      throw Exception("Kon geen klant toevoegen");
+      throw Exception("Kon geen opdracht toevoegen");
+  }
+}
+
+Future<opdrachtApplyModel> apiApplyTeacherJob(
+    BuildContext context, String emailadres, String id) async {
+  final reponse = await http
+      .post(
+    Uri.parse(apis.baseUrl + apis.moderateJobs),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'emailadres': emailadres, 'id': id}),
+  )
+      .catchError((onError) {
+    print(onError);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Kon geen verbinding maken'),
+      backgroundColor: errorColor,
+      duration: Duration(seconds: 30),
+    ));
+  });
+  switch (reponse.statusCode) {
+    case 200:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      print(reponse.statusCode);
+      return opdrachtApplyModel.fromJson(jsonDecode(reponse.body));
+    default:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalide gegevens'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception("Kon docent niet toevoegen aan opdracht");
   }
 }
 

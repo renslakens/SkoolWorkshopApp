@@ -322,7 +322,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
               pageBuilder: (BuildContext context, _, __) =>
                   SkoolWorkshopApp(
                     rol: "Medewerker",
-                    emailadres: "",
+                    emailadres: "", voornaam: '',
                   ),
             ),
           );
@@ -346,10 +346,11 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
 }
 
 class AddCustomerPage extends StatelessWidget {
-  const AddCustomerPage({Key? key, required this.rol, required this.emailadres})
+  const AddCustomerPage({Key? key, required this.rol, required this.emailadres, required this.voornaam})
       : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +369,7 @@ class AddCustomerPage extends StatelessWidget {
                   pageBuilder: (BuildContext context, _, __) =>
                       SkoolWorkshopApp(
                     rol: rol,
-                    emailadres: emailadres,
+                    emailadres: emailadres, voornaam: voornaam,
                   ),
                 ),
               );

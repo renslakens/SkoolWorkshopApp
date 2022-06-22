@@ -48,12 +48,14 @@ class loginModel {
 class Result {
   String token;
   String emailadres;
+  String voornaam;
   String rol;
   int isAccepted;
 
   Result({
     required this.token,
     required this.emailadres,
+    required this.voornaam,
     required this.rol,
     required this.isAccepted,
   });
@@ -61,6 +63,7 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => Result(
       token: json['token'] ?? "na",
       emailadres: json['emailadres'] ?? "na",
+      voornaam: json['voornaam'] ?? "na",
       rol: json['rol'] ?? "Docent",
       isAccepted: json['isAccepted'] ?? 99,
   );
@@ -68,6 +71,7 @@ class Result {
   Map<String, dynamic> toJson() => {
     "token": token,
     "emailadres": emailadres,
+    "voornaam": voornaam,
     "rol": rol,
     "isAccepted": isAccepted,
   };
