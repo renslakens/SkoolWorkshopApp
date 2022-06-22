@@ -7,14 +7,16 @@ import 'package:skoolworkshop/profileview.dart';
 import 'package:intl/intl.dart';
 
 class NotificationWidget extends StatefulWidget {
-  NotificationWidget({Key? key}) : super(key: key);
+  NotificationWidget({Key? key, required this.emailadres}) : super(key: key);
+  String emailadres;
 
   @override
   State<NotificationWidget> createState() => _NotificationWidgetState();
 }
 
 class _NotificationWidgetState extends State<NotificationWidget> {
-  final String getUnAcceptedProfilesUrl = apis.baseUrl + apis.unAcceptedProfiles;
+  final String getUnAcceptedProfilesUrl =
+      apis.baseUrl + apis.unAcceptedProfiles;
   final String deleteDocent = apis.baseUrl + apis.authRoute;
   final String acceptDocent = apis.baseUrl + apis.authRoute;
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
@@ -26,7 +28,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   }
 
   Future delDocent(String emailLogin) async {
-    http.Response response = await http.delete(Uri.parse(deleteDocent + emailLogin));
+    http.Response response =
+        await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
       print("Deleted");
     } else {
@@ -35,7 +38,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
   }
 
   Future accDocent(String emailLogin) async {
-    http.Response response = await http.put(Uri.parse(acceptDocent + emailLogin));
+    http.Response response =
+        await http.put(Uri.parse(acceptDocent + emailLogin));
     if (response.statusCode == 200) {
       print('User with ID $emailLogin successfully Accepted');
     }
@@ -69,8 +73,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren",
-              style: Theme.of(context).textTheme.headline3),
+          title:
+              Text("Goedkeuren", style: Theme.of(context).textTheme.headline3),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} toegang wilt geven tot de app?"),
           actions: [
@@ -87,6 +91,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               onPressed: () {
                 setState(() {
                   accDocent(_loginEmail(snapshot.data[index]).toString());
+                  Future.delayed(Duration(milliseconds: 500))
+                      .then((value) => setState(() {}));
                   Navigator.of(context).pop();
                 });
               },
@@ -103,8 +109,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Verwijderen",
-              style: Theme.of(context).textTheme.headline3),
+          title:
+              Text("Verwijderen", style: Theme.of(context).textTheme.headline3),
           content: Text(
               "Weet je zeker dat je ${_loginEmail(snapshot.data[index])} wilt verwijderen?",
               style: Theme.of(context).textTheme.bodyText1),
@@ -120,6 +126,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               onPressed: () {
                 setState(() {
                   delDocent(_loginEmail(snapshot.data[index]).toString());
+                  Future.delayed(Duration(milliseconds: 500))
+                      .then((value) => setState(() {}));
                   Navigator.of(context).pop();
                 });
               },
@@ -141,56 +149,61 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          leading: Icon(Icons.account_circle, size: 40),
-                          title: Text(_loginEmail(snapshot.data[index]).toString(),
-                              style: Theme.of(context).textTheme.subtitle1),
-                          subtitle: Text(
-                              "Rol: ${_rol(snapshot.data[index])}",
-                              style: Theme.of(context).textTheme.bodyText1),
-                          trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _acceptedMyDialog(
-                                          context, snapshot, index);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.green,
+                    child: Card(
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            leading: Icon(Icons.account_circle, size: 40),
+                            title: Text(
+                                _loginEmail(snapshot.data[index]).toString(),
+                                style: Theme.of(context).textTheme.subtitle1),
+                            subtitle: Text("Rol: ${_rol(snapshot.data[index])}",
+                                style: Theme.of(context).textTheme.bodyText1),
+                            trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _acceptedMyDialog(
+                                            context, snapshot, index);
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
+                                    child: const Icon(Icons.check),
                                   ),
-                                  child: const Icon(Icons.check),
-                                ),
-                                const SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _denyMyDialog(context, snapshot, index);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: errorColor,
+                                  const SizedBox(width: 8),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _denyMyDialog(context, snapshot, index);
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: errorColor,
+                                    ),
+                                    child: const Icon(Icons.clear),
                                   ),
-                                  child: const Icon(Icons.clear),
-                                ),
-                              ]),
-                        ),
-                      ],
+                                ]),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => singleProfilePage(emailadres: _loginEmail((snapshot.data[index]).toString()))));
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          pageBuilder: (BuildContext context, _, __) =>
+                              singleProfilePage(
+                            emailadres: widget.emailadres,
+                          ),
+                        ),
+                      );
+                    }
                     //TODO Navigate to profiles page with _id(snapshot.data[index]).toString()
-                  },
-                );
+                    );
               });
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -201,7 +214,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
 }
 
 class NotificationPage extends StatelessWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  const NotificationPage({Key? key, required this.emailadres})
+      : super(key: key);
+  final String emailadres;
 
   @override
   Widget build(BuildContext context) {
@@ -209,10 +224,13 @@ class NotificationPage extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text('Meldingen',
-            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
+            style: TextStyle(
+                fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       ),
-      body: NotificationWidget(),
+      body: NotificationWidget(
+        emailadres: emailadres,
+      ),
     );
   }
 }

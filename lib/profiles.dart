@@ -48,7 +48,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren"),
+          title: Text("Verwijderen"),
           content: Text(
               "Weet je zeker dat je ${_emailadres(snapshot.data[index])} wilt verwijderen?"),
           actions: [
@@ -63,6 +63,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               onPressed: () {
                 setState(() {
                   deleteUser(_emailadres(snapshot.data[index]).toString());
+                  Future.delayed(Duration(milliseconds: 500)).then((value) => setState(() {}));
                   Navigator.of(context).pop();
                 });
               },
@@ -138,7 +139,8 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: const Text('Profielen'),
+        title: Text('Profielen',
+            style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
       ),
       body: ProfileWidget(),

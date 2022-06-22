@@ -1,20 +1,116 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:skoolworkshop/main.dart';
 import 'package:skoolworkshop/profiles.dart';
+import '/Model/userModel.dart';
+import 'package:skoolworkshop/apis.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'api_service.dart';
+import 'package:get/get.dart';
 
 import 'Widgets/profile_widget.dart';
 
 class singleProfilePage extends StatefulWidget {
-  const singleProfilePage({Key? key, required this.emailadres}) : super(key: key);
-  final String emailadres;
+  singleProfilePage({Key? key, required this.emailadres}) : super(key: key);
+  String emailadres;
 
   @override
-  State<singleProfilePage> createState() => _singleProfilePageState();
+  State<singleProfilePage> createState() =>
+      _singleProfilePageState();
 }
 
 class _singleProfilePageState extends State<singleProfilePage> {
+  final String getAcceptedUser = apis.baseUrl + apis.acceptedProfiles;
+  DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
+  DateFormat properDate = DateFormat("yyyy-dd-MM");
+
+  List<UserModel>? userModel = [];
+
+  Future<List<dynamic>> fetchUsers() async {
+    var result =
+        await http.get(Uri.parse(apis.baseUrl + apis.unAcceptedProfiles));
+    final filteredUser = json.decode(result.body)['result'].where(
+          (um) =>
+              um.results.indexWhere(
+                (r) => r.emailadres == widget.emailadres,
+              ) >=
+              0,
+        );
+    return filteredUser[0].results[0];
+  }
+
+  String _naam(dynamic user) {
+    return user['voornaam'];
+  }
+
+  String _achternaam(dynamic user) {
+    return user['achternaam'];
+  }
+
+  String _geboorteplaats(dynamic user) {
+    return user['geboorteplaats'];
+  }
+
+  String _geboortedatum(dynamic user) {
+    String geboortedatum = user['geboortedatum'] ?? 0;
+    DateTime newtime = dateFormat.parse(geboortedatum.replaceAll("T", " "));
+    return properDate.format(newtime);
+  }
+
+  String _emailadres(dynamic user) {
+    return user['emailadres'];
+  }
+
+  String _geslacht(dynamic user) {
+    return user['geslacht'];
+  }
+
+  String _rijbewijs(dynamic user) {
+    return user['heeftRijbewijs'];
+  }
+
+  String _auto(dynamic user) {
+    return user['heeftAuto'];
+  }
+
+  String _adres(dynamic user) {
+    return user['adres'];
+  }
+
+  String _huisnummer(dynamic user) {
+    return user['huisnummer'];
+  }
+
+  String _postcode(dynamic user) {
+    return user['postcode'];
+  }
+
+  String _woonplaats(dynamic user) {
+    return user['_woonplaats'];
+  }
+
+  String _telefoon(dynamic user) {
+    return user['telefoon'];
+  }
+
+  String _land(dynamic user) {
+    return user['land'];
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getData();
+  // }
+
+  // void _getData() async {
+  //   userModel = (await ApiService().getUnacceptedProfiles())!;
+  //   final filteredUsers = userModel?.where((um) => um.result.indexWhere((r) => r.emailadres == emailadres,) >= 0,);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +131,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
           ),
           const SizedBox(height: 12),
           //Naam en email worden meegegeven in buildName methode :)
-          buildName(),
+          buildName(context),
           const SizedBox(height: 6),
           const Divider(
             height: 20,
@@ -55,10 +151,10 @@ class _singleProfilePageState extends State<singleProfilePage> {
     );
   }
 
-  Widget buildName(/*results*/) => Column(
+  Widget buildName(BuildContext context) => Column(
         children: [
           Text(
-            "Naam " "Achternaam",
+            "${fetchUsers()} ${_achternaam(fetchUsers)}",
             style: Theme.of(context).textTheme.headline2,
           ),
           Text("Emailadres", style: Theme.of(context).textTheme.bodyText1)
@@ -104,10 +200,10 @@ class _singleProfilePageState extends State<singleProfilePage> {
                 Expanded(
                     child: Text(
                         "Adres: "
-                        "straat  "
-                        "nr "
-                        "postcode "
-                        "woonplaats",
+                        "straat:   "
+                        "nr:  "
+                        "postcode:  "
+                        "woonplaats: ",
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),

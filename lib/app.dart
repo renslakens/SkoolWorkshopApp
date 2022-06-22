@@ -26,13 +26,13 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     HomePage(rol: widget.rol, emailadres: widget.emailadres,),
     awaitingProfile(),
     awaitingProfile(),
-    NotificationPage(),
+    NotificationPage(emailadres: widget.emailadres,),
     singleProfilePage(emailadres: widget.emailadres,),
   ];
 
   late final EmployeeScreens = [
     HomePage(rol: widget.rol, emailadres: widget.emailadres,),
-    NotificationPage(),
+    NotificationPage(emailadres: widget.emailadres,),
     ProfilePage(),
   ];
 

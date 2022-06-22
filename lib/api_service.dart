@@ -12,6 +12,21 @@ import 'package:skoolworkshop/colors.dart';
 import 'Model/locationModel.dart';
 import 'apis.dart';
 
+class ApiService {
+  Future<List<UserModel>?> getUnacceptedProfiles() async {
+    try {
+      var url = Uri.parse(apis.baseUrl + apis.unAcceptedProfiles);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<UserModel> model = List<UserModel>.from( json.decode(response.body)['data'].map( (x) => UserModel.fromJson(x)));
+        return model;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+}
+
 Future<loginModel> login(
     String naam, String lastName, String email, String wachtwoord) async {
   final reponse = await http.post(
