@@ -35,6 +35,7 @@ dependencies:
   built_value: any
   json_annotation: any
   mailer: any
+  enough_mail: ^2.1.1
   email_auth: any
   #Adds rounded date picker plugin.
   flutter_rounded_date_picker: 3.0.1
