@@ -65,6 +65,12 @@ class _singleProfilePageState extends State<singleProfilePage> {
   String _achternaam(dynamic user) {
     // print(user);
     achternaam = "d+";
+    setState(() {
+      // delDocent(_loginEmail(snapshot.data[index]).toString());
+      Future.delayed(Duration(milliseconds: 500))
+          .then((value) => setState(() {}));
+      // Navigator.of(context).pop();
+    });
     fetchUsers().then((value) => endResult = value);
     return endResult;
     // return user['wachtwoord'] ?? "d";

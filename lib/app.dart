@@ -32,7 +32,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
 
   late final EmployeeScreens = [
     HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
-    NotificationPage(),
+    NotificationPage(emailadres: '',),
     ProfilePage(),
   ];
 

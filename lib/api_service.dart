@@ -8,6 +8,7 @@ import 'package:skoolworkshop/Model/loginModel.dart';
 import 'package:skoolworkshop/Model/registerModel.dart';
 import 'package:skoolworkshop/Model/userModel.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
+import 'package:skoolworkshop/Model/opdrachtApplyModel.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'Model/locationModel.dart';
 import 'apis.dart';
