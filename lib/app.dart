@@ -31,7 +31,7 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   ];
 
   late final EmployeeScreens = [
-    //HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
+    HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
     NotificationPage(),
     ProfilePage(),
   ];
@@ -56,10 +56,10 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   ];
 
   final EmployeeButtons = [
-    // BottomNavigationBarItem(
-    //   icon: Icon(Icons.home),
-    //   label: 'Home',
-    // ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
     BottomNavigationBarItem(
       icon: Icon(Icons.circle_notifications_outlined),
       label: 'Meldingen',
