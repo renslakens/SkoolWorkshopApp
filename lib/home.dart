@@ -8,6 +8,7 @@ import 'package:skoolworkshop/Model/opdrachtApplyModel.dart';
 import 'package:skoolworkshop/addCustomer.dart';
 import 'package:skoolworkshop/addJob.dart';
 import 'package:skoolworkshop/addLocation.dart';
+import 'package:skoolworkshop/addTargetAudience.dart';
 import 'package:skoolworkshop/addWorkshop.dart';
 import 'package:skoolworkshop/api_service.dart';
 import 'package:skoolworkshop/colors.dart';
@@ -36,7 +37,7 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
   Future<opdrachtApplyModel>? _futureApplyTeacher;
 
   Future<List<dynamic>> fetchJobs() async {
-    var result = await http.get(Uri.parse(jobsUrl));
+    var result = await http.get(Uri.parse(jobsUrl + widget.emailadres));
     return json.decode(result.body)['result'];
   }
 
@@ -53,14 +54,18 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
   }
 
   String _datum(dynamic job) {
-    return job['startTijd'];
+    String time = job['startTijd'] ?? 0;
+    var parts = time.split('T');
+    var date = parts[0].trim();
+    return date;
   }
 
-  Future<void> _handleApplyToJob(String emailadres, String voornaam, String workshopnaam, String datum, String opdrachtID) async {
+  Future<void> _handleApplyToJob(String emailadres, String voornaam,
+      String workshopnaam, String datum, String opdrachtID) async {
     future:
     _futureApplyTeacher;
-    opdrachtApplyModel res = await apiApplyTeacherJob(context,
-        widget.emailadres, opdrachtID);
+    opdrachtApplyModel res =
+        await apiApplyTeacherJob(context, widget.emailadres, opdrachtID);
     jobapply(emailadres, voornaam, workshopnaam, datum);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
@@ -88,7 +93,12 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
               child: Text("Inschrijven"),
               onPressed: () {
                 setState(() {
-                  _handleApplyToJob(widget.emailadres, widget.voornaam, _workshopnaam(snapshot.data[index]).toString(), _datum(snapshot.data[index]).toString(), _opdrachtID(snapshot.data[index]).toString());
+                  _handleApplyToJob(
+                      widget.emailadres,
+                      widget.voornaam,
+                      _workshopnaam(snapshot.data[index]).toString(),
+                      _datum(snapshot.data[index]).toString(),
+                      _opdrachtID(snapshot.data[index]).toString());
                   Navigator.of(context).pop();
                 });
               },
@@ -148,7 +158,15 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
                 );
               });
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Padding(
+              padding: const EdgeInsets.all(80.0),
+              child: Center(
+                child: Text(
+                  "Er zijn nog een opdrachten beschikbaar waarvoor jij je kunt inschrijven",
+                  style: Theme.of(context).textTheme.headline3,
+                  textAlign: TextAlign.center,
+                ),
+              ));
         }
       },
     );
@@ -202,6 +220,10 @@ class HomePage extends StatelessWidget {
                     value: 3,
                     child: Text("Locatie toevoegen"),
                   ),
+                  PopupMenuItem<int>(
+                    value: 4,
+                    child: Text("Doelgroep toevoegen"),
+                  ),
                 ];
               },
               onSelected: (value) {
@@ -243,6 +265,12 @@ class HomePage extends StatelessWidget {
                   ));
                 } else if (value == 3) {
                   Get.to(AddLocationPage(
+                    rol: rol,
+                    emailadres: emailadres,
+                    voornaam: voornaam,
+                  ));
+                } else if (value == 3) {
+                  Get.to(AddTAPage(
                     rol: rol,
                     emailadres: emailadres,
                     voornaam: voornaam,

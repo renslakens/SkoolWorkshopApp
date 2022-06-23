@@ -26,7 +26,7 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
   final String jobURL = apis.baseUrl + apis.jobRoute;
 
   Future<List<dynamic>> fetchWorkshops() async {
-    String finalUrl = jobURL + apis.emailWorkshops + widget.emailadres + apis.isBevestigd + "0";
+    String finalUrl = jobURL + apis.emailWorkshops + widget.emailadres + apis.isBevestigd + "1";
     print(finalUrl);
     var result = await http.get(Uri.parse(finalUrl));
     return json.decode(result.body)['result'];
@@ -79,7 +79,7 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
               padding: const EdgeInsets.all(80.0),
               child: Center(
                 child: Text(
-                  "Er zijn nog geen opdrachten die voor jou bevestigd zijn",
+                  "Er zijn geen workshops van jou in afwachting voor goedkeuring",
                   style: Theme.of(context).textTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
@@ -90,8 +90,8 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
   }
 }
 
-class ConfirmedWorkshopPage extends StatelessWidget {
-  const ConfirmedWorkshopPage({Key? key, required this.voornaam, required this.emailadres}) : super(key: key);
+class AwaitingWorkshopPage extends StatelessWidget {
+  const AwaitingWorkshopPage({Key? key, required this.voornaam, required this.emailadres}) : super(key: key);
   final String voornaam;
   final String emailadres;
 
@@ -100,7 +100,7 @@ class ConfirmedWorkshopPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Bevestigde workshops',
+        title: Text('Workshops in afwachting',
             style: TextStyle(fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         backgroundColor: mainColor,
         automaticallyImplyLeading: false,
