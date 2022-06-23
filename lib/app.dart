@@ -11,9 +11,10 @@ import 'awaitingProfile.dart';
 import 'register.dart';
 
 class SkoolWorkshopApp extends StatefulWidget {
-  const SkoolWorkshopApp({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  const SkoolWorkshopApp({Key? key, required this.rol, required this.emailadres, required this.voornaam}) : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   _SkoolWorkshopAppState createState() => _SkoolWorkshopAppState();
@@ -23,16 +24,15 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
   int currentIndex = 0;
 
   late final TeacherScreens = [
-    HomePage(rol: widget.rol, emailadres: widget.emailadres,),
+    HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
     awaitingProfile(),
     awaitingProfile(),
-    NotificationPage(emailadres: widget.emailadres,),
     singleProfilePage(emailadres: widget.emailadres,),
   ];
 
   late final EmployeeScreens = [
-    HomePage(rol: widget.rol, emailadres: widget.emailadres,),
-    NotificationPage(emailadres: widget.emailadres,),
+    HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
+    NotificationPage(),
     ProfilePage(),
   ];
 
@@ -48,10 +48,6 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
     BottomNavigationBarItem(
       icon: Icon(Icons.access_time),
       label: 'Afwachting',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.circle_notifications_outlined),
-      label: 'Meldingen',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle_outlined),

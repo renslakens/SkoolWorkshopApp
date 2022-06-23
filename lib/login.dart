@@ -137,8 +137,10 @@ class _LoginPageState extends State<LoginPage> {
 
       print("token: " + res.result.token);
       print("rol: " + res.result.rol);
+      print("voornaam: " + res.result.voornaam);
       String rol = res.result.rol;
       String emailadres = res.result.emailadres;
+      String voornaam = res.result.voornaam;
 
       //   //checks if there is no error in the response body.
       //   //if error is not present, navigate the users to Login Screen.
@@ -156,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-                rol: rol, emailadres: emailadres,
+                rol: rol, emailadres: emailadres, voornaam: voornaam,
               ),
             ),
           );

@@ -102,7 +102,7 @@ class _AddWorkshopWidgetState extends State<AddWorkshopWidget> {
               pageBuilder: (BuildContext context, _, __) =>
                   SkoolWorkshopApp(
                     rol: "Medewerker",
-                    emailadres: "",
+                    emailadres: "", voornaam: '',
                   ),
             ),
           );
@@ -126,9 +126,10 @@ class _AddWorkshopWidgetState extends State<AddWorkshopWidget> {
 }
 
 class AddWorkshopPage extends StatelessWidget {
-  const AddWorkshopPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  const AddWorkshopPage({Key? key, required this.rol, required this.emailadres, required this.voornaam}) : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +144,7 @@ class AddWorkshopPage extends StatelessWidget {
                 PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-                    rol: rol, emailadres: emailadres,
+                    rol: rol, emailadres: emailadres, voornaam: voornaam,
                   ),
                 ),
               );

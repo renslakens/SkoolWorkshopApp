@@ -199,7 +199,7 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
               pageBuilder: (BuildContext context, _, __) =>
                   SkoolWorkshopApp(
                     rol: "Medewerker",
-                    emailadres: "",
+                    emailadres: "", voornaam: '',
                   ),
             ),
           );
@@ -223,10 +223,11 @@ class _AddLocationWidgetState extends State<AddLocationWidget> {
 }
 
 class AddLocationPage extends StatelessWidget {
-  const AddLocationPage({Key? key, required this.rol, required this.emailadres})
+  const AddLocationPage({Key? key, required this.rol, required this.emailadres, required this.voornaam})
       : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +246,7 @@ class AddLocationPage extends StatelessWidget {
                   pageBuilder: (BuildContext context, _, __) =>
                       SkoolWorkshopApp(
                     rol: rol,
-                    emailadres: emailadres,
+                    emailadres: emailadres, voornaam: voornaam,
                   ),
                 ),
               );

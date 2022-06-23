@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import 'app.dart';
 import 'colors.dart';
@@ -20,6 +21,7 @@ class _AddJobWidgetState extends State<AddJobWidget> {
   final _workshopController = TextEditingController();
   final _customerController = TextEditingController();
   final _taController = TextEditingController();
+  int _currentValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +30,20 @@ class _AddJobWidgetState extends State<AddJobWidget> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text("Opdracht info", style: Theme.of(context).textTheme.headline2,),
-            TextField(
-              controller: _numberofteachersController,
-              decoration: const InputDecoration(
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor)),
-                labelText: 'Naam',
-                labelStyle: TextStyle(
-                  fontFamily: 'Heebo',
-                  color: Colors.black,
-                ),
-              ),
+            Text(
+              "Klant info",
+              style: Theme.of(context).textTheme.headline2,
             ),
+            // Align(child: Widget[Text("Aantal docenten", style: Theme.of(context).textTheme.titleMedium,),
+            //     NumberPicker(
+            //       value: _currentValue,
+            //       itemHeight: 30,
+            //       itemWidth: 50,
+            //       minValue: 0,
+            //       maxValue: 100,
+            //       textStyle: Theme.of(context).textTheme.bodyText1,
+            //       onChanged: (value) => setState(() => _currentValue = value),
+            //     )],),
             TextField(
               controller: _salaryController,
               decoration: const InputDecoration(
@@ -161,9 +165,10 @@ class _AddJobWidgetState extends State<AddJobWidget> {
 }
 
 class AddJobPage extends StatelessWidget {
-  const AddJobPage({Key? key, required this.rol, required this.emailadres}) : super(key: key);
+  const AddJobPage({Key? key, required this.rol, required this.emailadres, required this.voornaam}) : super(key: key);
   final String rol;
   final String emailadres;
+  final String voornaam;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +183,7 @@ class AddJobPage extends StatelessWidget {
                 PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) => SkoolWorkshopApp(
-                    rol: rol, emailadres: emailadres,
+                    rol: rol, emailadres: emailadres, voornaam: voornaam,
                   ),
                 ),
               );
