@@ -3,7 +3,7 @@
 //import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
+// import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:skoolworkshop/awaitingProfile.dart';
 import 'package:skoolworkshop/mailer.dart';
 //import 'package:open_file/open_file.dart';
@@ -63,9 +63,9 @@ class _RegisterPageState extends State<RegisterPage> {
     Workshop(id: 29, name: "Vloggen"),
   ];
 
-  final _items = _workshops
-      .map((workshop) => MultiSelectItem<Workshop>(workshop, workshop.name))
-      .toList();
+  // final _items = _workshops
+  //     .map((workshop) => MultiSelectItem<Workshop>(workshop, workshop.name))
+  //     .toList();
 
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
