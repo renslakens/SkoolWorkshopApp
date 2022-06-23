@@ -18,111 +18,68 @@ class singleProfilePage extends StatefulWidget {
   String emailadres;
 
   @override
-  State<singleProfilePage> createState() =>
-      _singleProfilePageState();
+  State<singleProfilePage> createState() => _singleProfilePageState();
 }
 
 class _singleProfilePageState extends State<singleProfilePage> {
-  final String getAcceptedUser = apis.baseUrl + apis.acceptedProfiles;
+  final String getAcceptedUser = apis.baseUrl + "/api/docent/test5@gmail.com";
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
   DateFormat properDate = DateFormat("yyyy-dd-MM");
 
   List<UserModel>? userModel = [];
 
-  Future<List<dynamic>> fetchUsers() async {
-    var result =
-        await http.get(Uri.parse(apis.baseUrl + apis.unAcceptedProfiles));
-    print(result.body);
-    final filteredUser = json.decode(result.body)['result'].where(
-          (um) =>
-              um.results.indexWhere(
-                (r) => r.emailadres == widget.emailadres,
-              ) >=
-              0,
-        );
-    // print("user: " + filteredUser[0].results[0].toString());
+  // Future<List<dynamic>> fetchUsers() async {
+  //   var result = await http.get(Uri.parse(apis.baseUrl + "/api/docent/test5@gmail.com"));
+  //   print(result.body);
+  //   return json.decode(result.body)['result'];
+  // }
 
-    return filteredUser[0].results[0];
+  String _naam(dynamic workshop) {
+    return workshop['naam'] ?? "Onbekende workshop";
   }
 
-  String _naam(dynamic user) {
-    return user['voornaam'];
+  String endResult = "d";
+
+  String achternaam = "e";
+  String textBetweenWords(
+      String sentence, String firstWord, String secondWord) {
+    if(sentence.length < 4){
+      return "na";
+    }else {
+      print(sentence);
+      print(firstWord);
+      print(secondWord);
+      return sentence.substring(sentence.indexOf(firstWord) + firstWord.length,
+          sentence.indexOf(secondWord));
+    }
+  }
+
+  Future<String> fetchUsers() async {
+    var result =
+        await http.get(Uri.parse(apis.baseUrl + "/api/docent/" + widget.emailadres));
+    print("\n\n\n\n\n");
+    endResult = result.body.toString();
+    return result.body.toString();
   }
 
   String _achternaam(dynamic user) {
-    return user['wachtwoord'];
+    // print(user);
+    achternaam = "d+";
+    fetchUsers().then((value) => endResult = value);
+    return endResult;
+    // return user['wachtwoord'] ?? "d";
   }
-
-  String _geboorteplaats(dynamic user) {
-    return user['geboorteplaats'];
-  }
-
-  String _geboortedatum(dynamic user) {
-    String geboortedatum = user['geboortedatum'] ?? 0;
-    DateTime newtime = dateFormat.parse(geboortedatum.replaceAll("T", " "));
-    return properDate.format(newtime);
-  }
-
-  String _emailadres(dynamic user) {
-    return user['emailadres'];
-  }
-
-  String _geslacht(dynamic user) {
-    return user['geslacht'];
-  }
-
-  String _rijbewijs(dynamic user) {
-    return user['heeftRijbewijs'];
-  }
-
-  String _auto(dynamic user) {
-    return user['heeftAuto'];
-  }
-
-  String _adres(dynamic user) {
-    return user['adres'];
-  }
-
-  String _huisnummer(dynamic user) {
-    return user['huisnummer'];
-  }
-
-  String _postcode(dynamic user) {
-    return user['postcode'];
-  }
-
-  String _woonplaats(dynamic user) {
-    return user['_woonplaats'];
-  }
-
-  String _telefoon(dynamic user) {
-    return user['telefoon'];
-  }
-
-  String _land(dynamic user) {
-    return user['land'];
-  }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getData();
-  // }
-
-  // void _getData() async {
-  //   userModel = (await ApiService().getUnacceptedProfiles())!;
-  //   final filteredUsers = userModel?.where((um) => um.result.indexWhere((r) => r.emailadres == emailadres,) >= 0,);
-  // }
 
   @override
   Widget build(BuildContext context) {
+    fetchUsers();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-        'Profiel',
-        style: Theme.of(context).textTheme.headline1,
-      )),
+            'Profiel',
+            style: Theme.of(context).textTheme.headline1,
+          )),
       body: ListView(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(20),
@@ -158,9 +115,7 @@ class _singleProfilePageState extends State<singleProfilePage> {
   Widget buildName(BuildContext context) => Column(
         children: [
           Text(
-            // _achternaam(fetchUsers()).toString(),
-            // "${fetchUsers()} ${_achternaam(fetchUsers)}",
-            "d",
+            textBetweenWords(_achternaam(fetchUsers()), '"voornaam":"', '","achternaam"'),
             style: Theme.of(context).textTheme.headline2,
           ),
           Text("Emailadres", style: Theme.of(context).textTheme.bodyText1)
