@@ -43,26 +43,49 @@ class _singleProfilePageState extends State<singleProfilePage> {
   String achternaam = "e";
   String textBetweenWords(
       String sentence, String firstWord, String secondWord) {
-    if(sentence.length < 4){
+    if (sentence.length < 4) {
       return "na";
-    }else {
+    } else if (firstWord == '"heeftRijbewijs":') {
+      if (sentence.substring(sentence.indexOf(firstWord) + firstWord.length,
+              sentence.indexOf(secondWord)) ==
+          "1") {
+        return "Ja";
+      } else {
+        return "Nee";
+      }
+    } else if (firstWord == '"heeftAuto":') {
+      if (sentence.substring(sentence.indexOf(firstWord) + firstWord.length,
+              sentence.indexOf(secondWord)) ==
+          "1") {
+        return "Ja";
+      } else {
+        return "Nee";
+      }
+    } else if (firstWord == '"geboortedatum":"') {
+      DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
+      DateFormat properDate = DateFormat("yyyy-dd-MM");
+      DateFormat timeOnly = DateFormat("HH:mm");
+      String date = sentence.substring(sentence.indexOf(firstWord) + firstWord.length, sentence.indexOf(secondWord));
+      DateTime newtime = dateFormat.parse(date.replaceAll("T", " "));
+      return properDate.format(newtime);
+    } else {
       print(sentence);
-      print(firstWord);
-      print(secondWord);
+      // print(firstWord);
+      // print(secondWord);
       return sentence.substring(sentence.indexOf(firstWord) + firstWord.length,
           sentence.indexOf(secondWord));
     }
   }
 
   Future<String> fetchUsers() async {
-    var result =
-        await http.get(Uri.parse(apis.baseUrl + "/api/docent/" + widget.emailadres));
+    var result = await http
+        .get(Uri.parse(apis.baseUrl + "/api/docent/" + widget.emailadres));
     print("\n\n\n\n\n");
     endResult = result.body.toString();
     return result.body.toString();
   }
 
-  String _achternaam(dynamic user) {
+  String _query(dynamic user) {
     // print(user);
     achternaam = "d+";
     setState(() {
@@ -121,10 +144,12 @@ class _singleProfilePageState extends State<singleProfilePage> {
   Widget buildName(BuildContext context) => Column(
         children: [
           Text(
-            textBetweenWords(_achternaam(fetchUsers()), '"voornaam":"', '","achternaam"'),
+            textBetweenWords(
+                _query(fetchUsers()), '"voornaam":"', '","achternaam"'),
             style: Theme.of(context).textTheme.headline2,
           ),
-          Text("Emailadres", style: Theme.of(context).textTheme.bodyText1)
+          Text(textBetweenWords(
+  _query(fetchUsers()), '"loginEmail":"', '","geslacht"'), style: Theme.of(context).textTheme.bodyText1)
         ],
       );
 
@@ -144,13 +169,21 @@ class _singleProfilePageState extends State<singleProfilePage> {
               children: [
                 Expanded(
                     child: Text(
-                        "Geslacht: "
-                        "Vrouw "
-                        "Geboortedatum: "
-                        "01-01-2000",
+                        "Geslacht: " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"geslacht":"', '","geboortedatum"') +
+                            "\nGeboortedatum: " +
+                             textBetweenWords(_query(fetchUsers()),
+                                '"geboortedatum":"', '","geboorteplaats"'),
                         style: Theme.of(context).textTheme.bodyText1)),
                 Expanded(
-                    child: Text("Rijbewijs: " "Ja         " "Auto: " "Nee",
+                    child: Text(
+                        "Rijbewijs: " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"heeftRijbewijs":', ',"heeftAuto"') +
+                            "\nAuto: " +
+                        textBetweenWords(_query(fetchUsers()),
+                            '"heeftAuto":', '},') ,
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),
@@ -162,15 +195,26 @@ class _singleProfilePageState extends State<singleProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    child: Text("Telefoonnummer: " "06-12345678",
+                    child: Text(
+                        "Telefoonnummer: " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"telefoonnummer":"', '","straat"'),
                         style: Theme.of(context).textTheme.bodyText1)),
                 Expanded(
                     child: Text(
-                        "Adres: "
-                        "straat:   "
-                        "nr:  "
-                        "postcode:  "
-                        "woonplaats: ",
+                        "Adres: " +
+                            "\nstraat: " +
+                            textBetweenWords(_query(fetchUsers()), '"straat":"',
+                                '","huisnummer"') +
+                            "\nhuisnummer:  " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"huisnummer":', ',"postcode"') +
+                            "\npostcode:  " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"postcode":"', '","woonplaats"') +
+                            "\nwoonplaats: " +
+                            textBetweenWords(_query(fetchUsers()),
+                                '"woonplaats":"', '","land"'),
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),

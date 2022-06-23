@@ -55,7 +55,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Goedkeuren"),
+          title: Text("Verwijderen"),
           content: Text(
               "Weet je zeker dat je ${_emailadres(snapshot.data[index])} wilt verwijderen?"),
           actions: [
