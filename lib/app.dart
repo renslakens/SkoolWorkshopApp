@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:skoolworkshop/awaitingWorkshop.dart';
 import 'package:skoolworkshop/notification.dart';
 import 'package:skoolworkshop/profiles.dart';
 import 'package:skoolworkshop/profileview.dart';
 
 import 'colors.dart';
+import 'confirmedWorkshop.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
@@ -25,8 +27,8 @@ class _SkoolWorkshopAppState extends State<SkoolWorkshopApp> {
 
   late final TeacherScreens = [
     HomePage(rol: widget.rol, emailadres: widget.emailadres, voornaam: widget.voornaam,),
-    awaitingProfile(),
-    awaitingProfile(),
+    ConfirmedWorkshopPage(voornaam: widget.voornaam, emailadres: widget.emailadres,),
+    AwaitingWorkshopPage(voornaam: widget.voornaam, emailadres: widget.emailadres),
     singleProfilePage(emailadres: widget.emailadres,),
   ];
 

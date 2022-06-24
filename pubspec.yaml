@@ -27,23 +27,22 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  dio: any
-  retrofit: any
-  http: any
-  get: ^4.6.5
-  numberpicker: ^2.1.1
-  blobs: ^2.0.0
-  built_value: any
-  json_annotation: any
-  mailer: any
-  enough_mail: ^2.1.1
-  email_auth: any
+  dio: 4.0.6
+  retrofit: 3.0.1+1
+  http: 0.13.4
+  get: 4.6.5
+  numberpicker: 2.1.1
+  blobs: 2.0.0
+  built_value: 8.3.3
+  json_annotation: 4.5.0
+  mailer: 5.1.1
+  enough_mail: 2.1.1
+  flutter_launcher_icons: 0.9.3
+  email_auth: 1.0.0
   #Adds rounded date picker plugin.
   flutter_rounded_date_picker: 3.0.1
   flutter:
     sdk: flutter
-
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -65,6 +64,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/Skool-Workshop-Logo-Beeldmerk.png"
+  adaptive_icon_background: "#FFFFFF"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

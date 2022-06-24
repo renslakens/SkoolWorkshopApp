@@ -7,6 +7,7 @@ import 'package:skoolworkshop/Model/customerModel.dart';
 import 'package:skoolworkshop/Model/loginModel.dart';
 import 'package:skoolworkshop/Model/registerModel.dart';
 import 'package:skoolworkshop/Model/userModel.dart';
+import 'package:skoolworkshop/Model/taModel.dart';
 import 'package:skoolworkshop/Model/workShopDetailModel.dart';
 import 'package:skoolworkshop/Model/opdrachtApplyModel.dart';
 import 'package:skoolworkshop/colors.dart';
@@ -374,3 +375,37 @@ Future<opdrachtApplyModel> apiApplyTeacherJob(
   }
 }
 
+Future<targetAudience> apiAddTargetAudience(
+    BuildContext context, String doelgroep) async {
+  final reponse = await http
+      .post(
+    Uri.parse(apis.baseUrl + apis.moderateJobs),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(
+        <String, String>{'doelgroep': doelgroep}),
+  )
+      .catchError((onError) {
+    print(onError);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Kon geen verbinding maken'),
+      backgroundColor: errorColor,
+      duration: Duration(seconds: 30),
+    ));
+  });
+  switch (reponse.statusCode) {
+    case 200:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      print(reponse.statusCode);
+      return targetAudience.fromJson(jsonDecode(reponse.body));
+    default:
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalide gegevens'),
+        backgroundColor: errorColor,
+      ));
+      throw Exception("Kon geen doelgroep toevoegen");
+  }
+}
