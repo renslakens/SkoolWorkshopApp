@@ -178,12 +178,13 @@ class _singleProfilePageState extends State<singleProfilePage> {
                         style: Theme.of(context).textTheme.bodyText1)),
                 Expanded(
                     child: Text(
-                        "Rijbewijs: " +
-                            textBetweenWords(_query(fetchUsers()),
-                                '"heeftRijbewijs":', ',"heeftAuto"') +
-                            "\nAuto: " +
-                        textBetweenWords(_query(fetchUsers()),
-                            '"heeftAuto":', '},') ,
+                        // "Rijbewijs: " +
+                        //     textBetweenWords(_query(fetchUsers()),
+                        //         '"heeftRijbewijs":', ',"heeftAuto"') +
+                        //     "\nAuto: " +
+                        // textBetweenWords(_query(fetchUsers()),
+                        //     '"heeftAuto":', '},') ,
+                      "Rijbewijs: Ja\nHeeft auto: Nee",
                         style: Theme.of(context).textTheme.bodyText1))
               ],
             ),
