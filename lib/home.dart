@@ -14,6 +14,7 @@ import 'package:skoolworkshop/api_service.dart';
 import 'package:skoolworkshop/colors.dart';
 import 'package:skoolworkshop/apis.dart';
 import 'package:http/http.dart' as http;
+import 'package:skoolworkshop/login.dart';
 import 'package:skoolworkshop/mailer.dart';
 
 class WorkshopWidget extends StatefulWidget {
@@ -283,6 +284,24 @@ class HomePage extends StatelessWidget {
                   ));
                 }
               }),
+          PopupMenuButton(
+            // add icon, by default "3 dot" icon
+              icon: Icon(Icons.logout),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Text("Uitloggen"),
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                if (value == 0) {
+                  Get.to(LoginPage());
+                  Get.back();
+                  Get.off(LoginPage());
+                }
+              }),
         ],
       );
     } else {
@@ -291,6 +310,26 @@ class HomePage extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'Oswald', fontSize: 28, color: Colors.black)),
         automaticallyImplyLeading: false,
+        actions: [
+          PopupMenuButton(
+            // add icon, by default "3 dot" icon
+              icon: Icon(Icons.logout),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Text("Uitloggen"),
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                if (value == 0) {
+                  Get.to(LoginPage());
+                  Get.back();
+                  Get.off(LoginPage());
+                }
+              }),
+        ],
       );
     }
   }
