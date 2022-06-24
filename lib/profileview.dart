@@ -22,7 +22,7 @@ class singleProfilePage extends StatefulWidget {
 }
 
 class _singleProfilePageState extends State<singleProfilePage> {
-  final String getAcceptedUser = apis.baseUrl + "/api/docent/test5@gmail.com";
+  // final String getAcceptedUser = apis.baseUrl + "/api/docent/" + Widget.emailadres;
   DateFormat dateFormat = DateFormat("yyyy-dd-MM HH:mm:ss");
   DateFormat properDate = DateFormat("yyyy-dd-MM");
 
