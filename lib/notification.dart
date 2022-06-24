@@ -28,7 +28,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     return json.decode(result.body)['result'];
   }
 
-  Future delDocent(String emailLogin) async {
+  Future delDocent(String emailLogin, String voornaam) async {
+    accountdeleted(emailLogin, voornaam);
     http.Response response =
         await http.delete(Uri.parse(deleteDocent + emailLogin));
     if (response.statusCode == 200) {
@@ -38,7 +39,8 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     }
   }
 
-  Future accDocent(String emailLogin) async {
+  Future accDocent(String emailLogin, String voornaam) async {
+    accountaccepted(emailLogin, voornaam);
     http.Response response =
         await http.put(Uri.parse(acceptDocent + emailLogin));
     if (response.statusCode == 200) {
@@ -91,7 +93,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Geef toegang"),
               onPressed: () {
                 setState(() {
-                  accDocent(_loginEmail(snapshot.data[index]).toString());
+                  accDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Future.delayed(Duration(milliseconds: 500))
                       .then((value) => setState(() {}));
                   Navigator.of(context).pop();
@@ -117,7 +119,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               style: Theme.of(context).textTheme.bodyText1),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: Text("Annuleer"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -126,7 +128,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               child: Text("Verwijder"),
               onPressed: () {
                 setState(() {
-                  delDocent(_loginEmail(snapshot.data[index]).toString());
+                  delDocent(_loginEmail(snapshot.data[index]).toString(), _voornaam(snapshot.data[index]).toString());
                   Future.delayed(Duration(milliseconds: 500))
                       .then((value) => setState(() {}));
                   Navigator.of(context).pop();
