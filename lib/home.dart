@@ -163,7 +163,7 @@ class _WorkshopWidgetState extends State<WorkshopWidget> {
               padding: const EdgeInsets.all(80.0),
               child: Center(
                 child: Text(
-                  "Er zijn nog een opdrachten beschikbaar waarvoor jij je kunt inschrijven",
+                  "Er zijn nog geen opdrachten beschikbaar waarvoor jij je kunt inschrijven",
                   style: Theme.of(context).textTheme.headline3,
                   textAlign: TextAlign.center,
                 ),
